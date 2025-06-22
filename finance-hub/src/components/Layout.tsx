@@ -18,10 +18,9 @@ const Layout = () => {
                 <div className="relative">
                   <TrendingUp className="h-10 w-10 text-blue-400" />
                   <div className="absolute -top-1 -right-1 w-3 h-3 bg-gradient-to-r from-blue-400 to-purple-400 rounded-full animate-pulse"></div>
-                </div>
-                <div>
+                </div>                <div>
                   <span className="text-2xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
-                    Finance Hub
+                    Finance
                   </span>
                   <div className="text-xs text-gray-400 font-medium">Professional Portfolio Manager</div>
                 </div>
@@ -175,9 +174,8 @@ const Layout = () => {
           {/* Bottom Footer */}
           <div className="py-8 border-t border-white/10">
             <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
-              <div className="text-center md:text-left">
-                <p className="text-gray-300 text-sm mb-1">
-                  &copy; 2025 Finance Hub. All rights reserved.
+              <div className="text-center md:text-left">                <p className="text-gray-300 text-sm mb-1">
+                  &copy; 2025 Finance. All rights reserved.
                 </p>
                 <p className="text-gray-400 text-xs">
                   Built with ❤️ using React, TypeScript, and Tailwind CSS.

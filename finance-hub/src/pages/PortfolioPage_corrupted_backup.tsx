@@ -36,37 +36,38 @@ const MyAssets = () => {
     value: asset.currentPrice * asset.quantity,
     percentage: ((asset.currentPrice * asset.quantity) / totalValue) * 100,
   }));
-  // More realistic portfolio performance data with gradual investment additions
+
+  // More realistic portfolio performance data with fluctuations
   const getPerformanceData = (timeRange: string) => {
     const baseData = {
       '1Y': [
-        { date: 'Jul 2024', value: 8500, market: 8400, month: 'Jul' },   // Starting portfolio
-        { date: 'Aug 2024', value: 9200, market: 8900, month: 'Aug' },   // Added $500 + growth
-        { date: 'Sep 2024', value: 10100, market: 9600, month: 'Sep' },  // Added $700 + growth
-        { date: 'Oct 2024', value: 10800, market: 10100, month: 'Oct' }, // Added $500 + growth
-        { date: 'Nov 2024', value: 12200, market: 11300, month: 'Nov' }, // Added $1000 + good growth
-        { date: 'Dec 2024', value: 13100, market: 12000, month: 'Dec' }, // Added $600 + growth
-        { date: 'Jan 2025', value: 14200, market: 12800, month: 'Jan' }, // Added $800 + growth
-        { date: 'Feb 2025', value: 15500, market: 13900, month: 'Feb' }, // Added $1000 + growth
-        { date: 'Mar 2025', value: 16300, market: 14600, month: 'Mar' }, // Added $600 + growth
-        { date: 'Apr 2025', value: 17800, market: 15800, month: 'Apr' }, // Added $1200 + strong growth
-        { date: 'May 2025', value: 18600, market: 16400, month: 'May' }, // Added $500 + growth
-        { date: 'Jun 2025', value: totalValue || 19400, market: 17100, month: 'Jun' }, // Added $600 + growth
+        { date: 'Jul 2024', value: 15000, market: 14800, month: 'Jul' },
+        { date: 'Aug 2024', value: 14200, market: 14100, month: 'Aug' },
+        { date: 'Sep 2024', value: 15800, market: 15200, month: 'Sep' },
+        { date: 'Oct 2024', value: 14900, market: 14600, month: 'Oct' },
+        { date: 'Nov 2024', value: 16800, market: 15900, month: 'Nov' },
+        { date: 'Dec 2024', value: 17500, market: 16400, month: 'Dec' },
+        { date: 'Jan 2025', value: 16900, market: 16100, month: 'Jan' },
+        { date: 'Feb 2025', value: 18200, market: 17200, month: 'Feb' },
+        { date: 'Mar 2025', value: 17600, market: 16800, month: 'Mar' },
+        { date: 'Apr 2025', value: 19100, market: 17900, month: 'Apr' },
+        { date: 'May 2025', value: 18800, market: 17600, month: 'May' },
+        { date: 'Jun 2025', value: totalValue, market: 18200, month: 'Jun' },
       ],
       '5Y': [
-        { date: '2021', value: 2500, market: 2600, month: '2021' },   // Started with small amount
-        { date: '2022', value: 5800, market: 5200, month: '2022' },   // Regular contributions throughout year
-        { date: '2023', value: 9200, market: 8400, month: '2023' },   // Continued contributions + some growth
-        { date: '2024', value: 14500, market: 13100, month: '2024' }, // Increased contributions + growth
-        { date: '2025', value: totalValue || 19400, market: 17100, month: '2025' }, // Current value
+        { date: '2021', value: 8000, market: 8200, month: '2021' },
+        { date: '2022', value: 12000, market: 11500, month: '2022' },
+        { date: '2023', value: 14500, market: 13800, month: '2023' },
+        { date: '2024', value: 17000, market: 16200, month: '2024' },
+        { date: '2025', value: totalValue, market: 18200, month: '2025' },
       ],
       'YTD': [
-        { date: 'Jan', value: 14200, market: 12800, month: 'Jan' },  // Started year
-        { date: 'Feb', value: 15500, market: 13900, month: 'Feb' },  // Added $1000 + growth
-        { date: 'Mar', value: 16300, market: 14600, month: 'Mar' },  // Added $600 + growth
-        { date: 'Apr', value: 17800, market: 15800, month: 'Apr' },  // Added $1200 + strong growth
-        { date: 'May', value: 18600, market: 16400, month: 'May' },  // Added $500 + growth
-        { date: 'Jun', value: totalValue || 19400, market: 17100, month: 'Jun' }, // Added $600 + growth
+        { date: 'Jan', value: 16900, market: 16100, month: 'Jan' },
+        { date: 'Feb', value: 18200, market: 17200, month: 'Feb' },
+        { date: 'Mar', value: 17600, market: 16800, month: 'Mar' },
+        { date: 'Apr', value: 19100, market: 17900, month: 'Apr' },
+        { date: 'May', value: 18800, market: 17600, month: 'May' },
+        { date: 'Jun', value: totalValue, market: 18200, month: 'Jun' },
       ]
     };
     return baseData[timeRange as keyof typeof baseData] || baseData['1Y'];
@@ -92,14 +93,29 @@ const MyAssets = () => {
   ];
 
   // Colors for pie chart
-  const COLORS = ['#3b82f6', '#ef4444', '#10b981', '#f59e0b', '#8b5cf6', '#06b6d4', '#84cc16'];
-
-  return (
-    <div className="space-y-8">
-      <div className="mb-6">
-        <h2 className="text-3xl font-bold text-gray-900 mb-2">Portfolio Overview</h2>
-        <p className="text-gray-600">Comprehensive view of your investment performance</p>
+  const COLORS = ['#3b82f6', '#ef4444', '#10b981', '#f59e0b', '#8b5cf6', '#06b6d4', '#84cc16'];  return (
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-blue-50/30 to-purple-50/30">
+      {/* Header Section with Gradient Background */}
+      <div className="bg-gradient-to-r from-blue-900 via-purple-900 to-indigo-900 relative overflow-hidden">
+        <div className="absolute inset-0 bg-black/20"></div>
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+          <div className="flex items-center space-x-4">
+            <div className="bg-white/20 backdrop-blur-sm rounded-2xl p-4">
+              <PieChart className="h-12 w-12 text-white" />
+            </div>
+            <div>
+              <h1 className="text-4xl font-bold text-white mb-2">
+                Portfolio
+              </h1>
+              <p className="text-blue-100 text-lg">
+                Comprehensive view of your investment performance and asset allocation.
+              </p>
+            </div>
+          </div>
+        </div>
       </div>
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
 
       {/* Enhanced Portfolio Summary */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
@@ -146,7 +162,7 @@ const MyAssets = () => {
           <div className="flex items-center justify-between">
             <div>
               <h3 className="text-sm font-medium text-gray-600 mb-1">Est. Dividend</h3>
-              <p className="text-3xl font-bold text-green-600">$764</p>
+              <p className="text-3xl font-bold text-green-600">₺764</p>
               <p className="text-sm text-gray-500 mt-1">4.0% Yield</p>
             </div>
             <div className="p-3 bg-green-100 rounded-lg">
@@ -271,7 +287,7 @@ const MyAssets = () => {
                 <YAxis 
                   stroke="#9ca3af" 
                   fontSize={12}
-                  tickFormatter={(value) => `$${(value/1000).toFixed(0)}K`}
+                  tickFormatter={(value) => `₺${(value/1000).toFixed(0)}K`}
                   domain={['dataMin - 1000', 'dataMax + 1000']}
                 />
                 <Tooltip 
@@ -363,8 +379,8 @@ const MyAssets = () => {
               <BarChart data={dividendData}>
                 <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
                 <XAxis dataKey="month" stroke="#9ca3af" />
-                <YAxis stroke="#9ca3af" tickFormatter={(value) => `$${value}`} />
-                <Tooltip formatter={(value: any) => [`$${value}`, 'Dividend']} />
+                <YAxis stroke="#9ca3af" tickFormatter={(value) => `₺${value}`} />
+                <Tooltip formatter={(value: any) => [`₺${value}`, 'Dividend']} />
                 <Bar dataKey="amount" fill="#10b981" radius={[4, 4, 0, 0]} />
               </BarChart>
             </ResponsiveContainer>
@@ -486,8 +502,7 @@ const MyAssets = () => {
               >
                 <Plus className="h-4 w-4 mr-2" />
                 Add Transaction
-              </Link>
-            </div>
+              </Link>            </div>
           </div>
         )}
       </div>
@@ -746,7 +761,7 @@ const AddTransaction = () => {
                   </label>
                   <div className="relative">
                     <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                      <span className="text-gray-500 sm:text-sm">$</span>
+                      <span className="text-gray-500 sm:text-sm">₺</span>
                     </div>
                     <input
                       type="number"
@@ -760,7 +775,7 @@ const AddTransaction = () => {
                         },
                         max: {
                           value: 1000000,
-                          message: 'Price cannot exceed $1,000,000'
+                          message: 'Price cannot exceed ₺1,000,000'
                         }
                       })}
                       className={`w-full pl-8 pr-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors ${
@@ -1020,14 +1035,28 @@ const PortfolioPage = () => {
   ];
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-      {/* Header */}
-      <div className="mb-8">
-        <h1 className="text-3xl font-bold text-gray-900">Portfolio Management</h1>
-        <p className="mt-2 text-gray-600">
-          Manage your investments, track performance, and add new transactions.
-        </p>
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-blue-50/30 to-purple-50/30">
+      {/* Header Section with Gradient Background */}
+      <div className="bg-gradient-to-r from-blue-900 via-purple-900 to-indigo-900 relative overflow-hidden">
+        <div className="absolute inset-0 bg-black/20"></div>
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+          <div className="flex items-center space-x-4">
+            <div className="bg-white/20 backdrop-blur-sm rounded-2xl p-4">
+              <PieChart className="h-12 w-12 text-white" />
+            </div>
+            <div>
+              <h1 className="text-4xl font-bold text-white mb-2">
+                Portfolio Management
+              </h1>
+              <p className="text-blue-100 text-lg">
+                Manage your investments, track performance, and add new transactions.
+              </p>
+            </div>
+          </div>
+        </div>
       </div>
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
 
       {/* Sub Navigation */}
       <div className="mb-8">
@@ -1059,9 +1088,9 @@ const PortfolioPage = () => {
       <Routes>
         <Route index element={<MyAssets />} />
         <Route path="my-assets" element={<MyAssets />} />
-        <Route path="add-transaction" element={<AddTransaction />} />
-        <Route path="transaction-history" element={<TransactionHistory />} />
+        <Route path="add-transaction" element={<AddTransaction />} />        <Route path="transaction-history" element={<TransactionHistory />} />
       </Routes>
+      </div>
     </div>
   );
 };

@@ -1,7 +1,7 @@
 function App() {
   return (
     <div style={{ padding: '20px', fontFamily: 'Arial' }}>
-      <h1 style={{ color: '#2563eb' }}>🎉 Finance Hub is Working!</h1>
+      <h1 style={{ color: '#2563eb' }}>🎉 Finance is Working!</h1>
       <p>If you can see this page, the React application is running correctly.</p>
       <div style={{ 
         background: 'white', 

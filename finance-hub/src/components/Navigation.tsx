@@ -158,10 +158,9 @@ const Navigation = () => {
                 <div className="relative">
                   <TrendingUp className="h-9 w-9 text-blue-400 group-hover:scale-110 transition-transform duration-200" />
                   <div className="absolute -top-1 -right-1 w-3 h-3 bg-gradient-to-r from-blue-400 to-purple-400 rounded-full animate-pulse"></div>
-                </div>
-                <div>
+                </div>                <div>
                   <span className="text-2xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
-                    Finance Hub
+                    Finance
                   </span>
                   <div className="text-xs text-gray-300 font-medium">Professional Portfolio Manager</div>
                 </div>

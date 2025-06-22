@@ -88,34 +88,94 @@ const DiscoverPage = () => {
                   </div>
                 ))}
               </div>
-            </div>
-
-            {/* Market Heat Map */}
+            </div>            {/* Market Heat Map */}
             <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
               <h3 className="text-xl font-semibold text-gray-900 mb-6">📊 Market Heat Map</h3>
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+              <div className="grid grid-cols-6 gap-2 h-96">
                 {[
-                  { name: 'AAPL', change: '+2.34%', size: 'large' },
-                  { name: 'TSLA', change: '+5.67%', size: 'medium' },
-                  { name: 'NVDA', change: '+3.21%', size: 'large' },
-                  { name: 'MSFT', change: '+1.45%', size: 'medium' },
-                  { name: 'GOOGL', change: '+2.89%', size: 'small' },
-                  { name: 'AMZN', change: '-1.23%', size: 'medium' },
-                  { name: 'META', change: '+4.12%', size: 'small' },
-                  { name: 'BRK.A', change: '+0.89%', size: 'small' },
+                  // Large Cap Stocks (biggest market caps take more space)
+                  { name: 'AAPL', change: '+2.34%', marketCap: 2800, size: 'xl' }, // Apple
+                  { name: 'MSFT', change: '+1.45%', marketCap: 2810, size: 'xl' }, // Microsoft
+                  { name: 'GOOGL', change: '+2.89%', marketCap: 1780, size: 'large' }, // Alphabet
+                  { name: 'AMZN', change: '-1.23%', marketCap: 1410, size: 'large' }, // Amazon
+                  { name: 'NVDA', change: '+3.21%', marketCap: 1040, size: 'large' }, // NVIDIA
+                  { name: 'TSLA', change: '+5.67%', marketCap: 789, size: 'medium' }, // Tesla
+                  { name: 'META', change: '+4.12%', marketCap: 756, size: 'medium' }, // Meta
+                  { name: 'BRK.A', change: '+0.89%', marketCap: 741, size: 'medium' }, // Berkshire
+                  
+                  // Mid Cap Stocks
+                  { name: 'AVGO', change: '+1.87%', marketCap: 615, size: 'medium' }, // Broadcom
+                  { name: 'JPM', change: '-0.45%', marketCap: 485, size: 'small' }, // JPMorgan
+                  { name: 'JNJ', change: '+0.67%', marketCap: 442, size: 'small' }, // Johnson & Johnson
+                  { name: 'V', change: '+2.11%', marketCap: 521, size: 'small' }, // Visa
+                  { name: 'WMT', change: '+1.33%', marketCap: 478, size: 'small' }, // Walmart
+                  { name: 'UNH', change: '+0.98%', marketCap: 512, size: 'small' }, // UnitedHealth
+                  { name: 'MA', change: '+1.76%', marketCap: 378, size: 'small' }, // Mastercard
+                  { name: 'PG', change: '+0.54%', marketCap: 365, size: 'small' }, // Procter & Gamble
+                  { name: 'HD', change: '+2.45%', marketCap: 348, size: 'small' }, // Home Depot
+                  { name: 'XOM', change: '+3.21%', marketCap: 398, size: 'small' }, // Exxon Mobil
+                  { name: 'CVX', change: '+2.87%', marketCap: 289, size: 'small' }, // Chevron
+                  { name: 'PFE', change: '-1.12%', marketCap: 156, size: 'xs' }, // Pfizer
+                  
+                  // Smaller Cap Stocks
+                  { name: 'ADBE', change: '+1.89%', marketCap: 234, size: 'xs' }, // Adobe
+                  { name: 'NFLX', change: '+4.56%', marketCap: 189, size: 'xs' }, // Netflix
+                  { name: 'CRM', change: '+2.34%', marketCap: 178, size: 'xs' }, // Salesforce
+                  { name: 'ORCL', change: '+1.67%', marketCap: 267, size: 'xs' }, // Oracle
+                  { name: 'CSCO', change: '+0.89%', marketCap: 198, size: 'xs' }, // Cisco
+                  { name: 'INTC', change: '-2.34%', marketCap: 145, size: 'xs' }, // Intel
+                  { name: 'AMD', change: '+6.78%', marketCap: 223, size: 'xs' }, // AMD
+                  { name: 'QCOM', change: '+3.45%', marketCap: 187, size: 'xs' }, // Qualcomm
+                  { name: 'IBM', change: '+1.23%', marketCap: 134, size: 'xs' }, // IBM
+                  { name: 'NOW', change: '+4.21%', marketCap: 145, size: 'xs' }, // ServiceNow
+                  { name: 'COP', change: '+2.67%', marketCap: 156, size: 'xs' }, // ConocoPhillips
+                  { name: 'NEE', change: '+1.45%', marketCap: 167, size: 'xs' }, // NextEra Energy
+                  { name: 'RTX', change: '+0.87%', marketCap: 134, size: 'xs' }, // Raytheon
+                  { name: 'UPS', change: '-0.56%', marketCap: 123, size: 'xs' }, // UPS
+                  { name: 'LOW', change: '+1.98%', marketCap: 145, size: 'xs' }, // Lowe's
+                  { name: 'CAT', change: '+2.87%', marketCap: 156, size: 'xs' }, // Caterpillar
+                  { name: 'GS', change: '+1.34%', marketCap: 112, size: 'xs' }, // Goldman Sachs
+                  { name: 'BA', change: '-1.45%', marketCap: 98, size: 'xs' }, // Boeing
+                  { name: 'AMGN', change: '+0.76%', marketCap: 134, size: 'xs' }, // Amgen
+                  { name: 'SBUX', change: '+2.11%', marketCap: 109, size: 'xs' }, // Starbucks
                 ].map((item) => (
                   <div 
                     key={item.name}
                     className={`
-                      p-4 rounded-lg text-white font-semibold text-center transition-all duration-200 hover:scale-105 cursor-pointer
+                      p-2 rounded-lg text-white font-semibold text-center transition-all duration-200 hover:scale-105 cursor-pointer flex flex-col justify-center items-center
                       ${item.change.startsWith('+') ? 'bg-green-500 hover:bg-green-600' : 'bg-red-500 hover:bg-red-600'}
-                      ${item.size === 'large' ? 'col-span-2 row-span-2' : item.size === 'medium' ? 'col-span-1 row-span-1' : ''}
+                      ${
+                        item.size === 'xl' ? 'col-span-2 row-span-3 text-lg' :
+                        item.size === 'large' ? 'col-span-2 row-span-2 text-base' :
+                        item.size === 'medium' ? 'col-span-1 row-span-2 text-sm' :
+                        item.size === 'small' ? 'col-span-1 row-span-1 text-sm' :
+                        'col-span-1 row-span-1 text-xs'
+                      }
                     `}
+                    title={`${item.name} - Market Cap: $${item.marketCap}B`}
                   >
-                    <div className="text-lg font-bold">{item.name}</div>
-                    <div className="text-sm opacity-90">{item.change}</div>
+                    <div className="font-bold">{item.name}</div>
+                    <div className="opacity-90 text-xs">{item.change}</div>
+                    {(item.size === 'xl' || item.size === 'large') && (
+                      <div className="text-xs opacity-75 mt-1">${item.marketCap}B</div>
+                    )}
                   </div>
                 ))}
+              </div>
+              <div className="mt-4 flex justify-between items-center text-sm text-gray-600">
+                <div className="flex items-center space-x-4">
+                  <div className="flex items-center space-x-2">
+                    <div className="w-3 h-3 bg-green-500 rounded"></div>
+                    <span>Positive</span>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <div className="w-3 h-3 bg-red-500 rounded"></div>
+                    <span>Negative</span>
+                  </div>
+                </div>
+                <div className="text-xs text-gray-500">
+                  Size represents market capitalization
+                </div>
               </div>
             </div>
           </div>
