@@ -1,51 +1,50 @@
-# Finance - Kişisel Portföy Yöneticisi
+# Finance Hub & Kişisel Portföy Yöneticisi
 
-Kişisel yatırım portföylerini yönetmek, finansal haberleri takip etmek, finansal araçları kullanmak ve finans topluluğu ile etkileşim kurmak için kapsamlı, etkileşimli, veri odaklı bir web uygulaması.
+Kişisel yatırım portföylerini yönetmek, finansal haberleri takip etmek, finansal araçları kullanmak ve finans topluluğu ile etkileşim kurmak için kapsamlı, etkileşimli ve veri odaklı bir web uygulaması.
 
 ## 🚀 Özellikler
 
 ### 📈 Portföy Yönetimi
 - **Varlıklarım**: Gerçek zamanlı hesaplamalarla yatırım portföyünüzü görüntüleyin ve takip edin
-- **İşlem Ekle**: Form doğrulaması ile alım/satım işlemlerini kaydedin
+- **İşlem Ekle**: Form doğrulaması ile alış/satış işlemlerini kaydedin
 - **İşlem Geçmişi**: Tüm portföy işlemlerinin tam geçmişi
-- **Portföy Analizi**: Toplam değer, maliyet esası ve kazanç/kayıp hesaplamaları
+- **Portföy Analitiği**: Toplam değer, maliyet esası ve kar/zarar hesaplamaları
 
 ### 📰 Finansal Haberler
-- **Son Haberler**: Filtreleme ve arama ile seçilmiş finansal haberleri inceleyin
+- **Son Haberler**: Filtreleme ve arama ile özenle seçilmiş finansal haberleri görüntüleyin
 - **Kategori Sayfaları**: Piyasa, Teknoloji, Kripto ve Ekonomi kategorilerine göre düzenlenmiş haberler
-- **Arama Fonksiyonu**: Belirli makaleleri ve konuları bulun
+- **Arama İşlevi**: Belirli makaleleri ve konuları bulun
 
 ### 🛠️ Finansal Araçlar
-- **Bileşik Faiz Hesaplayıcısı**: Zaman içinde yatırım büyümesini hesaplayın
-- **Emeklilik Planlayıcısı**: Emeklilik hedeflerinizi planlayın
-- **Portföy Analizörü**: Detaylı portföy analizi araçları
+- **Bileşik Faiz Hesaplayıcısı**: Zamanla yatırım büyümesini hesaplayın
+- **Daha Fazla Araç**: Ek finansal hesaplayıcılar için genişletilebilir çerçeve
 
 ### 👥 Topluluk
-- **Forum Kategorileri**: Hisse senetleri, kripto, gayrimenkul ve genel finans tartışmaları
+- **Forum Kategorileri**: Hisse senetleri, kripto, gayrimenkul ve genel finans konularını tartışın
 - **Tartışma Konuları**: Finansal tartışmalara göz atın ve katılın
 - **Kullanıcı Gönderileri**: Topluluk odaklı içerik ve görüşler
 
 ### 🎨 Kullanıcı Deneyimi
-- **Responsive Tasarım**: Tüm cihaz boyutlarında tam responsive
+- **Duyarlı Tasarım**: Tüm cihaz boyutlarında tam duyarlı
 - **Modern UI**: Tailwind CSS ile oluşturulmuş temiz, profesyonel arayüz
-- **Hızlı Navigasyon**: İç içe routing ve breadcrumb'lar ile React Router
-- **Tip Güvenliği**: Uygulama genelinde tam TypeScript entegrasyonu
+- **Hızlı Navigasyon**: İç içe yönlendirme ve breadcrumb'lar ile React Router
+- **Tip Güvenliği**: Uygulama boyunca tam TypeScript entegrasyonu
 
 ## 🛠️ Teknoloji Yığını
 
 - **Frontend Framework**: TypeScript ile React 18
-- **Build Aracı**: Hızlı geliştirme ve optimize edilmiş build'ler için Vite
-- **Routing**: İç içe route'lar ile React Router v6
-- **State Yönetimi**: Global state yönetimi için Zustand
+- **Build Aracı**: Hızlı geliştirme ve optimize edilmiş derlemeler için Vite
+- **Yönlendirme**: İç içe rotalar ile React Router v6
+- **Durum Yönetimi**: Global durum yönetimi için Zustand
 - **Formlar**: Doğrulama ile React Hook Form
-- **Styling**: Özel componentler ile Tailwind CSS
+- **Stil**: Özel bileşenler ile Tailwind CSS
 - **İkonlar**: Modern ikonografi için Lucide React
-- **HTTP Client**: API çağrıları için Axios
+- **HTTP İstemcisi**: API çağrıları için Axios
 - **Geliştirme**: ESLint, TypeScript strict mode
 
 ## 📦 Kurulum
 
-1. **Repository'yi klonlayın**:
+1. **Depoyu klonlayın**:
    ```bash
    git clone <repository-url>
    cd finance-hub
@@ -67,148 +66,145 @@ Kişisel yatırım portföylerini yönetmek, finansal haberleri takip etmek, fin
 
 ```
 src/
-├── components/          # Yeniden kullanılabilir UI componentleri
-│   ├── Layout.tsx      # Ana uygulama layout wrapper'ı
-│   └── Navigation.tsx  # Navigasyon componenti
+├── components/          # Yeniden kullanılabilir UI bileşenleri
+│   ├── Layout.tsx      # Ana uygulama layout sarıcısı
+│   └── Navigation.tsx  # Navigasyon bileşeni
 ├── pages/              # Ana uygulama sayfaları
-│   ├── Dashboard.tsx   # Ana dashboard
+│   ├── Dashboard.tsx   # Ana panel
 │   ├── PortfolioPage.tsx # Portföy yönetimi
 │   ├── NewsPage.tsx    # Finansal haberler
 │   ├── ToolsPage.tsx   # Finansal hesaplayıcılar
-│   ├── DiscoverPage.tsx # Keşfet sayfası
-│   ├── CommunityPage.tsx # Topluluk forumu
-│   └── tools/          # Alt araç sayfaları
-│       ├── PortfolioAnalyzer.tsx
-│       └── RetirementPlanner.tsx
-├── store/              # Zustand state yönetimi
-│   └── portfolioStore.ts # Portföy state ve actions
+│   └── CommunityPage.tsx # Topluluk forumu
+├── store/              # Zustand durum yönetimi
+│   └── portfolioStore.ts # Portföy durumu ve eylemleri
 ├── services/           # API ve harici servisler
-│   └── apiService.ts   # HTTP client ve API çağrıları
-├── types/              # TypeScript tip tanımlamaları
+│   └── apiService.ts   # HTTP istemcisi ve API çağrıları
+├── types/              # TypeScript tip tanımları
 │   └── index.ts        # Tüm uygulama tipleri
 ├── data/               # Mock veri ve sabitler
 │   └── mockData.ts     # Geliştirme için örnek veri
-└── utils/              # Yardımcı fonksiyonlar
-    └── helpers.ts      # Formatlama ve hesaplama yardımcıları
+├── utils/              # Yardımcı fonksiyonlar
+│   └── helpers.ts      # Formatlama ve hesaplama yardımcıları
+└── hooks/              # Özel React hook'ları (genişletilebilir)
 ```
 
-## 🎯 Temel Özellik Uygulamaları
+## 🎯 Anahtar Özellik Uygulamaları
 
-### State Yönetimi
-- Portfolio verileri için TypeScript ile Zustand store
-- Varlık ve işlem ekleme/çıkarma için actions
+### Durum Yönetimi
+- Portföy verileri için TypeScript ile Zustand store
+- Varlık ve işlem ekleme/kaldırma eylemleri
 - Portföy analitiği için hesaplanmış değerler
 
 ### Form İşleme
 - Doğrulama ile React Hook Form entegrasyonu
-- Type-safe form submissions
-- Error handling and user feedback
+- Tip güvenli form gönderileri
+- Hata işleme ve kullanıcı geri bildirimi
 
-### Responsive Design
-- Mobile-first approach with Tailwind CSS
-- Responsive navigation and layouts
-- Optimized for all screen sizes
+### Duyarlı Tasarım
+- Tailwind CSS ile mobil öncelikli yaklaşım
+- Duyarlı navigasyon ve layout'lar
+- Tüm ekran boyutları için optimize edilmiş
 
-### Type Safety
-- Comprehensive TypeScript types for all data models
-- Strict type checking throughout the application
-- IntelliSense support for improved developer experience
+### Tip Güvenliği
+- Tüm veri modelleri için kapsamlı TypeScript tipleri
+- Uygulama boyunca sıkı tip kontrolü
+- Gelişmiş geliştirici deneyimi için IntelliSense desteği
 
-## 🚦 Available Scripts
+## 🚦 Kullanılabilir Komutlar
 
-- `npm run dev` - Start development server
-- `npm run build` - Build for production
-- `npm run preview` - Preview production build
-- `npm run lint` - Run ESLint
+- `npm run dev` - Geliştirme sunucusunu başlat
+- `npm run build` - Üretim için derle
+- `npm run preview` - Üretim derlemesini önizle
+- `npm run lint` - ESLint'i çalıştır
 
-## 🧪 Testing the Application
+## 🧪 Uygulamayı Test Etme
 
-The application comes pre-loaded with sample data for demonstration:
+Uygulama, gösteri için önceden yüklenmiş örnek verilerle gelir:
 
-### Portfolio Management
-1. Navigate to **Portfolio → My Assets** to view sample portfolio
-2. Go to **Portfolio → Add Transaction** to test the form:
-   - Try adding a new stock (e.g., Symbol: "TSLA", Name: "Tesla Inc.")
-   - Test form validation by leaving fields empty
-   - Submit a transaction and see it in Transaction History
-3. View **Portfolio → Transaction History** for all transactions
+### Portföy Yönetimi
+1. Örnek portföyü görüntülemek için **Portföy → Varlıklarım**'a gidin
+2. Formu test etmek için **Portföy → İşlem Ekle**'ye gidin:
+   - Yeni bir hisse senedi eklemeyi deneyin (örn. Sembol: "TSLA", İsim: "Tesla Inc.")
+   - Alanları boş bırakarak form doğrulamasını test edin
+   - Bir işlem gönderin ve İşlem Geçmişi'nde görün
+3. Tüm işlemler için **Portföy → İşlem Geçmişi**'ni görüntüleyin
 
-### News & Information
-1. Browse **News** to see sample financial articles
-2. Use search and category filters
-3. Test responsive design on different screen sizes
+### Haberler & Bilgiler
+1. Örnek finansal makaleleri görmek için **Haberler**'e göz atın
+2. Arama ve kategori filtrelerini kullanın
+3. Farklı ekran boyutlarında duyarlı tasarımı test edin
 
-### Financial Tools
-1. Visit **Tools → Compound Interest Calculator**
-2. Enter sample values to see calculations
-3. View detailed yearly breakdown
+### Finansal Araçlar
+1. **Araçlar → Bileşik Faiz Hesaplayıcısı**'nı ziyaret edin
+2. Hesaplamaları görmek için örnek değerler girin
+3. Detaylı yıllık dökümü görüntüleyin
 
-### Community Features
-1. Explore **Community** to see forum structure
-2. Browse categories and discussion threads
-3. Responsive navigation on mobile devices
+### Topluluk Özellikleri
+1. Forum yapısını görmek için **Topluluk**'u keşfedin
+2. Kategorilere ve tartışma konularına göz atın
+3. Mobil cihazlarda duyarlı navigasyon
 
-## ✅ Project Completion Status
+## ✅ Proje Tamamlanma Durumu
 
-- ✅ **Complete React + TypeScript setup** with Vite
-- ✅ **4+ main sections** with sub-pages (Portfolio, News, Tools, Community)
-- ✅ **React Router** with nested routing
-- ✅ **Zustand state management** with TypeScript
-- ✅ **React Hook Form** with validation
-- ✅ **Tailwind CSS** responsive design
-- ✅ **Mock data** for realistic demo
-- ✅ **Type safety** throughout application
-- ✅ **Reusable components** and utilities
-- ✅ **Git version control** with meaningful commits
-- ✅ **Comprehensive documentation**
+- ✅ **Vite ile tamamlanmış React + TypeScript kurulumu**
+- ✅ **Alt sayfalar ile 4+ ana bölüm** (Portföy, Haberler, Araçlar, Topluluk)
+- ✅ **İç içe yönlendirme ile React Router**
+- ✅ **TypeScript ile Zustand durum yönetimi**
+- ✅ **Doğrulama ile React Hook Form**
+- ✅ **Tailwind CSS duyarlı tasarım**
+- ✅ **Gerçekçi demo için mock veri**
+- ✅ **Uygulama boyunca tip güvenliği**
+- ✅ **Yeniden kullanılabilir bileşenler** ve yardımcılar
+- ✅ **Anlamlı commit'lerle Git versiyon kontrolü**
+- ✅ **Kapsamlı dokümantasyon**
 
-## 🏆 Technical Achievements
+## 🏆 Teknik Başarılar
 
-### Advanced React Patterns
-- **Custom Hooks**: Zustand store integration
-- **Component Composition**: Reusable layout and navigation components  
-- **Form Management**: React Hook Form with comprehensive validation
-- **Error Boundaries**: Graceful error handling throughout the app
+### Gelişmiş React Kalıpları
+- **Özel Hook'lar**: Zustand store entegrasyonu
+- **Bileşen Kompozisyonu**: Yeniden kullanılabilir layout ve navigasyon bileşenleri  
+- **Form Yönetimi**: Kapsamlı doğrulama ile React Hook Form
+- **Hata Sınırları**: Uygulama boyunca zarif hata işleme
 
-### TypeScript Excellence
-- **Strict Type Safety**: Zero `any` types, comprehensive interfaces
-- **Type-Only Imports**: Optimized bundle size
-- **Generic Types**: Reusable utility functions with proper typing
-- **Advanced Types**: Union types, conditional types, and mapped types
+### TypeScript Mükemmelliği
+- **Sıkı Tip Güvenliği**: Sıfır `any` tipi, kapsamlı arayüzler
+- **Sadece Tip İmportları**: Optimize edilmiş paket boyutu
+- **Jenerik Tipler**: Doğru tipleme ile yeniden kullanılabilir yardımcı fonksiyonlar
+- **Gelişmiş Tipler**: Union tipler, koşullu tipler ve eşlenmiş tipler
 
-### Performance Optimizations
-- **Code Splitting**: Route-based lazy loading ready
-- **State Management**: Efficient Zustand store with persistence
-- **Optimized Builds**: Vite for fast development and production builds
-- **Tree Shaking**: Minimal bundle size with unused code elimination
+### Performans Optimizasyonları
+- **Kod Bölme**: Rota tabanlı lazy loading hazır
+- **Durum Yönetimi**: Persistence ile verimli Zustand store
+- **Optimize Edilmiş Derlemeler**: Hızlı geliştirme ve üretim derlemeleri için Vite
+- **Tree Shaking**: Kullanılmayan kod eliminasyonu ile minimal paket boyutu
 
-### Professional Development Practices
-- **Clean Architecture**: Separation of concerns with organized folder structure
-- **Reusable Code**: DRY principles with utility functions and components
-- **Responsive Design**: Mobile-first approach with Tailwind CSS
-- **Version Control**: Semantic commit messages and clean Git history
+### Profesyonel Geliştirme Uygulamaları
+- **Temiz Mimari**: Organize edilmiş klasör yapısı ile endişelerin ayrılması
+- **Yeniden Kullanılabilir Kod**: Yardımcı fonksiyonlar ve bileşenlerle DRY prensibi
+- **Duyarlı Tasarım**: Tailwind CSS ile mobil öncelikli yaklaşım
+- **Versiyon Kontrolü**: Semantik commit mesajları ve temiz Git geçmişi
 
-## 🔮 Future Enhancements
+## 🔮 Gelecek İyileştirmeler
 
-- Real-time stock price integration
-- User authentication and persistence
-- Advanced portfolio analytics and charts
-- Social features for community engagement
-- Mobile app development
-- Integration with real financial APIs
+- Gerçek zamanlı hisse senedi fiyat entegrasyonu
+- Kullanıcı kimlik doğrulaması ve persistence
+- Gelişmiş portföy analitiği ve grafikler
+- Topluluk etkileşimi için sosyal özellikler
+- Mobil uygulama geliştirme
+- Gerçek finansal API'ler ile entegrasyon
 
-## 📄 License
+## 📄 Lisans
 
-This project is part of a software engineering course and is for educational purposes.
+Bu proje bir yazılım mühendisliği dersinin parçasıdır ve eğitim amaçlıdır.
 
-## 👨‍💻 Development
+## 👨‍💻 Geliştirme
 
-Built with modern web development best practices:
-- Component-based architecture
-- Separation of concerns
-- Reusable utilities and hooks
-- Comprehensive type safety
-- Clean code principles
+Modern web geliştirme en iyi uygulamaları ile oluşturulmuştur:
+- Bileşen tabanlı mimari
+- Endişelerin ayrılması
+- Yeniden kullanılabilir yardımcılar ve hook'lar
+- Kapsamlı tip güvenliği
+- Temiz kod prensipleri
     ...reactDom.configs.recommended.rules,
   },
 })
