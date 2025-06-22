@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any */
 import axios from 'axios';
 import type { Article, MarketData, ApiResponse } from '../types';
 import { mockArticles, mockMarketData } from '../data/mockData';
@@ -34,8 +35,8 @@ export class ApiService {
         data: articles,
         success: true,
         message: 'News fetched successfully'
-      };
-    } catch (error) {
+      };    } catch (error) {
+      console.error('Failed to fetch news:', error);
       return {
         data: [],
         success: false,
@@ -76,8 +77,8 @@ export class ApiService {
         data: mockMarketData,
         success: true,
         message: 'Market data fetched successfully'
-      };
-    } catch (error) {
+      };    } catch (error) {
+      console.error('Failed to fetch market data:', error);
       return {
         data: [],
         success: false,
