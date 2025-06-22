@@ -9,7 +9,6 @@ import {
   Menu, 
   X,
   TrendingUp,
-  Search,
   User,
   LogIn,
   Settings,
@@ -24,11 +23,10 @@ const Navigation = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [user, setUser] = useState({ name: 'John Doe', email: 'john@example.com' });
   const location = useLocation();
-
   const navigationItems = [
     { path: '/', label: 'Dashboard', icon: Home },
     { path: '/portfolio', label: 'Portfolio', icon: BarChart3 },
-    { path: '/discover', label: 'Discover', icon: Search },
+    { path: '/discover', label: 'Discover', icon: TrendingUp },
     { path: '/news', label: 'News', icon: Newspaper },
     { path: '/tools', label: 'Tools', icon: Calculator },
     { path: '/community', label: 'Community', icon: Users },
@@ -147,34 +145,30 @@ const Navigation = () => {
             >
               {isRegistering ? 'Already have an account? Sign in' : "Don't have an account? Sign up"}
             </button>
-          </div>
-        </div>
+          </div>        </div>
       </div>
     );
   };
   return (
     <>
-      <nav className="bg-white shadow-lg border-b border-gray-200 sticky top-0 z-50 backdrop-blur-md bg-white/95">
+      <nav className="bg-gradient-to-r from-gray-900 via-blue-900 to-purple-900 shadow-lg border-b border-gray-700/50 sticky top-0 z-50 backdrop-blur-md">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-18">            {/* Logo */}
-            <div className="flex items-center">
+          <div className="flex justify-between items-center h-20">{/* Logo */}            <div className="flex items-center">
               <Link to="/" className="flex items-center space-x-3 hover:opacity-80 transition-all duration-200 group">
                 <div className="relative">
-                  <TrendingUp className="h-9 w-9 text-blue-600 group-hover:scale-110 transition-transform duration-200" />
-                  <div className="absolute -top-1 -right-1 w-3 h-3 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full animate-pulse"></div>
+                  <TrendingUp className="h-9 w-9 text-blue-400 group-hover:scale-110 transition-transform duration-200" />
+                  <div className="absolute -top-1 -right-1 w-3 h-3 bg-gradient-to-r from-blue-400 to-purple-400 rounded-full animate-pulse"></div>
                 </div>
                 <div>
-                  <span className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+                  <span className="text-2xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
                     Finance Hub
                   </span>
-                  <div className="text-xs text-gray-500 font-medium">Professional Portfolio Manager</div>
+                  <div className="text-xs text-gray-300 font-medium">Professional Portfolio Manager</div>
                 </div>
               </Link>
-            </div>
-
-            {/* Centered Desktop Navigation */}
+            </div>            {/* Centered Desktop Navigation */}
             <div className="hidden md:flex items-center justify-center flex-1 mx-8">
-              <div className="flex items-center space-x-1 bg-gray-50 rounded-full p-1">
+              <div className="flex items-center space-x-1 bg-white/10 rounded-full p-1 backdrop-blur-md">
                 {navigationItems.map((item) => {
                   const Icon = item.icon;
                   return (
@@ -183,14 +177,14 @@ const Navigation = () => {
                       to={item.path}
                       className={`group relative flex items-center space-x-2 px-4 py-2.5 rounded-full text-sm font-semibold transition-all duration-200 ${
                         isActive(item.path)
-                          ? 'text-white bg-gradient-to-r from-blue-600 to-purple-600 shadow-lg shadow-blue-500/25'
-                          : 'text-gray-700 hover:text-blue-600 hover:bg-white hover:shadow-md'
+                          ? 'text-white bg-gradient-to-r from-blue-500 to-purple-500 shadow-lg shadow-blue-500/25'
+                          : 'text-gray-300 hover:text-white hover:bg-white/20 hover:shadow-md'
                       }`}
                     >
                       <Icon className={`h-4 w-4 transition-all duration-200 ${
                         isActive(item.path) 
                           ? 'text-white' 
-                          : 'text-gray-600 group-hover:text-blue-600 group-hover:scale-110'
+                          : 'text-gray-300 group-hover:text-white group-hover:scale-110'
                       }`} />
                       <span className="font-medium">{item.label}</span>
                     </Link>
@@ -202,19 +196,18 @@ const Navigation = () => {
             {/* Right side - User menu or Login */}
             <div className="hidden md:flex items-center space-x-4">
               {isLoggedIn ? (
-                <div className="relative">
-                  <button
+                <div className="relative">                  <button
                     onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
-                    className="flex items-center space-x-3 px-4 py-2.5 rounded-lg hover:bg-gray-50 transition-all duration-200 border border-gray-200 hover:border-gray-300"
+                    className="flex items-center space-x-3 px-4 py-2.5 rounded-lg hover:bg-white/20 transition-all duration-200 border border-white/20 hover:border-white/30"
                   >
-                    <div className="w-9 h-9 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full flex items-center justify-center shadow-lg">
+                    <div className="w-9 h-9 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full flex items-center justify-center shadow-lg">
                       <User className="w-5 h-5 text-white" />
                     </div>
                     <div className="text-left">
-                      <div className="text-sm font-semibold text-gray-900">{user.name}</div>
-                      <div className="text-xs text-gray-500">{user.email}</div>
+                      <div className="text-sm font-semibold text-white">{user.name}</div>
+                      <div className="text-xs text-gray-300">{user.email}</div>
                     </div>
-                    <ChevronDown className={`w-4 h-4 text-gray-400 transition-transform duration-200 ${
+                    <ChevronDown className={`w-4 h-4 text-gray-300 transition-transform duration-200 ${
                       isUserMenuOpen ? 'rotate-180' : ''
                     }`} />
                   </button>
@@ -254,10 +247,9 @@ const Navigation = () => {
                       </div>
                     </div>
                   )}
-                </div>              ) : (
-                <button
+                </div>              ) : (                <button
                   onClick={() => setIsLoginModalOpen(true)}
-                  className="flex items-center space-x-2 px-6 py-2.5 text-sm font-semibold bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-lg hover:from-blue-700 hover:to-purple-700 transition-all duration-200 shadow-lg shadow-blue-500/25 hover:shadow-blue-500/40 transform hover:scale-105"
+                  className="flex items-center space-x-2 px-6 py-2.5 text-sm font-semibold bg-gradient-to-r from-blue-500 to-purple-500 text-white rounded-lg hover:from-blue-600 hover:to-purple-600 transition-all duration-200 shadow-lg shadow-blue-500/25 hover:shadow-blue-500/40 transform hover:scale-105"
                 >
                   <LogIn className="w-4 h-4" />
                   <span>Sign In</span>
@@ -265,11 +257,10 @@ const Navigation = () => {
               )}
             </div>
 
-            {/* Mobile menu button */}
-            <div className="md:hidden flex items-center">
+            {/* Mobile menu button */}            <div className="md:hidden flex items-center">
               <button
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
-                className="text-gray-600 hover:text-gray-900 focus:outline-none focus:text-gray-900 p-2"
+                className="text-gray-300 hover:text-white focus:outline-none focus:text-white p-2"
               >
                 {isMenuOpen ? (
                   <X className="h-6 w-6" />
@@ -278,23 +269,20 @@ const Navigation = () => {
                 )}
               </button>
             </div>
-          </div>
-
-          {/* Mobile Navigation Menu */}
+          </div>          {/* Mobile Navigation Menu */}
           {isMenuOpen && (
             <div className="md:hidden">
-              <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-gray-50 border-t border-gray-200">
+              <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-gradient-to-r from-gray-800 via-blue-800 to-purple-800 border-t border-gray-600/50 backdrop-blur-md">
                 {navigationItems.map((item) => {
                   const Icon = item.icon;
                   return (
                     <Link
                       key={item.path}
                       to={item.path}
-                      onClick={() => setIsMenuOpen(false)}
-                      className={`flex items-center space-x-2 px-3 py-2 rounded-md text-base font-medium transition-colors ${
+                      onClick={() => setIsMenuOpen(false)}                      className={`flex items-center space-x-2 px-3 py-2 rounded-md text-base font-medium transition-colors ${
                         isActive(item.path)
-                          ? 'text-blue-600 bg-blue-100'
-                          : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'
+                          ? 'text-white bg-blue-600/30'
+                          : 'text-gray-300 hover:text-white hover:bg-white/10'
                       }`}
                     >
                       <Icon className="h-5 w-5" />

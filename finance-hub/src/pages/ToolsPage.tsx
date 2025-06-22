@@ -283,52 +283,148 @@ const ToolsOverview = () => {
       description: 'Calculate how your investments can grow over time with compound interest.',
       icon: Calculator,
       path: '/tools/compound-interest',
-      color: 'bg-blue-500'
+      color: 'from-blue-500 to-blue-600',
+      bgColor: 'bg-blue-50',
+      stats: 'Exponential Growth'
     },
     {
       title: 'Portfolio Analyzer',
       description: 'Analyze your portfolio performance, risk assessment, and get optimization recommendations.',
       icon: PieChart,
       path: '/tools/portfolio-analyzer',
-      color: 'bg-purple-500'
+      color: 'from-purple-500 to-purple-600',
+      bgColor: 'bg-purple-50',
+      stats: 'Risk Assessment'
     },
     {
       title: 'Retirement Planner',
       description: 'Plan your retirement with comprehensive calculations and projections.',
       icon: TrendingUp,
       path: '/tools/retirement-planner',
-      color: 'bg-green-500'
+      color: 'from-green-500 to-green-600',
+      bgColor: 'bg-green-50',
+      stats: 'Future Planning'
     }
   ];
 
   return (
-    <div>
-      <div className="mb-6">
-        <h2 className="text-2xl font-bold text-gray-900 mb-2">Financial Tools</h2>
-        <p className="text-gray-600">
-          Powerful calculators and analyzers to help you make informed financial decisions.
-        </p>
-      </div>
-
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {tools.map((tool) => {
-          const Icon = tool.icon;
-          return (            <div key={tool.path} className="card hover:shadow-lg transition-shadow">
-              <div className="flex items-center mb-4">
-                <div className={`p-3 rounded-lg ${tool.color}`}>
-                  <Icon className="h-6 w-6 text-white" />
-                </div>
-                <div className="ml-4">
-                  <h3 className="text-lg font-semibold text-gray-900">{tool.title}</h3>
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-blue-50/30 to-purple-50/30">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        {/* Enhanced Header */}
+        <div className="mb-8">
+          <div className="bg-white rounded-2xl p-8 shadow-sm border border-gray-200/50 backdrop-blur-sm">
+            <div className="flex items-center justify-between">
+              <div>
+                <h1 className="text-4xl font-bold bg-gradient-to-r from-gray-900 to-gray-700 bg-clip-text text-transparent">
+                  Financial Tools
+                </h1>
+                <p className="mt-3 text-lg text-gray-600">
+                  Powerful calculators and analyzers to help you make informed financial decisions.
+                </p>
+              </div>
+              <div className="hidden md:flex items-center space-x-3">
+                <div className="bg-gradient-to-r from-blue-500 to-purple-600 rounded-full p-3">
+                  <Calculator className="h-8 w-8 text-white" />
                 </div>
               </div>
-              <p className="text-gray-600 mb-4">{tool.description}</p>
-              <Link to={tool.path} className="w-full btn-primary block text-center">
-                Use Tool
-              </Link>
             </div>
-          );
-        })}
+          </div>
+        </div>
+
+        {/* Tools Section */}
+        <div className="mb-8">
+          <h2 className="text-2xl font-semibold text-gray-900 mb-6 flex items-center">
+            <div className="w-1 h-6 bg-gradient-to-b from-blue-500 to-purple-600 rounded-full mr-3"></div>
+            Available Tools
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {tools.map((tool, index) => {
+              const Icon = tool.icon;
+              return (
+                <Link
+                  key={tool.path}
+                  to={tool.path}
+                  className="group block"
+                >
+                  <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-200/50 hover:shadow-lg transition-all duration-300 transform hover:scale-105">
+                    <div className="flex items-center justify-between mb-4">
+                      <div className="flex items-center">                        <div className={`p-4 rounded-xl ${tool.bgColor} group-hover:scale-110 transition-transform duration-300`}>
+                          <Icon className={`h-6 w-6 ${
+                            tool.path.includes('compound-interest') ? 'text-blue-600' :
+                            tool.path.includes('portfolio-analyzer') ? 'text-purple-600' :
+                            'text-green-600'
+                          }`} />
+                        </div>
+                        <div className="ml-4">
+                          <h3 className="text-lg font-semibold text-gray-900 group-hover:text-blue-600 transition-colors">
+                            {tool.title}
+                          </h3>
+                          <p className="text-sm text-gray-500 font-medium">{tool.stats}</p>
+                        </div>
+                      </div>
+                      <div className="text-right">
+                        <div className="w-2 h-16 bg-gradient-to-b from-gray-200 to-gray-300 rounded-full overflow-hidden">
+                          <div 
+                            className={`w-full bg-gradient-to-b ${tool.color} rounded-full transition-all duration-1000`}
+                            style={{ height: `${60 + (index * 15)}%` }}
+                          ></div>
+                        </div>
+                      </div>
+                    </div>
+                    <p className="text-gray-600 mb-4 line-clamp-2">{tool.description}</p>
+                    <div className="flex items-center justify-between">
+                      <span className="text-sm font-medium text-blue-600 group-hover:text-blue-700">
+                        Use Tool
+                      </span>
+                      <div className="w-8 h-8 rounded-full bg-gradient-to-r from-blue-500 to-purple-600 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                        <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                        </svg>
+                      </div>
+                    </div>
+                  </div>
+                </Link>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* Enhanced All Tools Section */}
+        <div className="bg-white rounded-2xl shadow-sm border border-gray-200/50 overflow-hidden">
+          <div className="bg-gradient-to-r from-blue-50 to-indigo-50 p-6 border-b border-gray-200/50">
+            <div className="flex items-center justify-between">
+              <div>
+                <h2 className="text-xl font-semibold text-gray-900 flex items-center">
+                  <BarChart3 className="h-5 w-5 text-blue-600 mr-2" />
+                  Quick Tools Overview
+                </h2>
+                <p className="text-sm text-gray-600 mt-1">Access all financial calculation tools</p>
+              </div>
+            </div>
+          </div>
+          <div className="p-6">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              {tools.map((tool) => {
+                const Icon = tool.icon;
+                return (
+                  <Link
+                    key={tool.path}
+                    to={tool.path}
+                    className="group flex items-center p-4 bg-gray-50 rounded-xl hover:bg-gray-100 transition-colors"
+                  >
+                    <div className={`w-10 h-10 bg-gradient-to-r ${tool.color} rounded-lg flex items-center justify-center mr-3 group-hover:scale-110 transition-transform duration-300`}>
+                      <Icon className="w-5 h-5 text-white" />
+                    </div>
+                    <div>
+                      <p className="font-semibold text-gray-900 group-hover:text-blue-600 transition-colors">{tool.title}</p>
+                      <p className="text-sm text-gray-500">{tool.stats}</p>
+                    </div>
+                  </Link>
+                );
+              })}
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );
@@ -343,46 +439,72 @@ const ToolsPage = () => {
     { path: '/tools/retirement-planner', label: 'Retirement Planner', icon: TrendingUp },
   ];
 
-  return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-      {/* Header */}
-      <div className="mb-8">
-        <h1 className="text-3xl font-bold text-gray-900">Financial Tools</h1>
-        <p className="mt-2 text-gray-600">
-          Comprehensive calculators and analyzers for your financial planning needs.
-        </p>
-      </div>
+  // If we're on the main tools page, show the enhanced overview
+  if (location.pathname === '/tools') {
+    return <ToolsOverview />;
+  }
 
-      {/* Sub Navigation */}
-      <div className="mb-8">
-        <nav className="flex space-x-8">
-          {navItems.map((item) => {
-            const Icon = item.icon;
-            const isActive = item.path === location.pathname;
-            
-            return (
-              <Link
-                key={item.path}
-                to={item.path}
-                className={`flex items-center space-x-2 pb-4 border-b-2 transition-colors ${
-                  isActive
-                    ? 'border-primary-600 text-primary-600'
-                    : 'border-transparent text-gray-600 hover:text-gray-900 hover:border-gray-300'
-                }`}
-              >
-                <Icon className="h-5 w-5" />
-                <span className="font-medium">{item.label}</span>
-              </Link>
-            );
-          })}
-        </nav>
-      </div>      {/* Content */}
-      <Routes>
-        <Route index element={<ToolsOverview />} />
-        <Route path="compound-interest" element={<CompoundInterestCalculator />} />
-        <Route path="portfolio-analyzer" element={<PortfolioAnalyzer />} />
-        <Route path="retirement-planner" element={<RetirementPlanner />} />
-      </Routes>
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-blue-50/30 to-purple-50/30">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        {/* Header */}
+        <div className="mb-8">
+          <div className="bg-white rounded-2xl p-8 shadow-sm border border-gray-200/50 backdrop-blur-sm">
+            <div className="flex items-center justify-between">
+              <div>
+                <h1 className="text-4xl font-bold bg-gradient-to-r from-gray-900 to-gray-700 bg-clip-text text-transparent">
+                  Financial Tools
+                </h1>
+                <p className="mt-3 text-lg text-gray-600">
+                  Comprehensive calculators and analyzers for your financial planning needs.
+                </p>
+              </div>
+              <div className="hidden md:flex items-center space-x-3">
+                <div className="bg-gradient-to-r from-blue-500 to-purple-600 rounded-full p-3">
+                  <Calculator className="h-8 w-8 text-white" />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Sub Navigation */}
+        <div className="mb-8">
+          <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-200/50">
+            <nav className="flex space-x-8">
+              {navItems.map((item) => {
+                const Icon = item.icon;
+                const isActive = item.path === location.pathname;
+                
+                return (
+                  <Link
+                    key={item.path}
+                    to={item.path}
+                    className={`flex items-center space-x-2 pb-4 border-b-2 transition-colors ${
+                      isActive
+                        ? 'border-blue-600 text-blue-600'
+                        : 'border-transparent text-gray-600 hover:text-gray-900 hover:border-gray-300'
+                    }`}
+                  >
+                    <Icon className="h-5 w-5" />
+                    <span className="font-medium">{item.label}</span>
+                  </Link>
+                );
+              })}
+            </nav>
+          </div>
+        </div>
+
+        {/* Content */}
+        <div className="bg-white rounded-2xl shadow-sm border border-gray-200/50 p-8">
+          <Routes>
+            <Route index element={<ToolsOverview />} />
+            <Route path="compound-interest" element={<CompoundInterestCalculator />} />
+            <Route path="portfolio-analyzer" element={<PortfolioAnalyzer />} />
+            <Route path="retirement-planner" element={<RetirementPlanner />} />
+          </Routes>
+        </div>
+      </div>
     </div>
   );
 };

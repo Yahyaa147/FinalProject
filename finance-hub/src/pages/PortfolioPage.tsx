@@ -8,8 +8,6 @@ import {
   PieChart as RechartsPieChart, 
   Pie,
   Cell, 
-  LineChart, 
-  Line, 
   XAxis, 
   YAxis, 
   CartesianGrid, 
@@ -190,13 +188,19 @@ const MyAssets = () => {
                   innerRadius={40}
                   paddingAngle={2}
                   dataKey="value"
-                >
-                  {assetAllocationData.map((entry, index) => (
+                >                  {assetAllocationData.map((_, index) => (
                     <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                   ))}
-                </Pie>
-                <Tooltip 
-                  formatter={(value: any) => [formatCurrency(value), 'Value']} 
+                </Pie>                <Tooltip                  formatter={(value: any, _name: any, props: any) => [
+                    formatCurrency(value), 
+                    props.payload.name
+                  ]}
+                  labelFormatter={(label, payload) => {
+                    if (payload && payload.length > 0) {
+                      return `${payload[0].payload.name} (${payload[0].payload.percentage.toFixed(1)}%)`;
+                    }
+                    return label;
+                  }}
                   contentStyle={{ 
                     backgroundColor: 'white', 
                     border: '1px solid #e5e7eb', 
@@ -313,20 +317,42 @@ const MyAssets = () => {
 
       {/* Additional Charts Row */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-        
-        {/* Risk Metrics */}
+          {/* Risk Metrics */}
         <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-200">
           <h3 className="text-xl font-semibold text-gray-900 mb-6">Risk Analysis</h3>
           <div className="h-64">
             <ResponsiveContainer width="100%" height="100%">
-              <BarChart data={riskMetrics} layout="horizontal">
+              <BarChart data={riskMetrics}>
                 <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
-                <XAxis type="number" stroke="#9ca3af" />
-                <YAxis dataKey="metric" type="category" stroke="#9ca3af" width={100} />
-                <Tooltip />
-                <Bar dataKey="value" fill="#8884d8" radius={[0, 4, 4, 0]} />
+                <XAxis dataKey="metric" stroke="#9ca3af" />
+                <YAxis stroke="#9ca3af" domain={[0, 25]} />
+                <Tooltip 
+                  formatter={(value: any, _name: any) => [`${value}%`, 'Risk Level']}
+                  contentStyle={{ 
+                    backgroundColor: 'white', 
+                    border: '1px solid #e5e7eb', 
+                    borderRadius: '8px',
+                    boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)'
+                  }}
+                />
+                <Bar dataKey="value" fill="#ef4444" radius={[4, 4, 0, 0]} />
               </BarChart>
             </ResponsiveContainer>
+          </div>
+          <div className="mt-4 space-y-3">            {riskMetrics.map((metric) => (
+              <div key={metric.metric} className="flex items-center justify-between">
+                <span className="text-sm font-medium text-gray-700">{metric.metric}</span>
+                <div className="flex items-center space-x-2">
+                  <div className="w-24 bg-gray-200 rounded-full h-2">
+                    <div 
+                      className="bg-red-500 h-2 rounded-full transition-all duration-500"
+                      style={{ width: `${(metric.value / metric.maxValue) * 100}%` }}
+                    ></div>
+                  </div>
+                  <span className="text-sm font-semibold text-gray-900 w-8">{metric.value}%</span>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
 
