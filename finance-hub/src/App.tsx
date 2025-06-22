@@ -6,6 +6,7 @@ import PortfolioPage from './pages/PortfolioPage';
 import NewsPage from './pages/NewsPage';
 import ToolsPage from './pages/ToolsPage';
 import CommunityPage from './pages/CommunityPage';
+import DiscoverPage from './pages/DiscoverPage';
 import { usePortfolioStore } from './store/portfolioStore';
 import { mockAssets, mockTransactions } from './data/mockData';
 
@@ -28,6 +29,7 @@ function App() {
         <Route path="/" element={<Layout />}>
           <Route index element={<Dashboard />} />
           <Route path="portfolio/*" element={<PortfolioPage />} />
+          <Route path="discover/*" element={<DiscoverPage />} />
           <Route path="news/*" element={<NewsPage />} />
           <Route path="tools/*" element={<ToolsPage />} />
           <Route path="community/*" element={<CommunityPage />} />

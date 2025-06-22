@@ -13,7 +13,8 @@ import {
   ThumbsUp,
   MessageCircle,
   TrendingUp,
-  Award
+  Award,
+  X
 } from 'lucide-react';
 import { mockForumCategories, mockForumThreads, mockForumPosts } from '../data/mockData';
 import { getRelativeTime } from '../utils/helpers';
@@ -21,6 +22,197 @@ import type { ForumCategory, ForumThread, ForumPost } from '../types';
 
 const ForumHome = () => {
   const [categories] = useState<ForumCategory[]>(mockForumCategories);
+  const [isCreatePostModalOpen, setIsCreatePostModalOpen] = useState(false);
+  const [isJoinCommunityModalOpen, setIsJoinCommunityModalOpen] = useState(false);
+
+  // Create Post Modal Component
+  const CreatePostModal = () => {
+    const [title, setTitle] = useState('');
+    const [content, setContent] = useState('');
+    const [selectedCategory, setSelectedCategory] = useState('');
+    const [tags, setTags] = useState('');
+
+    if (!isCreatePostModalOpen) return null;
+
+    const handleSubmit = (e: React.FormEvent) => {
+      e.preventDefault();
+      // Here you would typically submit to your backend
+      console.log('Creating post:', { title, content, selectedCategory, tags });
+      setIsCreatePostModalOpen(false);
+      // Reset form
+      setTitle('');
+      setContent('');
+      setSelectedCategory('');
+      setTags('');
+    };
+
+    return (
+      <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+        <div className="bg-white rounded-lg w-full max-w-2xl max-h-[90vh] overflow-y-auto">
+          <div className="p-6">
+            <div className="flex justify-between items-center mb-6">
+              <h2 className="text-2xl font-bold text-gray-900">Create New Post</h2>
+              <button
+                onClick={() => setIsCreatePostModalOpen(false)}
+                className="text-gray-400 hover:text-gray-600"
+              >
+                <X className="w-6 h-6" />
+              </button>
+            </div>
+
+            <form onSubmit={handleSubmit} className="space-y-6">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Post Title *
+                </label>
+                <input
+                  type="text"
+                  value={title}
+                  onChange={(e) => setTitle(e.target.value)}
+                  placeholder="Enter a descriptive title for your post"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  required
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Category *
+                </label>
+                <select
+                  value={selectedCategory}
+                  onChange={(e) => setSelectedCategory(e.target.value)}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  required
+                >
+                  <option value="">Select a category</option>
+                  {categories.map((category) => (
+                    <option key={category.id} value={category.id}>
+                      {category.name}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Content *
+                </label>
+                <textarea
+                  value={content}
+                  onChange={(e) => setContent(e.target.value)}
+                  placeholder="Share your thoughts, questions, or insights..."
+                  rows={8}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
+                  required
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Tags (optional)
+                </label>
+                <input
+                  type="text"
+                  value={tags}
+                  onChange={(e) => setTags(e.target.value)}
+                  placeholder="Add tags separated by commas (e.g., stocks, investing, tech)"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                />
+              </div>
+
+              <div className="flex justify-end space-x-4 pt-4 border-t border-gray-200">
+                <button
+                  type="button"
+                  onClick={() => setIsCreatePostModalOpen(false)}
+                  className="px-4 py-2 text-gray-700 bg-gray-100 rounded-md hover:bg-gray-200 transition-colors"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  className="px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
+                >
+                  Create Post
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    );
+  };
+
+  // Join Community Modal Component
+  const JoinCommunityModal = () => {
+    if (!isJoinCommunityModalOpen) return null;
+
+    const handleJoin = () => {
+      console.log('Joining community');
+      setIsJoinCommunityModalOpen(false);
+    };
+
+    return (
+      <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+        <div className="bg-white rounded-lg w-full max-w-md">
+          <div className="p-6">
+            <div className="flex justify-between items-center mb-6">
+              <h2 className="text-xl font-bold text-gray-900">Join Our Community</h2>
+              <button
+                onClick={() => setIsJoinCommunityModalOpen(false)}
+                className="text-gray-400 hover:text-gray-600"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            <div className="space-y-4">
+              <div className="text-center">
+                <Users className="w-16 h-16 text-blue-600 mx-auto mb-4" />
+                <p className="text-gray-600 mb-6">
+                  Join thousands of investors sharing insights, tips, and market analysis.
+                </p>
+              </div>
+
+              <div className="space-y-3">
+                <div className="flex items-center space-x-3">
+                  <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                  <span className="text-gray-700">Get expert investment advice</span>
+                </div>
+                <div className="flex items-center space-x-3">
+                  <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                  <span className="text-gray-700">Share your portfolio insights</span>
+                </div>
+                <div className="flex items-center space-x-3">
+                  <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                  <span className="text-gray-700">Connect with like-minded investors</span>
+                </div>
+                <div className="flex items-center space-x-3">
+                  <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                  <span className="text-gray-700">Stay updated with market trends</span>
+                </div>
+              </div>
+
+              <div className="flex space-x-3 pt-4">
+                <button
+                  onClick={() => setIsJoinCommunityModalOpen(false)}
+                  className="flex-1 px-4 py-2 text-gray-700 bg-gray-100 rounded-md hover:bg-gray-200 transition-colors"
+                >
+                  Maybe Later
+                </button>
+                <button
+                  onClick={handleJoin}
+                  className="flex-1 px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
+                >
+                  Join Now
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  };
 
   return (
     <div className="space-y-8">
@@ -86,18 +278,27 @@ const ForumHome = () => {
       </div>
 
       {/* Quick Actions */}
-      <div className="flex flex-wrap gap-4 items-center justify-between">
-        <div className="flex gap-2">
-          <button className="flex items-center space-x-2 bg-primary-600 text-white px-4 py-2 rounded-lg hover:bg-primary-700 transition-colors shadow-sm">
+      <div className="flex flex-wrap gap-4 items-center justify-between">        <div className="flex gap-2">
+          <button className="flex items-center space-x-2 bg-primary-600 text-white px-4 py-2 rounded-lg hover:bg-primary-700 transition-colors">
             <Users className="h-4 w-4" />
             <span>All Forums</span>
           </button>
-          <button className="flex items-center space-x-2 bg-white border border-gray-300 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-50 transition-colors shadow-sm">
+          <button className="flex items-center space-x-2 bg-white border border-gray-300 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-50 transition-colors">
             <MessageSquare className="h-4 w-4" />
             <span>Discussions</span>
           </button>
+          <button 
+            onClick={() => setIsJoinCommunityModalOpen(true)}
+            className="flex items-center space-x-2 bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700 transition-colors"
+          >
+            <Users className="h-4 w-4" />
+            <span>Join Community</span>
+          </button>
         </div>
-        <button className="flex items-center space-x-2 bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition-colors shadow-sm">
+        <button 
+          onClick={() => setIsCreatePostModalOpen(true)} 
+          className="flex items-center space-x-2 bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition-colors"
+        >
           <Plus className="h-4 w-4" />
           <span>Create Post</span>
         </button>
@@ -178,6 +379,114 @@ const ForumHome = () => {
           </div>
         </div>
       </div>
+
+      {/* Featured Community Insights */}
+      <div className="space-y-4">
+        <h2 className="text-2xl font-bold text-gray-900">Featured Insights</h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="bg-white rounded-lg border border-gray-200 shadow-sm overflow-hidden">
+            <div className="h-48 bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center">
+              <TrendingUp className="h-16 w-16 text-white" />
+            </div>
+            <div className="p-6">
+              <h3 className="text-lg font-semibold text-gray-900 mb-2">Market Analysis Hub</h3>
+              <p className="text-gray-600 mb-4">Deep dive into market trends with community-driven analysis and expert insights.</p>
+              <div className="flex items-center text-sm text-gray-500">
+                <Users className="h-4 w-4 mr-1" />
+                <span>2,847 members</span>
+              </div>
+            </div>
+          </div>
+
+          <div className="bg-white rounded-lg border border-gray-200 shadow-sm overflow-hidden">
+            <div className="h-48 bg-gradient-to-br from-green-500 to-emerald-600 flex items-center justify-center">
+              <Award className="h-16 w-16 text-white" />
+            </div>
+            <div className="p-6">
+              <h3 className="text-lg font-semibold text-gray-900 mb-2">Portfolio Showcase</h3>
+              <p className="text-gray-600 mb-4">Share and discover winning investment strategies from top performers.</p>
+              <div className="flex items-center text-sm text-gray-500">
+                <Users className="h-4 w-4 mr-1" />
+                <span>1,923 members</span>
+              </div>
+            </div>
+          </div>
+
+          <div className="bg-white rounded-lg border border-gray-200 shadow-sm overflow-hidden">
+            <div className="h-48 bg-gradient-to-br from-yellow-500 to-orange-600 flex items-center justify-center">
+              <MessageCircle className="h-16 w-16 text-white" />
+            </div>
+            <div className="p-6">
+              <h3 className="text-lg font-semibold text-gray-900 mb-2">Daily Discussions</h3>
+              <p className="text-gray-600 mb-4">Join daily conversations about market movements and investment opportunities.</p>
+              <div className="flex items-center text-sm text-gray-500">
+                <Users className="h-4 w-4 mr-1" />
+                <span>4,156 members</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Community Leaderboard */}
+      <div className="space-y-4">
+        <h2 className="text-2xl font-bold text-gray-900">Top Contributors This Week</h2>
+        <div className="bg-white rounded-lg border border-gray-200 shadow-sm">
+          <div className="p-6">            <div className="space-y-4">
+              {[
+                {
+                  name: 'Alex Thompson',
+                  posts: 23,
+                  likes: 189,
+                  avatar: '🏆',
+                },
+                {
+                  name: 'Sarah Chen',
+                  posts: 19,
+                  likes: 156,
+                  avatar: '🥈',
+                },
+                {
+                  name: 'Michael Ross',
+                  posts: 17,
+                  likes: 142,
+                  avatar: '🥉',
+                },
+                {
+                  name: 'Emily Davis',
+                  posts: 15,
+                  likes: 128,
+                  avatar: '⭐',
+                },
+                {
+                  name: 'David Kim',
+                  posts: 12,
+                  likes: 98,
+                  avatar: '💎',
+                }].map((user, index) => (
+                <div key={user.name} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                  <div className="flex items-center space-x-3">
+                    <div className="w-10 h-10 bg-blue-500 rounded-full flex items-center justify-center text-white font-bold text-lg">
+                      {user.avatar}
+                    </div>
+                    <div>
+                      <div className="font-semibold text-gray-900">{user.name}</div>
+                      <div className="text-sm text-gray-500">Rank #{index + 1}</div>
+                    </div>
+                  </div>
+                  <div className="text-right">
+                    <div className="text-sm text-gray-900">{user.posts} posts</div>
+                    <div className="text-sm text-gray-500">{user.likes} likes</div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <CreatePostModal />
+      <JoinCommunityModal />
     </div>
   );
 };
@@ -289,7 +598,7 @@ const CategoryView = () => {
 };
 
 const ThreadView = () => {
-  const { categoryId, threadId } = useParams<{ categoryId: string; threadId: string }>();
+  const { threadId } = useParams<{ categoryId: string; threadId: string }>();
   const [thread, setThread] = useState<ForumThread | null>(null);
   const [posts, setPosts] = useState<ForumPost[]>([]);
 
