@@ -2,14 +2,12 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { useEffect } from 'react';
 import Layout from './components/Layout';
 import Dashboard from './pages/Dashboard';
+import PortfolioPage from './pages/PortfolioPage';
+import NewsPage from './pages/NewsPage';
+import ToolsPage from './pages/ToolsPage';
+import CommunityPage from './pages/CommunityPage';
 import { usePortfolioStore } from './store/portfolioStore';
 import { mockAssets, mockTransactions } from './data/mockData';
-
-// Placeholder components for other pages
-const Portfolio = () => <div className="p-8"><h1 className="text-2xl font-bold">Portfolio (Coming Soon)</h1></div>;
-const News = () => <div className="p-8"><h1 className="text-2xl font-bold">News (Coming Soon)</h1></div>;
-const Tools = () => <div className="p-8"><h1 className="text-2xl font-bold">Tools (Coming Soon)</h1></div>;
-const Community = () => <div className="p-8"><h1 className="text-2xl font-bold">Community (Coming Soon)</h1></div>;
 
 function App() {
   const { addAsset, addTransaction, assets, transactions } = usePortfolioStore();
@@ -29,10 +27,10 @@ function App() {
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<Dashboard />} />
-          <Route path="portfolio/*" element={<Portfolio />} />
-          <Route path="news/*" element={<News />} />
-          <Route path="tools/*" element={<Tools />} />
-          <Route path="community/*" element={<Community />} />
+          <Route path="portfolio/*" element={<PortfolioPage />} />
+          <Route path="news/*" element={<NewsPage />} />
+          <Route path="tools/*" element={<ToolsPage />} />
+          <Route path="community/*" element={<CommunityPage />} />
         </Route>
       </Routes>
     </Router>
