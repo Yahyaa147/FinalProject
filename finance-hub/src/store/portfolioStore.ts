@@ -1,6 +1,7 @@
 import { create } from 'zustand';
 import { devtools, persist } from 'zustand/middleware';
 import type { Asset, Transaction, Portfolio, User } from '../types';
+import { mockAssets, mockTransactions } from '../data/mockData';
 
 interface PortfolioState {
   // Portfolio state
@@ -45,11 +46,10 @@ interface PortfolioState {
 export const usePortfolioStore = create<PortfolioState>()(
   devtools(
     persist(
-      (set, get) => ({
-        // Initial state
+      (set, get) => ({        // Initial state with mock data for demo
         portfolio: null,
-        assets: [],
-        transactions: [],
+        assets: mockAssets,
+        transactions: mockTransactions,
         user: null,
         isLoading: false,
         error: null,

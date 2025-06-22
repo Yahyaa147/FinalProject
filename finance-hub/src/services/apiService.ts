@@ -108,15 +108,15 @@ export class ApiService {
       };
     }
   }
-
   // CoinGecko API for crypto prices (example of real API integration)
   static async getCryptoPrices(symbols: string[]): Promise<ApiResponse<MarketData[]>> {
     try {
       // This is an example of how you might integrate with CoinGecko's free API
-      const coinGeckoSymbols = symbols.map(s => s.toLowerCase()).join(',');
+      // const coinGeckoSymbols = symbols.map(s => s.toLowerCase()).join(',');
       
       // Uncomment for real API usage:
       /*
+      const coinGeckoSymbols = symbols.map(s => s.toLowerCase()).join(',');
       const response = await axios.get(
         `https://api.coingecko.com/api/v3/simple/price?ids=${coinGeckoSymbols}&vs_currencies=usd&include_24hr_change=true`
       );

@@ -120,10 +120,8 @@ export const calculateCompoundInterest = (
       currentAmount += monthlyContribution;
       yearContributions += monthlyContribution;
       totalContributions += monthlyContribution;
-      
-      // Calculate interest based on frequency
+        // Calculate interest based on frequency
       if (month % (12 / n) === 0 || month === 12) {
-        const periodsInCalculation = 12 / n;
         const periodRate = r / n;
         const interest = currentAmount * periodRate;
         currentAmount += interest;
