@@ -52,6 +52,8 @@ export interface ForumCategory {
   description: string;
   threadCount: number;
   postCount: number;
+  color: string;
+  lastActivity: Date;
 }
 
 export interface ForumThread {
@@ -59,9 +61,9 @@ export interface ForumThread {
   categoryId: string;
   title: string;
   content: string;
-  username: string;
+  author: string;
   userAvatar?: string;
-  date: Date;
+  createdAt: Date;
   replies: number;
   views: number;
   lastActivity: Date;
@@ -73,7 +75,7 @@ export interface ForumPost {
   id: string;
   threadId: string;
   content: string;
-  username: string;
+  author: string;
   userAvatar?: string;
   date: Date;
   parentPostId?: string;

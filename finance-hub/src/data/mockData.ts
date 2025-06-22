@@ -210,35 +210,45 @@ export const mockForumCategories: ForumCategory[] = [
     name: 'General Discussion',
     description: 'General investment and finance discussions',
     threadCount: 1250,
-    postCount: 18500
+    postCount: 18500,
+    color: 'bg-blue-600',
+    lastActivity: new Date('2025-06-22')
   },
   {
     id: '2',
     name: 'Stock Analysis',
     description: 'In-depth analysis of individual stocks and market trends',
     threadCount: 890,
-    postCount: 12400
+    postCount: 12400,
+    color: 'bg-green-600',
+    lastActivity: new Date('2025-06-22')
   },
   {
     id: '3',
     name: 'Cryptocurrency',
     description: 'All things crypto - trading, technology, and market analysis',
     threadCount: 2100,
-    postCount: 35600
+    postCount: 35600,
+    color: 'bg-yellow-600',
+    lastActivity: new Date('2025-06-22')
   },
   {
     id: '4',
     name: 'Portfolio Reviews',
     description: 'Share your portfolio and get feedback from the community',
     threadCount: 567,
-    postCount: 8900
+    postCount: 8900,
+    color: 'bg-purple-600',
+    lastActivity: new Date('2025-06-21')
   },
   {
     id: '5',
     name: 'Beginner Questions',
     description: 'New to investing? Ask your questions here',
     threadCount: 1800,
-    postCount: 24500
+    postCount: 24500,
+    color: 'bg-indigo-600',
+    lastActivity: new Date('2025-06-22')
   }
 ];
 
@@ -249,35 +259,65 @@ export const mockForumThreads: ForumThread[] = [
     categoryId: '2',
     title: 'Apple Q1 2025 Earnings Analysis - Bullish or Bearish?',
     content: 'What do you think about Apple\'s latest earnings report? Revenue beat expectations but iPhone sales were slightly down.',
-    username: 'TechInvestor92',
-    date: new Date('2025-06-20'),
+    author: 'TechInvestor92',
+    createdAt: new Date('2025-06-20'),
     replies: 24,
     views: 890,
     lastActivity: new Date('2025-06-22'),
-    isPinned: false
+    isPinned: false,
+    isLocked: false
   },
   {
     id: '2',
     categoryId: '3',
     title: 'Bitcoin ETF Impact on Market Dynamics',
     content: 'How do you think the new Bitcoin ETFs are affecting the overall crypto market? Seeing increased institutional flow.',
-    username: 'CryptoAnalyst',
-    date: new Date('2025-06-19'),
+    author: 'CryptoAnalyst',
+    createdAt: new Date('2025-06-19'),
     replies: 45,
     views: 1200,
     lastActivity: new Date('2025-06-22'),
-    isPinned: true
+    isPinned: true,
+    isLocked: false
   },
   {
     id: '3',
     categoryId: '4',
     title: 'Rate My 25-Year-Old\'s Portfolio',
     content: 'Looking for feedback on my investment allocation. Currently 70% stocks, 20% bonds, 10% crypto.',
-    username: 'YoungInvestor',
-    date: new Date('2025-06-18'),
+    author: 'YoungInvestor',
+    createdAt: new Date('2025-06-18'),
     replies: 18,
     views: 567,
-    lastActivity: new Date('2025-06-21')
+    lastActivity: new Date('2025-06-21'),
+    isPinned: false,
+    isLocked: false
+  },
+  {
+    id: '4',
+    categoryId: '1',
+    title: 'Market Outlook for 2025 - Your Predictions?',
+    content: 'With all the economic changes happening, what are your predictions for the markets in 2025?',
+    author: 'MarketWatcher',
+    createdAt: new Date('2025-06-17'),
+    replies: 67,
+    views: 2100,
+    lastActivity: new Date('2025-06-22'),
+    isPinned: false,
+    isLocked: false
+  },
+  {
+    id: '5',
+    categoryId: '5',
+    title: 'How much should I invest as a beginner?',
+    content: 'I\'m 22 and just started working. How much of my salary should I invest?',
+    author: 'NewGrad2025',
+    createdAt: new Date('2025-06-16'),
+    replies: 32,
+    views: 1450,
+    lastActivity: new Date('2025-06-21'),
+    isPinned: false,
+    isLocked: false
   }
 ];
 
@@ -287,7 +327,7 @@ export const mockForumPosts: ForumPost[] = [
     id: '1',
     threadId: '1',
     content: 'I think Apple is still undervalued despite the recent run-up. Their services revenue continues to grow steadily.',
-    username: 'ValueHunter',
+    author: 'ValueHunter',
     date: new Date('2025-06-21'),
     likes: 8
   },
@@ -295,7 +335,7 @@ export const mockForumPosts: ForumPost[] = [
     id: '2',
     threadId: '1',
     content: 'Disagree - with increased competition in smartphones and regulatory pressure, I see headwinds ahead.',
-    username: 'BearishBob',
+    author: 'BearishBob',
     date: new Date('2025-06-21'),
     likes: 3
   },
@@ -303,8 +343,24 @@ export const mockForumPosts: ForumPost[] = [
     id: '3',
     threadId: '2',
     content: 'The institutional adoption through ETFs is definitely a game changer. We\'re seeing more stable price action.',
-    username: 'InstitutionalTrader',
+    author: 'InstitutionalTrader',
     date: new Date('2025-06-20'),
     likes: 15
+  },
+  {
+    id: '4',
+    threadId: '3',
+    content: 'That\'s a solid allocation for your age! You might want to consider increasing your crypto allocation slightly, maybe to 15%.',
+    author: 'PortfolioGuru',
+    date: new Date('2025-06-19'),
+    likes: 12
+  },
+  {
+    id: '5',
+    threadId: '4',
+    content: 'I\'m cautiously optimistic about 2025. Tech sector should continue to do well with AI developments.',
+    author: 'TechBull',
+    date: new Date('2025-06-18'),
+    likes: 9
   }
 ];

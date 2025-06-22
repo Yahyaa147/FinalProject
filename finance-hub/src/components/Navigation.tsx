@@ -29,35 +29,38 @@ const Navigation = () => {
     }
     return location.pathname.startsWith(path);
   };
-
   return (
     <nav className="bg-white shadow-lg border-b border-gray-200">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between h-16">
+        <div className="flex justify-between items-center h-16">
           {/* Logo and Brand */}
           <div className="flex items-center">
-            <Link to="/" className="flex items-center space-x-2">
+            <Link to="/" className="flex items-center space-x-3 hover:opacity-80 transition-opacity">
               <TrendingUp className="h-8 w-8 text-primary-600" />
               <span className="text-xl font-bold text-gray-900">Finance Hub</span>
             </Link>
           </div>
 
-          {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-8">
+          {/* Desktop Navigation - Enhanced */}
+          <div className="hidden md:flex items-center space-x-2">
             {navigationItems.map((item) => {
               const Icon = item.icon;
               return (
                 <Link
                   key={item.path}
                   to={item.path}
-                  className={`flex items-center space-x-1 px-3 py-2 rounded-md text-sm font-medium transition-colors ${
+                  className={`group relative flex items-center space-x-2 px-4 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 border ${
                     isActive(item.path)
-                      ? 'text-primary-600 bg-primary-50'
-                      : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50'
+                      ? 'text-primary-700 bg-primary-50 border-primary-200 shadow-sm'
+                      : 'text-gray-600 hover:text-primary-600 hover:bg-primary-50/50 border-gray-200/60 hover:border-primary-200 hover:shadow-sm'
                   }`}
                 >
-                  <Icon className="h-4 w-4" />
-                  <span>{item.label}</span>
+                  <Icon className={`h-4 w-4 transition-transform duration-200 ${isActive(item.path) ? 'text-primary-600' : 'group-hover:scale-110'}`} />
+                  <span className="font-medium">{item.label}</span>
+                  {/* Hover effect line */}
+                  {!isActive(item.path) && (
+                    <div className="absolute bottom-0 left-1/2 w-0 h-0.5 bg-primary-600 transition-all duration-200 group-hover:w-3/4 transform -translate-x-1/2"></div>
+                  )}
                 </Link>
               );
             })}
