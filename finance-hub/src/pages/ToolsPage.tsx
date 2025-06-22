@@ -11,6 +11,8 @@ import {
 import { calculateCompoundInterest, formatCurrency } from '../utils/helpers';
 import type { CompoundInterestFormData } from '../types';
 import type { CompoundInterestResult } from '../utils/helpers';
+import PortfolioAnalyzer from './tools/PortfolioAnalyzer';
+import RetirementPlanner from './tools/RetirementPlanner';
 
 const CompoundInterestCalculator = () => {
   const [result, setResult] = useState<CompoundInterestResult | null>(null);
@@ -248,7 +250,7 @@ const CompoundInterestCalculator = () => {
                       </tr>
                     </thead>
                     <tbody className="divide-y divide-gray-200">
-                      {result.yearlyBreakdown.map((year) => (
+                      {result.yearlyBreakdown.map((year: any) => (
                         <tr key={year.year} className="hover:bg-gray-50">
                           <td className="px-3 py-2 text-sm text-gray-900">{year.year}</td>
                           <td className="px-3 py-2 text-sm text-gray-900">
@@ -285,19 +287,17 @@ const ToolsOverview = () => {
     },
     {
       title: 'Portfolio Analyzer',
-      description: 'Analyze your portfolio allocation and risk metrics.',
+      description: 'Analyze your portfolio performance, risk assessment, and get optimization recommendations.',
       icon: PieChart,
       path: '/tools/portfolio-analyzer',
-      color: 'bg-green-500',
-      comingSoon: true
+      color: 'bg-purple-500'
     },
     {
       title: 'Retirement Planner',
-      description: 'Plan for your retirement with our comprehensive calculator.',
+      description: 'Plan your retirement with comprehensive calculations and projections.',
       icon: TrendingUp,
       path: '/tools/retirement-planner',
-      color: 'bg-purple-500',
-      comingSoon: true
+      color: 'bg-green-500'
     }
   ];
 
@@ -313,31 +313,19 @@ const ToolsOverview = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {tools.map((tool) => {
           const Icon = tool.icon;
-          return (
-            <div key={tool.path} className="card hover:shadow-lg transition-shadow">
+          return (            <div key={tool.path} className="card hover:shadow-lg transition-shadow">
               <div className="flex items-center mb-4">
                 <div className={`p-3 rounded-lg ${tool.color}`}>
                   <Icon className="h-6 w-6 text-white" />
                 </div>
                 <div className="ml-4">
                   <h3 className="text-lg font-semibold text-gray-900">{tool.title}</h3>
-                  {tool.comingSoon && (
-                    <span className="text-xs bg-orange-100 text-orange-800 px-2 py-1 rounded-full">
-                      Coming Soon
-                    </span>
-                  )}
                 </div>
               </div>
               <p className="text-gray-600 mb-4">{tool.description}</p>
-              {tool.comingSoon ? (
-                <button className="w-full btn-secondary" disabled>
-                  Coming Soon
-                </button>
-              ) : (
-                <Link to={tool.path} className="w-full btn-primary block text-center">
-                  Use Tool
-                </Link>
-              )}
+              <Link to={tool.path} className="w-full btn-primary block text-center">
+                Use Tool
+              </Link>
             </div>
           );
         })}
@@ -348,10 +336,11 @@ const ToolsOverview = () => {
 
 const ToolsPage = () => {
   const location = useLocation();
-
   const navItems = [
     { path: '/tools', label: 'All Tools', icon: BarChart3 },
     { path: '/tools/compound-interest', label: 'Compound Interest', icon: Calculator },
+    { path: '/tools/portfolio-analyzer', label: 'Portfolio Analyzer', icon: PieChart },
+    { path: '/tools/retirement-planner', label: 'Retirement Planner', icon: TrendingUp },
   ];
 
   return (
@@ -387,12 +376,12 @@ const ToolsPage = () => {
             );
           })}
         </nav>
-      </div>
-
-      {/* Content */}
+      </div>      {/* Content */}
       <Routes>
         <Route index element={<ToolsOverview />} />
         <Route path="compound-interest" element={<CompoundInterestCalculator />} />
+        <Route path="portfolio-analyzer" element={<PortfolioAnalyzer />} />
+        <Route path="retirement-planner" element={<RetirementPlanner />} />
       </Routes>
     </div>
   );

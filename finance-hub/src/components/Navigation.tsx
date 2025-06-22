@@ -152,39 +152,47 @@ const Navigation = () => {
       </div>
     );
   };
-
   return (
     <>
-      <nav className="bg-white shadow-lg border-b border-gray-200">
+      <nav className="bg-white shadow-lg border-b border-gray-200 sticky top-0 z-50 backdrop-blur-md bg-white/95">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">            {/* Logo */}
+          <div className="flex justify-between items-center h-18">            {/* Logo */}
             <div className="flex items-center">
-              <Link to="/" className="flex items-center space-x-3 hover:opacity-80 transition-opacity">
-                <TrendingUp className="h-8 w-8 text-blue-600" />
-                <span className="text-2xl font-bold text-gray-900">Finance Hub</span>
+              <Link to="/" className="flex items-center space-x-3 hover:opacity-80 transition-all duration-200 group">
+                <div className="relative">
+                  <TrendingUp className="h-9 w-9 text-blue-600 group-hover:scale-110 transition-transform duration-200" />
+                  <div className="absolute -top-1 -right-1 w-3 h-3 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full animate-pulse"></div>
+                </div>
+                <div>
+                  <span className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+                    Finance Hub
+                  </span>
+                  <div className="text-xs text-gray-500 font-medium">Professional Portfolio Manager</div>
+                </div>
               </Link>
             </div>
 
             {/* Centered Desktop Navigation */}
             <div className="hidden md:flex items-center justify-center flex-1 mx-8">
-              <div className="flex items-center space-x-2">
+              <div className="flex items-center space-x-1 bg-gray-50 rounded-full p-1">
                 {navigationItems.map((item) => {
                   const Icon = item.icon;
                   return (
                     <Link
                       key={item.path}
                       to={item.path}
-                      className={`group relative flex items-center space-x-3 px-5 py-3 rounded-lg text-base font-semibold transition-all duration-200 ${
+                      className={`group relative flex items-center space-x-2 px-4 py-2.5 rounded-full text-sm font-semibold transition-all duration-200 ${
                         isActive(item.path)
-                          ? 'text-blue-700 bg-blue-50 shadow-sm'
-                          : 'text-gray-700 hover:text-blue-600 hover:bg-blue-50/50'
+                          ? 'text-white bg-gradient-to-r from-blue-600 to-purple-600 shadow-lg shadow-blue-500/25'
+                          : 'text-gray-700 hover:text-blue-600 hover:bg-white hover:shadow-md'
                       }`}
                     >
-                      <Icon className={`h-5 w-5 transition-transform duration-200 ${isActive(item.path) ? 'text-blue-600' : 'group-hover:scale-110'}`} />
-                      <span className="font-semibold">{item.label}</span>                      {/* Active indicator */}
-                      {isActive(item.path) && (
-                        <div className="absolute bottom-0 left-1/2 w-8 h-0.5 bg-blue-600 rounded-full transform -translate-x-1/2"></div>
-                      )}
+                      <Icon className={`h-4 w-4 transition-all duration-200 ${
+                        isActive(item.path) 
+                          ? 'text-white' 
+                          : 'text-gray-600 group-hover:text-blue-600 group-hover:scale-110'
+                      }`} />
+                      <span className="font-medium">{item.label}</span>
                     </Link>
                   );
                 })}
@@ -197,42 +205,48 @@ const Navigation = () => {
                 <div className="relative">
                   <button
                     onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
-                    className="flex items-center space-x-3 px-4 py-2.5 rounded-lg hover:bg-gray-100 transition-colors"
+                    className="flex items-center space-x-3 px-4 py-2.5 rounded-lg hover:bg-gray-50 transition-all duration-200 border border-gray-200 hover:border-gray-300"
                   >
-                    <div className="w-9 h-9 bg-blue-600 rounded-full flex items-center justify-center">
+                    <div className="w-9 h-9 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full flex items-center justify-center shadow-lg">
                       <User className="w-5 h-5 text-white" />
                     </div>
                     <div className="text-left">
-                      <div className="text-base font-semibold text-gray-900">{user.name}</div>
-                      <div className="text-sm text-gray-500">{user.email}</div>
+                      <div className="text-sm font-semibold text-gray-900">{user.name}</div>
+                      <div className="text-xs text-gray-500">{user.email}</div>
                     </div>
-                    <ChevronDown className="w-5 h-5 text-gray-400" />
+                    <ChevronDown className={`w-4 h-4 text-gray-400 transition-transform duration-200 ${
+                      isUserMenuOpen ? 'rotate-180' : ''
+                    }`} />
                   </button>
 
                   {/* User dropdown menu */}
                   {isUserMenuOpen && (
-                    <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg border border-gray-200 z-50">
-                      <div className="py-1">
+                    <div className="absolute right-0 mt-2 w-56 bg-white rounded-xl shadow-xl border border-gray-200 z-50 backdrop-blur-md bg-white/95">
+                      <div className="py-2">
+                        <div className="px-4 py-3 border-b border-gray-100">
+                          <div className="text-sm font-semibold text-gray-900">{user.name}</div>
+                          <div className="text-xs text-gray-500">{user.email}</div>
+                        </div>
                         <Link
                           to="/profile"
-                          className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                          className="flex items-center px-4 py-3 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-700 transition-colors"
                           onClick={() => setIsUserMenuOpen(false)}
                         >
                           <User className="w-4 h-4 mr-3" />
-                          Profile
+                          Profile Settings
                         </Link>
                         <Link
                           to="/settings"
-                          className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                          className="flex items-center px-4 py-3 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-700 transition-colors"
                           onClick={() => setIsUserMenuOpen(false)}
                         >
                           <Settings className="w-4 h-4 mr-3" />
-                          Settings
+                          Account Settings
                         </Link>
-                        <hr className="my-1" />
+                        <hr className="my-2 border-gray-100" />
                         <button
                           onClick={handleLogout}
-                          className="flex items-center w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                          className="flex items-center w-full px-4 py-3 text-sm text-red-600 hover:bg-red-50 transition-colors"
                         >
                           <LogOut className="w-4 h-4 mr-3" />
                           Sign Out
@@ -243,9 +257,9 @@ const Navigation = () => {
                 </div>              ) : (
                 <button
                   onClick={() => setIsLoginModalOpen(true)}
-                  className="flex items-center space-x-2 px-5 py-2.5 text-base font-semibold bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+                  className="flex items-center space-x-2 px-6 py-2.5 text-sm font-semibold bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-lg hover:from-blue-700 hover:to-purple-700 transition-all duration-200 shadow-lg shadow-blue-500/25 hover:shadow-blue-500/40 transform hover:scale-105"
                 >
-                  <LogIn className="w-5 h-5" />
+                  <LogIn className="w-4 h-4" />
                   <span>Sign In</span>
                 </button>
               )}
