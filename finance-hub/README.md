@@ -1,102 +1,106 @@
-# Finance Hub & Personal Portfolio Manager
+# Finance - Kişisel Portföy Yöneticisi
 
-A comprehensive, interactive, data-driven web application for managing personal investment portfolios, tracking financial news, using financial tools, and engaging with a finance community.
+Kişisel yatırım portföylerini yönetmek, finansal haberleri takip etmek, finansal araçları kullanmak ve finans topluluğu ile etkileşim kurmak için kapsamlı, etkileşimli, veri odaklı bir web uygulaması.
 
-## 🚀 Features
+## 🚀 Özellikler
 
-### 📈 Portfolio Management
-- **My Assets**: View and track your investment portfolio with real-time calculations
-- **Add Transaction**: Record buy/sell transactions with form validation
-- **Transaction History**: Complete history of all portfolio transactions
-- **Portfolio Analytics**: Total value, cost basis, and gain/loss calculations
+### 📈 Portföy Yönetimi
+- **Varlıklarım**: Gerçek zamanlı hesaplamalarla yatırım portföyünüzü görüntüleyin ve takip edin
+- **İşlem Ekle**: Form doğrulaması ile alım/satım işlemlerini kaydedin
+- **İşlem Geçmişi**: Tüm portföy işlemlerinin tam geçmişi
+- **Portföy Analizi**: Toplam değer, maliyet esası ve kazanç/kayıp hesaplamaları
 
-### 📰 Financial News
-- **Latest News**: Browse curated financial news with filtering and search
-- **Category Pages**: News organized by Market, Tech, Crypto, and Economy categories
-- **Search Functionality**: Find specific articles and topics
+### 📰 Finansal Haberler
+- **Son Haberler**: Filtreleme ve arama ile seçilmiş finansal haberleri inceleyin
+- **Kategori Sayfaları**: Piyasa, Teknoloji, Kripto ve Ekonomi kategorilerine göre düzenlenmiş haberler
+- **Arama Fonksiyonu**: Belirli makaleleri ve konuları bulun
 
-### 🛠️ Financial Tools
-- **Compound Interest Calculator**: Calculate investment growth over time
-- **More Tools**: Extensible framework for additional financial calculators
+### 🛠️ Finansal Araçlar
+- **Bileşik Faiz Hesaplayıcısı**: Zaman içinde yatırım büyümesini hesaplayın
+- **Emeklilik Planlayıcısı**: Emeklilik hedeflerinizi planlayın
+- **Portföy Analizörü**: Detaylı portföy analizi araçları
 
-### 👥 Community
-- **Forum Categories**: Discuss stocks, crypto, real estate, and general finance
-- **Discussion Threads**: Browse and participate in financial discussions
-- **User Posts**: Community-driven content and insights
+### 👥 Topluluk
+- **Forum Kategorileri**: Hisse senetleri, kripto, gayrimenkul ve genel finans tartışmaları
+- **Tartışma Konuları**: Finansal tartışmalara göz atın ve katılın
+- **Kullanıcı Gönderileri**: Topluluk odaklı içerik ve görüşler
 
-### 🎨 User Experience
-- **Responsive Design**: Fully responsive across all device sizes
-- **Modern UI**: Clean, professional interface built with Tailwind CSS
-- **Fast Navigation**: React Router with nested routing and breadcrumbs
-- **Type Safety**: Full TypeScript integration throughout the application
+### 🎨 Kullanıcı Deneyimi
+- **Responsive Tasarım**: Tüm cihaz boyutlarında tam responsive
+- **Modern UI**: Tailwind CSS ile oluşturulmuş temiz, profesyonel arayüz
+- **Hızlı Navigasyon**: İç içe routing ve breadcrumb'lar ile React Router
+- **Tip Güvenliği**: Uygulama genelinde tam TypeScript entegrasyonu
 
-## 🛠️ Technology Stack
+## 🛠️ Teknoloji Yığını
 
-- **Frontend Framework**: React 18 with TypeScript
-- **Build Tool**: Vite for fast development and optimized builds
-- **Routing**: React Router v6 with nested routes
-- **State Management**: Zustand for global state management
-- **Forms**: React Hook Form with validation
-- **Styling**: Tailwind CSS with custom components
-- **Icons**: Lucide React for modern iconography
-- **HTTP Client**: Axios for API calls
-- **Development**: ESLint, TypeScript strict mode
+- **Frontend Framework**: TypeScript ile React 18
+- **Build Aracı**: Hızlı geliştirme ve optimize edilmiş build'ler için Vite
+- **Routing**: İç içe route'lar ile React Router v6
+- **State Yönetimi**: Global state yönetimi için Zustand
+- **Formlar**: Doğrulama ile React Hook Form
+- **Styling**: Özel componentler ile Tailwind CSS
+- **İkonlar**: Modern ikonografi için Lucide React
+- **HTTP Client**: API çağrıları için Axios
+- **Geliştirme**: ESLint, TypeScript strict mode
 
-## 📦 Installation
+## 📦 Kurulum
 
-1. **Clone the repository**:
+1. **Repository'yi klonlayın**:
    ```bash
    git clone <repository-url>
    cd finance-hub
    ```
 
-2. **Install dependencies**:
+2. **Bağımlılıkları yükleyin**:
    ```bash
    npm install
    ```
 
-3. **Start the development server**:
+3. **Geliştirme sunucusunu başlatın**:
    ```bash
    npm run dev
    ```
 
-4. **Open your browser** and navigate to `http://localhost:5173`
+4. **Tarayıcınızı açın** ve `http://localhost:5173` adresine gidin
 
-## 📁 Project Structure
+## 📁 Proje Yapısı
 
 ```
 src/
-├── components/          # Reusable UI components
-│   ├── Layout.tsx      # Main app layout wrapper
-│   └── Navigation.tsx  # Navigation component
-├── pages/              # Main application pages
-│   ├── Dashboard.tsx   # Home dashboard
-│   ├── PortfolioPage.tsx # Portfolio management
-│   ├── NewsPage.tsx    # Financial news
-│   ├── ToolsPage.tsx   # Financial calculators
-│   └── CommunityPage.tsx # Community forum
-├── store/              # Zustand state management
-│   └── portfolioStore.ts # Portfolio state and actions
-├── services/           # API and external services
-│   └── apiService.ts   # HTTP client and API calls
-├── types/              # TypeScript type definitions
-│   └── index.ts        # All application types
-├── data/               # Mock data and constants
-│   └── mockData.ts     # Sample data for development
-├── utils/              # Utility functions
-│   └── helpers.ts      # Formatting and calculation helpers
-└── hooks/              # Custom React hooks (extensible)
+├── components/          # Yeniden kullanılabilir UI componentleri
+│   ├── Layout.tsx      # Ana uygulama layout wrapper'ı
+│   └── Navigation.tsx  # Navigasyon componenti
+├── pages/              # Ana uygulama sayfaları
+│   ├── Dashboard.tsx   # Ana dashboard
+│   ├── PortfolioPage.tsx # Portföy yönetimi
+│   ├── NewsPage.tsx    # Finansal haberler
+│   ├── ToolsPage.tsx   # Finansal hesaplayıcılar
+│   ├── DiscoverPage.tsx # Keşfet sayfası
+│   ├── CommunityPage.tsx # Topluluk forumu
+│   └── tools/          # Alt araç sayfaları
+│       ├── PortfolioAnalyzer.tsx
+│       └── RetirementPlanner.tsx
+├── store/              # Zustand state yönetimi
+│   └── portfolioStore.ts # Portföy state ve actions
+├── services/           # API ve harici servisler
+│   └── apiService.ts   # HTTP client ve API çağrıları
+├── types/              # TypeScript tip tanımlamaları
+│   └── index.ts        # Tüm uygulama tipleri
+├── data/               # Mock veri ve sabitler
+│   └── mockData.ts     # Geliştirme için örnek veri
+└── utils/              # Yardımcı fonksiyonlar
+    └── helpers.ts      # Formatlama ve hesaplama yardımcıları
 ```
 
-## 🎯 Key Features Implementation
+## 🎯 Temel Özellik Uygulamaları
 
-### State Management
-- Zustand store with TypeScript for portfolio data
-- Actions for adding/removing assets and transactions
-- Computed values for portfolio analytics
+### State Yönetimi
+- Portfolio verileri için TypeScript ile Zustand store
+- Varlık ve işlem ekleme/çıkarma için actions
+- Portföy analitiği için hesaplanmış değerler
 
-### Form Handling
-- React Hook Form integration with validation
+### Form İşleme
+- Doğrulama ile React Hook Form entegrasyonu
 - Type-safe form submissions
 - Error handling and user feedback
 
