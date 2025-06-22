@@ -1,5 +1,7 @@
 import { Routes, Route, Link, useLocation } from 'react-router-dom';
-import { Plus, TrendingUp, PieChart } from 'lucide-react';
+import { Plus, TrendingUp, PieChart, AlertCircle, CheckCircle } from 'lucide-react';
+import { useForm } from 'react-hook-form';
+import { useState } from 'react';
 import { usePortfolioStore } from '../store/portfolioStore';
 import { formatCurrency, formatPercentage, getGainLossColor } from '../utils/helpers';
 
@@ -112,23 +114,342 @@ const MyAssets = () => {
   );
 };
 
+interface TransactionFormData {
+  symbol: string;
+  name: string;
+  type: 'buy' | 'sell';
+  quantity: number;
+  price: number;
+  date: string;
+}
+
 const AddTransaction = () => {
+  const { addTransaction, addAsset, getAssetBySymbol } = usePortfolioStore();
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitSuccess, setSubmitSuccess] = useState(false);
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    reset,
+    watch
+  } = useForm<TransactionFormData>({
+    defaultValues: {
+      symbol: '',
+      name: '',
+      type: 'buy',
+      quantity: 0,
+      price: 0,
+      date: new Date().toISOString().split('T')[0]
+    }
+  });
+
+  const watchedType = watch('type');
+  const watchedQuantity = watch('quantity');
+  const watchedPrice = watch('price');
+  const totalValue = (watchedQuantity || 0) * (watchedPrice || 0);
+
+  const onSubmit = async (data: TransactionFormData) => {
+    setIsSubmitting(true);
+    setSubmitSuccess(false);
+
+    try {
+      // Check if asset exists, if not create it
+      let asset = getAssetBySymbol(data.symbol.toUpperCase());
+      
+      if (!asset) {
+        const newAssetId = `asset_${Date.now()}`;        addAsset({
+          id: newAssetId,
+          symbol: data.symbol.toUpperCase(),
+          name: data.name,
+          currentPrice: data.price,
+          quantity: 0,
+          averageCost: 0,
+          type: 'stock', // Default type
+          lastUpdated: new Date()
+        });
+        asset = getAssetBySymbol(data.symbol.toUpperCase());
+      }      if (asset) {
+        // Add the transaction
+        addTransaction({
+          id: `txn_${Date.now()}`,
+          assetId: asset.id,
+          type: data.type,
+          quantity: data.quantity,
+          price: data.price,
+          date: new Date(data.date),
+          fees: 0 // Default fees
+        });
+
+        setSubmitSuccess(true);
+        reset();
+        
+        // Hide success message after 3 seconds
+        setTimeout(() => setSubmitSuccess(false), 3000);
+      }
+    } catch (error) {
+      console.error('Error adding transaction:', error);
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   return (
     <div>
-      <h2 className="text-2xl font-bold text-gray-900 mb-6">Add Transaction</h2>
-      <div className="card max-w-2xl">
-        <p className="text-gray-600 mb-4">Transaction form will be implemented here using React Hook Form.</p>
-        <div className="bg-gray-50 p-4 rounded-lg">
-          <h3 className="font-medium text-gray-900 mb-2">Features to be implemented:</h3>
-          <ul className="text-sm text-gray-600 space-y-1">
-            <li>• Asset symbol input with validation</li>
-            <li>• Buy/Sell transaction type selection</li>
-            <li>• Quantity and price inputs</li>
-            <li>• Date picker</li>
-            <li>• Form validation with error handling</li>
-            <li>• Integration with Zustand store</li>
-          </ul>
+      <div className="mb-6">
+        <h2 className="text-2xl font-bold text-gray-900 mb-2">Add Transaction</h2>
+        <p className="text-gray-600">Record a new buy or sell transaction for your portfolio</p>
+      </div>
+
+      {submitSuccess && (
+        <div className="mb-6 bg-green-50 border border-green-200 rounded-lg p-4">
+          <div className="flex items-center">
+            <CheckCircle className="h-5 w-5 text-green-600 mr-2" />
+            <span className="text-green-800 font-medium">Transaction added successfully!</span>
+          </div>
         </div>
+      )}
+
+      <div className="card max-w-2xl">
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+          {/* Asset Information */}
+          <div>
+            <h3 className="text-lg font-medium text-gray-900 mb-4">Asset Information</h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label htmlFor="symbol" className="block text-sm font-medium text-gray-700 mb-1">
+                  Symbol *
+                </label>
+                <input
+                  type="text"
+                  id="symbol"
+                  {...register('symbol', {
+                    required: 'Asset symbol is required',
+                    pattern: {
+                      value: /^[A-Za-z]{1,10}$/,
+                      message: 'Enter a valid stock symbol (letters only, max 10 characters)'
+                    }
+                  })}
+                  className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 ${
+                    errors.symbol ? 'border-red-300' : 'border-gray-300'
+                  }`}
+                  placeholder="e.g., AAPL"
+                />
+                {errors.symbol && (
+                  <div className="mt-1 flex items-center text-sm text-red-600">
+                    <AlertCircle className="h-4 w-4 mr-1" />
+                    {errors.symbol.message}
+                  </div>
+                )}
+              </div>
+
+              <div>
+                <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
+                  Asset Name *
+                </label>
+                <input
+                  type="text"
+                  id="name"
+                  {...register('name', {
+                    required: 'Asset name is required',
+                    minLength: {
+                      value: 2,
+                      message: 'Asset name must be at least 2 characters'
+                    }
+                  })}
+                  className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 ${
+                    errors.name ? 'border-red-300' : 'border-gray-300'
+                  }`}
+                  placeholder="e.g., Apple Inc."
+                />
+                {errors.name && (
+                  <div className="mt-1 flex items-center text-sm text-red-600">
+                    <AlertCircle className="h-4 w-4 mr-1" />
+                    {errors.name.message}
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+
+          {/* Transaction Details */}
+          <div>
+            <h3 className="text-lg font-medium text-gray-900 mb-4">Transaction Details</h3>
+            <div className="space-y-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Transaction Type *
+                </label>
+                <div className="flex space-x-4">
+                  <label className="flex items-center">
+                    <input
+                      type="radio"
+                      value="buy"
+                      {...register('type', { required: 'Transaction type is required' })}
+                      className="h-4 w-4 text-primary-600 focus:ring-primary-500"
+                    />
+                    <span className="ml-2 text-sm text-gray-700">Buy</span>
+                  </label>
+                  <label className="flex items-center">
+                    <input
+                      type="radio"
+                      value="sell"
+                      {...register('type', { required: 'Transaction type is required' })}
+                      className="h-4 w-4 text-primary-600 focus:ring-primary-500"
+                    />
+                    <span className="ml-2 text-sm text-gray-700">Sell</span>
+                  </label>
+                </div>
+                {errors.type && (
+                  <div className="mt-1 flex items-center text-sm text-red-600">
+                    <AlertCircle className="h-4 w-4 mr-1" />
+                    {errors.type.message}
+                  </div>
+                )}
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <label htmlFor="quantity" className="block text-sm font-medium text-gray-700 mb-1">
+                    Quantity *
+                  </label>
+                  <input
+                    type="number"
+                    id="quantity"
+                    step="0.01"
+                    {...register('quantity', {
+                      required: 'Quantity is required',
+                      min: {
+                        value: 0.01,
+                        message: 'Quantity must be greater than 0'
+                      },
+                      max: {
+                        value: 1000000,
+                        message: 'Quantity cannot exceed 1,000,000'
+                      }
+                    })}
+                    className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 ${
+                      errors.quantity ? 'border-red-300' : 'border-gray-300'
+                    }`}
+                    placeholder="0.00"
+                  />
+                  {errors.quantity && (
+                    <div className="mt-1 flex items-center text-sm text-red-600">
+                      <AlertCircle className="h-4 w-4 mr-1" />
+                      {errors.quantity.message}
+                    </div>
+                  )}
+                </div>
+
+                <div>
+                  <label htmlFor="price" className="block text-sm font-medium text-gray-700 mb-1">
+                    Price per Share *
+                  </label>
+                  <input
+                    type="number"
+                    id="price"
+                    step="0.01"
+                    {...register('price', {
+                      required: 'Price is required',
+                      min: {
+                        value: 0.01,
+                        message: 'Price must be greater than 0'
+                      },
+                      max: {
+                        value: 1000000,
+                        message: 'Price cannot exceed $1,000,000'
+                      }
+                    })}
+                    className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 ${
+                      errors.price ? 'border-red-300' : 'border-gray-300'
+                    }`}
+                    placeholder="0.00"
+                  />
+                  {errors.price && (
+                    <div className="mt-1 flex items-center text-sm text-red-600">
+                      <AlertCircle className="h-4 w-4 mr-1" />
+                      {errors.price.message}
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              <div>
+                <label htmlFor="date" className="block text-sm font-medium text-gray-700 mb-1">
+                  Transaction Date *
+                </label>
+                <input
+                  type="date"
+                  id="date"
+                  {...register('date', {
+                    required: 'Transaction date is required'
+                  })}
+                  className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 ${
+                    errors.date ? 'border-red-300' : 'border-gray-300'
+                  }`}
+                />
+                {errors.date && (
+                  <div className="mt-1 flex items-center text-sm text-red-600">
+                    <AlertCircle className="h-4 w-4 mr-1" />
+                    {errors.date.message}
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+
+          {/* Transaction Summary */}
+          {totalValue > 0 && (
+            <div className="bg-gray-50 p-4 rounded-lg">
+              <h4 className="text-sm font-medium text-gray-900 mb-2">Transaction Summary</h4>
+              <div className="text-sm text-gray-600">
+                <div className="flex justify-between mb-1">
+                  <span>Transaction Type:</span>
+                  <span className={`font-medium ${
+                    watchedType === 'buy' ? 'text-green-600' : 'text-red-600'
+                  }`}>
+                    {watchedType?.toUpperCase()}
+                  </span>
+                </div>
+                <div className="flex justify-between mb-1">
+                  <span>Quantity:</span>
+                  <span className="font-medium">{watchedQuantity}</span>
+                </div>
+                <div className="flex justify-between mb-1">
+                  <span>Price per Share:</span>
+                  <span className="font-medium">{formatCurrency(watchedPrice || 0)}</span>
+                </div>
+                <div className="flex justify-between pt-2 border-t border-gray-200">
+                  <span className="font-medium">Total Value:</span>
+                  <span className="font-bold text-lg">{formatCurrency(totalValue)}</span>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* Submit Button */}
+          <div className="flex justify-end space-x-3">
+            <button
+              type="button"
+              onClick={() => reset()}
+              className="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+            >
+              Reset Form
+            </button>
+            <button
+              type="submit"
+              disabled={isSubmitting}
+              className={`px-6 py-2 rounded-lg text-white font-medium focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 ${
+                isSubmitting
+                  ? 'bg-gray-400 cursor-not-allowed'
+                  : 'bg-primary-600 hover:bg-primary-700'
+              }`}
+            >
+              {isSubmitting ? 'Adding Transaction...' : 'Add Transaction'}
+            </button>
+          </div>
+        </form>
       </div>
     </div>
   );

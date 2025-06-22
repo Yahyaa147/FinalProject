@@ -33,12 +33,12 @@ interface PortfolioState {
   setLoading: (loading: boolean) => void;
   setError: (error: string | null) => void;
   clearError: () => void;
-  
-  // Computed getters
+    // Computed getters
   getTotalPortfolioValue: () => number;
   getTotalCost: () => number;
   getTotalGainLoss: () => number;
   getAssetById: (id: string) => Asset | undefined;
+  getAssetBySymbol: (symbol: string) => Asset | undefined;
   getTransactionsByAssetId: (assetId: string) => Transaction[];
 }
 
@@ -110,10 +110,14 @@ export const usePortfolioStore = create<PortfolioState>()(
           const state = get();
           return state.getTotalPortfolioValue() - state.getTotalCost();
         },
-        
-        getAssetById: (id) => {
+          getAssetById: (id) => {
           const { assets } = get();
           return assets.find(asset => asset.id === id);
+        },
+        
+        getAssetBySymbol: (symbol) => {
+          const { assets } = get();
+          return assets.find(asset => asset.symbol.toLowerCase() === symbol.toLowerCase());
         },
         
         getTransactionsByAssetId: (assetId) => {
