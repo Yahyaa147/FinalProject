@@ -7,6 +7,7 @@ import NewsPage from './pages/NewsPage';
 import ToolsPage from './pages/ToolsPage';
 import CommunityPage from './pages/CommunityPage';
 import DiscoverPage from './pages/DiscoverPage';
+import ApiDemo from './components/ApiDemo';
 import { usePortfolioStore } from './store/portfolioStore';
 import { mockAssets, mockTransactions } from './data/mockData';
 
@@ -33,6 +34,7 @@ function App() {
           <Route path="news/*" element={<NewsPage />} />
           <Route path="tools/*" element={<ToolsPage />} />
           <Route path="community/*" element={<CommunityPage />} />
+          <Route path="api-demo" element={<ApiDemo />} />
         </Route>
       </Routes>
     </Router>
