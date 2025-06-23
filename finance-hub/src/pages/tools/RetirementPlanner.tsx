@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Calculator, TrendingUp, DollarSign, Calendar, Target, PiggyBank } from 'lucide-react';
 import { formatCurrency } from '../../utils/helpers';
+import { ToolPageHeader, ToolFormSection, ToolResultCard } from '../../components/tools';
 
 interface RetirementFormData {
   currentAge: number;
@@ -89,23 +90,29 @@ const RetirementPlanner = () => {
 
   // Calculate preview in real-time
   const previewResult = isValid ? calculateRetirement(watchedValues) : null;
-
   return (
-    <div className="max-w-6xl mx-auto">
-      <div className="mb-8">
-        <h2 className="text-3xl font-bold text-gray-900 mb-2">Retirement Planner</h2>
-        <p className="text-gray-600">
-          Plan your retirement with our comprehensive calculator. See how much you need to save and if you're on track.
-        </p>
-      </div>
+    <div className="space-y-8">
+      {/* Header Section */}
+      <ToolPageHeader
+        title="Retirement Planner"
+        subtitle="Plan your secure financial future"
+        description="Plan your retirement with our comprehensive calculator. See how much you need to save and if you're on track to meet your retirement goals."
+        icon={PiggyBank}
+        iconBgGradient="from-green-500 to-emerald-600"
+        headerBgGradient="from-green-50 to-emerald-50"
+        accentColor="text-green-600"
+        rightIcon={Target}
+        rightIconLabel="Future Planning"
+      />
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         {/* Calculator Form */}
-        <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-          <h3 className="text-xl font-semibold text-gray-900 mb-6 flex items-center">
-            <Calculator className="h-5 w-5 text-blue-600 mr-2" />
-            Retirement Parameters
-          </h3>
+        <div>
+          <ToolFormSection
+            title="Retirement Parameters"
+            icon={Calculator}
+            iconBgGradient="from-blue-500 to-indigo-600"
+          >
           
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
             {/* Age Information */}
@@ -265,9 +272,7 @@ const RetirementPlanner = () => {
               {errors.retirementGoal && (
                 <p className="text-red-600 text-sm mt-1">{errors.retirementGoal.message}</p>
               )}
-            </div>
-
-            <button
+            </div>            <button
               type="submit"
               className="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white py-3 px-6 rounded-lg hover:from-blue-700 hover:to-purple-700 transition-all duration-200 flex items-center justify-center space-x-2"
               disabled={!isValid}
@@ -276,17 +281,16 @@ const RetirementPlanner = () => {
               <span>Calculate Retirement Plan</span>
             </button>
           </form>
-        </div>
-
-        {/* Results */}
+          </ToolFormSection>
+        </div>        {/* Results */}
         <div className="space-y-6">
           {/* Live Preview */}
           {previewResult && (
-            <div className="bg-gradient-to-r from-blue-50 to-purple-50 rounded-xl border border-blue-200 p-6">
-              <h3 className="text-xl font-semibold text-gray-900 mb-4 flex items-center">
-                <TrendingUp className="h-5 w-5 text-blue-600 mr-2" />
-                Live Preview
-              </h3>
+            <ToolResultCard
+              title="Live Preview"
+              icon={TrendingUp}
+              gradient="from-blue-50 to-purple-50"
+            >
               
               <div className="grid grid-cols-1 gap-4">
                 <div className="bg-white rounded-lg p-4">
@@ -312,16 +316,16 @@ const RetirementPlanner = () => {
                     <div className="text-xs text-red-600 mt-1">
                       Consider increasing contributions to {formatCurrency(previewResult.recommendedMonthlyContribution)}/month
                     </div>
-                  </div>
-                )}
+                  </div>                )}
               </div>
-            </div>
-          )}
-
-          {/* Detailed Results */}
+            </ToolResultCard>
+          )}          {/* Detailed Results */}
           {result && (
-            <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-              <h3 className="text-xl font-semibold text-gray-900 mb-6">Detailed Analysis</h3>
+            <ToolResultCard
+              title="Detailed Analysis"
+              icon={Target}
+              gradient="from-gray-50 to-gray-100"
+            >
               
               <div className="space-y-6">
                 {/* Summary Cards */}
@@ -382,11 +386,10 @@ const RetirementPlanner = () => {
                     </div>
                     <div className="text-sm text-gray-600">
                       • Review and adjust plan annually
-                    </div>
-                  </div>
+                    </div>                  </div>
                 </div>
               </div>
-            </div>
+            </ToolResultCard>
           )}
         </div>
       </div>

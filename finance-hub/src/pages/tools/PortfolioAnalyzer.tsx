@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import { PieChart, BarChart3, TrendingUp, AlertCircle, CheckCircle } from 'lucide-react';
 import { usePortfolioStore } from '../../store/portfolioStore';
-import { formatCurrency, formatPercentage } from '../../utils/helpers';
+import { formatCurrency } from '../../utils/helpers';
+import { ToolPageHeader, ToolFormSection, ToolResultCard } from '../../components/tools';
 
 const PortfolioAnalyzer = () => {
   const { assets, getTotalPortfolioValue } = usePortfolioStore();
@@ -40,21 +41,29 @@ const PortfolioAnalyzer = () => {
       cash: 5
     }
   };
-
   return (
-    <div className="max-w-6xl mx-auto">
-      <div className="mb-8">
-        <h2 className="text-3xl font-bold text-gray-900 mb-2">Portfolio Analyzer</h2>
-        <p className="text-gray-600">
-          Get comprehensive insights into your portfolio performance, risk assessment, and optimization recommendations.
-        </p>
-      </div>
+    <div className="space-y-8">
+      {/* Header Section */}
+      <ToolPageHeader
+        title="Portfolio Analyzer"
+        subtitle="Analyze and optimize your investments"
+        description="Get comprehensive insights into your portfolio performance, risk assessment, and optimization recommendations for better returns."
+        icon={PieChart}
+        iconBgGradient="from-purple-500 to-pink-600"
+        headerBgGradient="from-purple-50 to-pink-50"
+        accentColor="text-purple-600"
+        rightIcon={TrendingUp}
+        rightIconLabel="Risk Assessment"
+      />
 
       {/* Analysis Trigger */}
-      <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 mb-8">
+      <ToolFormSection
+        title="Portfolio Analysis"
+        icon={BarChart3}
+        iconBgGradient="from-blue-500 to-indigo-600"
+      >
         <div className="flex items-center justify-between">
           <div>
-            <h3 className="text-xl font-semibold text-gray-900 mb-2">Portfolio Analysis</h3>
             <p className="text-gray-600">
               Analyze your current portfolio of {assets.length} assets worth {formatCurrency(totalValue)}
             </p>
@@ -67,18 +76,16 @@ const PortfolioAnalyzer = () => {
             <span>Run Analysis</span>
           </button>
         </div>
-      </div>
-
-      {analysisComplete && (
+      </ToolFormSection>      {analysisComplete && (
         <div className="space-y-8">
           {/* Analysis Results */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {/* Diversification Score */}
-            <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-              <div className="flex items-center justify-between mb-4">
-                <h3 className="text-lg font-semibold text-gray-900">Diversification</h3>
-                <PieChart className="h-5 w-5 text-blue-600" />
-              </div>
+            <ToolResultCard
+              title="Diversification"
+              icon={PieChart}
+              gradient="from-blue-50 to-indigo-50"
+            >
               <div className="mb-4">
                 <div className="flex items-center space-x-2 mb-2">
                   <div className="text-3xl font-bold text-green-600">{portfolioAnalysis.diversification.score}</div>
@@ -99,15 +106,12 @@ const PortfolioAnalyzer = () => {
                   {portfolioAnalysis.diversification.recommendation}
                 </div>
               </div>
-            </div>
-
-            {/* Risk Assessment */}
-            <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-              <div className="flex items-center justify-between mb-4">
-                <h3 className="text-lg font-semibold text-gray-900">Risk Level</h3>
-                <AlertCircle className="h-5 w-5 text-yellow-600" />
-              </div>
-              <div className="mb-4">
+            </ToolResultCard>            {/* Risk Assessment */}
+            <ToolResultCard
+              title="Risk Level"
+              icon={AlertCircle}
+              gradient="from-yellow-50 to-orange-50"
+            >              <div className="mb-4">
                 <div className="text-2xl font-bold text-yellow-600 mb-2">
                   {portfolioAnalysis.riskLevel.score}
                 </div>
@@ -118,15 +122,14 @@ const PortfolioAnalyzer = () => {
               <div className="text-sm text-gray-600">
                 {portfolioAnalysis.riskLevel.recommendation}
               </div>
-            </div>
+            </ToolResultCard>
 
             {/* Performance Score */}
-            <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-              <div className="flex items-center justify-between mb-4">
-                <h3 className="text-lg font-semibold text-gray-900">Performance</h3>
-                <TrendingUp className="h-5 w-5 text-green-600" />
-              </div>
-              <div className="mb-4">
+            <ToolResultCard
+              title="Performance"
+              icon={TrendingUp}
+              gradient="from-green-50 to-emerald-50"
+            >              <div className="mb-4">
                 <div className="flex items-center space-x-2 mb-2">
                   <div className="text-3xl font-bold text-green-600">{portfolioAnalysis.performanceScore.score}</div>
                   <div className="text-sm text-gray-600">/100</div>
@@ -138,12 +141,13 @@ const PortfolioAnalyzer = () => {
               <div className="text-sm text-gray-600">
                 {portfolioAnalysis.performanceScore.recommendation}
               </div>
-            </div>
-          </div>
-
-          {/* Asset Allocation Breakdown */}
-          <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-            <h3 className="text-xl font-semibold text-gray-900 mb-6">Asset Allocation Breakdown</h3>
+            </ToolResultCard>
+          </div>          {/* Asset Allocation Breakdown */}
+          <ToolResultCard
+            title="Asset Allocation Breakdown"
+            icon={PieChart}
+            gradient="from-purple-50 to-indigo-50"
+          >
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
               <div className="text-center">
                 <div className="w-16 h-16 bg-blue-100 rounded-full mx-auto mb-3 flex items-center justify-center">
@@ -167,18 +171,18 @@ const PortfolioAnalyzer = () => {
                 <div className="text-xs text-gray-600">High growth</div>
               </div>
               <div className="text-center">
-                <div className="w-16 h-16 bg-gray-100 rounded-full mx-auto mb-3 flex items-center justify-center">
-                  <span className="text-gray-600 font-bold">{portfolioAnalysis.assetAllocation.cash}%</span>
+                <div className="w-16 h-16 bg-gray-100 rounded-full mx-auto mb-3 flex items-center justify-center">                  <span className="text-gray-600 font-bold">{portfolioAnalysis.assetAllocation.cash}%</span>
                 </div>
                 <div className="text-sm font-medium text-gray-900">Cash</div>
                 <div className="text-xs text-gray-600">Liquidity</div>
               </div>
             </div>
-          </div>
-
-          {/* Recommendations */}
-          <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-            <h3 className="text-xl font-semibold text-gray-900 mb-6">Optimization Recommendations</h3>
+          </ToolResultCard>          {/* Recommendations */}
+          <ToolResultCard
+            title="Optimization Recommendations"
+            icon={CheckCircle}
+            gradient="from-green-50 to-emerald-50"
+          >
             <div className="space-y-4">
               <div className="flex items-start space-x-3 p-4 bg-green-50 rounded-lg">
                 <CheckCircle className="h-5 w-5 text-green-600 mt-0.5" />
@@ -202,13 +206,12 @@ const PortfolioAnalyzer = () => {
                 <TrendingUp className="h-5 w-5 text-blue-600 mt-0.5" />
                 <div>
                   <div className="font-medium text-blue-900">Growth Opportunity</div>
-                  <div className="text-sm text-blue-700">
-                    Consider adding international exposure to further diversify your holdings.
+                  <div className="text-sm text-blue-700">                    Consider adding international exposure to further diversify your holdings.
                   </div>
                 </div>
               </div>
             </div>
-          </div>
+          </ToolResultCard>
         </div>
       )}
     </div>

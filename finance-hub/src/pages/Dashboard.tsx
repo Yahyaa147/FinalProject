@@ -16,9 +16,7 @@ import {
   DashboardQuickActions, 
   MarketOverview, 
   NewsWidget, 
-  PortfolioPerformance,
   FinancialCalendar,
-  PortfolioAllocation,
   WatchlistWidget,
   MarketSummary
 } from '../components/dashboard';
@@ -177,35 +175,9 @@ const Dashboard = () => {
 
           {/* Watchlist Widget */}
           <WatchlistWidget />
-        </div>
-
-        {/* Portfolio Analysis Section */}
-        {assets.length > 0 && (
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
-            {/* Portfolio Performance */}
-            <PortfolioPerformance 
-              assets={assets}
-              totalCost={totalCost}
-              totalGainLoss={totalGainLoss}
-            />
-
-            {/* Portfolio Allocation */}
-            <PortfolioAllocation assets={assets} />
-          </div>
-        )}        {/* Enhanced Quick Actions using Reusable Component */}
+        </div>{/* Enhanced Quick Actions using Reusable Component */}
         <DashboardQuickActions 
           actions={[
-            {
-              title: 'Add Transaction',
-              description: 'Record new buy or sell orders',
-              link: '/portfolio',
-              icon: DollarSign,
-              gradient: 'bg-gradient-to-r from-blue-500 to-blue-600',
-              onClick: () => {
-                // Could open a modal or navigate to add transaction
-                console.log('Add transaction clicked');
-              }
-            },
             {
               title: 'Calculate Returns',
               description: 'Estimate investment growth',

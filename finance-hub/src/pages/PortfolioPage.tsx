@@ -5,6 +5,7 @@ import { useState } from 'react';
 import { usePortfolioStore } from '../store/portfolioStore';
 import { formatCurrency, formatPercentage, getGainLossColor } from '../utils/helpers';
 import PageHeader from '../components/PageHeader';
+import { PortfolioPerformance, PortfolioAllocation } from '../components/dashboard';
 import { 
   PieChart as RechartsPieChart, 
   Pie,
@@ -164,8 +165,20 @@ const MyAssets = () => {
             <div className="p-3 bg-yellow-100 rounded-lg">
               <BarChart3 className="h-6 w-6 text-yellow-600" />
             </div>
-          </div>
-        </div>
+          </div>        </div>
+      </div>
+
+      {/* Portfolio Analysis Components from Dashboard */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        {/* Portfolio Performance */}
+        <PortfolioPerformance 
+          assets={assets}
+          totalCost={totalCost}
+          totalGainLoss={totalGainLoss}
+        />
+
+        {/* Portfolio Allocation */}
+        <PortfolioAllocation assets={assets} />
       </div>
 
       {/* Charts Section */}
