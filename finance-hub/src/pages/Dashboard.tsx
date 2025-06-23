@@ -1,18 +1,27 @@
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
 import { 
   TrendingUp, 
   TrendingDown, 
   DollarSign, 
   PieChart, 
-  ArrowRight,
-  Users,
-  BarChart3
+  BarChart3,
+  Calculator,
+  Target
 } from 'lucide-react';
 import { usePortfolioStore } from '../store/portfolioStore';
 import { ApiService } from '../services/apiService';
 import { formatCurrency, formatPercentage, getGainLossColor } from '../utils/helpers';
 import PageHeader from '../components/PageHeader';
+import { 
+  DashboardQuickActions, 
+  MarketOverview, 
+  NewsWidget, 
+  PortfolioPerformance,
+  FinancialCalendar,
+  PortfolioAllocation,
+  WatchlistWidget,
+  MarketSummary
+} from '../components/dashboard';
 import type { Article, MarketData } from '../types';
 
 const Dashboard = () => {
@@ -146,166 +155,94 @@ const Dashboard = () => {
                   </div>
                 </div>
               );
-            })}
-          </div>
+            })}          </div>
+        </div>        {/* Live Market Summary */}
+        <div className="mb-8">
+          <MarketSummary />
         </div>
 
         {/* Main Content Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
-          {/* Market Overview */}
-          <div className="bg-white rounded-2xl shadow-sm border border-gray-200/50 overflow-hidden">
-            <div className="bg-gradient-to-r from-blue-50 to-indigo-50 p-6 border-b border-gray-200/50">
-              <div className="flex items-center justify-between">
-                <div>
-                  <h2 className="text-xl font-semibold text-gray-900 flex items-center">
-                    <BarChart3 className="h-5 w-5 text-blue-600 mr-2" />
-                    Market Overview
-                  </h2>
-                  <p className="text-sm text-gray-600 mt-1">Live market data and trends</p>
-                </div>
-                <Link 
-                  to="/news"
-                  className="px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-700 transition-colors"
-                >
-                  View All
-                </Link>
-              </div>
-            </div>
-            <div className="p-6">
-              <div className="space-y-4">
-                {marketData.map((market) => (
-                  <div key={market.symbol} className="flex items-center justify-between p-4 bg-gray-50 rounded-xl hover:bg-gray-100 transition-colors">
-                    <div className="flex items-center">
-                      <div className="w-10 h-10 bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg flex items-center justify-center mr-3">
-                        <span className="text-white font-bold text-sm">{market.symbol.charAt(0)}</span>
-                      </div>
-                      <div>
-                        <p className="font-semibold text-gray-900">{market.symbol}</p>
-                        <p className="text-2xl font-bold text-gray-900">{formatCurrency(market.price)}</p>
-                      </div>
-                    </div>
-                    <div className="text-right">
-                      <p className={`font-semibold flex items-center ${getGainLossColor(market.change)}`}>
-                        {market.change >= 0 ? <TrendingUp className="h-4 w-4 mr-1" /> : <TrendingDown className="h-4 w-4 mr-1" />}
-                        {formatCurrency(market.change)}
-                      </p>
-                      <p className={`text-sm font-medium ${getGainLossColor(market.change)}`}>
-                        {formatPercentage(market.changePercent)}
-                      </p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
+          {/* Enhanced Market Overview */}
+          <MarketOverview marketData={marketData} />
 
-          {/* Latest News */}
-          <div className="bg-white rounded-2xl shadow-sm border border-gray-200/50 overflow-hidden">
-            <div className="bg-gradient-to-r from-purple-50 to-pink-50 p-6 border-b border-gray-200/50">
-              <div className="flex items-center justify-between">
-                <div>
-                  <h2 className="text-xl font-semibold text-gray-900 flex items-center">
-                    <Users className="h-5 w-5 text-purple-600 mr-2" />
-                    Latest News
-                  </h2>
-                  <p className="text-sm text-gray-600 mt-1">Stay updated with market insights</p>
-                </div>
-                <Link 
-                  to="/news"
-                  className="px-4 py-2 bg-purple-600 text-white text-sm font-medium rounded-lg hover:bg-purple-700 transition-colors flex items-center"
-                >
-                  View All <ArrowRight className="ml-1 h-4 w-4" />
-                </Link>
-              </div>
-            </div>
-            <div className="p-6">
-              <div className="space-y-4">
-                {news.map((article) => (
-                  <div key={article.id} className="border-b border-gray-100 pb-4 last:border-b-0 last:pb-0">
-                    <div className="flex items-start space-x-3">
-                      <div className="w-2 h-2 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full mt-2 flex-shrink-0"></div>
-                      <div className="flex-1">
-                        <h3 className="font-semibold text-gray-900 mb-2 leading-snug">
-                          <Link 
-                            to={`/news/${article.id}`}
-                            className="hover:text-purple-600 transition-colors"
-                          >
-                            {article.title}
-                          </Link>
-                        </h3>
-                        <p className="text-sm text-gray-600 mb-3 leading-relaxed">{article.summary}</p>
-                        <div className="flex items-center justify-between">
-                          <span className="text-xs text-gray-500 font-medium">{article.source}</span>
-                          <span className={`px-3 py-1 rounded-full text-xs font-semibold ${
-                            article.category === 'stocks' ? 'bg-blue-100 text-blue-800' :
-                            article.category === 'crypto' ? 'bg-orange-100 text-orange-800' :
-                            article.category === 'macro' ? 'bg-green-100 text-green-800' :
-                            'bg-gray-100 text-gray-800'
-                          }`}>
-                            {article.category}
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
+          {/* Enhanced News Widget */}
+          <NewsWidget articles={news} />
         </div>
 
-        {/* Enhanced Quick Actions */}
-        <div>
-          <h2 className="text-2xl font-semibold text-gray-900 mb-6 flex items-center">
-            <div className="w-1 h-6 bg-gradient-to-b from-green-500 to-blue-600 rounded-full mr-3"></div>
-            Quick Actions
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            <Link
-              to="/portfolio/add-transaction"
-              className="group bg-white rounded-2xl p-6 shadow-sm border border-gray-200/50 hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1"
-            >
-              <div className="bg-gradient-to-r from-blue-500 to-blue-600 rounded-xl p-4 mb-4 group-hover:scale-110 transition-transform duration-300">
-                <DollarSign className="h-8 w-8 text-white" />
-              </div>
-              <h3 className="font-semibold text-gray-900 mb-2">Add Transaction</h3>
-              <p className="text-sm text-gray-600">Record new buy or sell orders</p>
-            </Link>
-            
-            <Link
-              to="/tools/compound-interest"
-              className="group bg-white rounded-2xl p-6 shadow-sm border border-gray-200/50 hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1"
-            >
-              <div className="bg-gradient-to-r from-green-500 to-green-600 rounded-xl p-4 mb-4 group-hover:scale-110 transition-transform duration-300">
-                <TrendingUp className="h-8 w-8 text-white" />
-              </div>
-              <h3 className="font-semibold text-gray-900 mb-2">Calculate Returns</h3>
-              <p className="text-sm text-gray-600">Estimate investment growth</p>
-            </Link>
-            
-            <Link
-              to="/portfolio/my-assets"
-              className="group bg-white rounded-2xl p-6 shadow-sm border border-gray-200/50 hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1"
-            >
-              <div className="bg-gradient-to-r from-purple-500 to-purple-600 rounded-xl p-4 mb-4 group-hover:scale-110 transition-transform duration-300">
-                <PieChart className="h-8 w-8 text-white" />
-              </div>
-              <h3 className="font-semibold text-gray-900 mb-2">View Portfolio</h3>
-              <p className="text-sm text-gray-600">Analyze your holdings</p>
-            </Link>
-            
-            <Link
-              to="/community"
-              className="group bg-white rounded-2xl p-6 shadow-sm border border-gray-200/50 hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1"
-            >
-              <div className="bg-gradient-to-r from-orange-500 to-orange-600 rounded-xl p-4 mb-4 group-hover:scale-110 transition-transform duration-300">
-                <Users className="h-8 w-8 text-white" />
-              </div>
-              <h3 className="font-semibold text-gray-900 mb-2">Join Community</h3>
-              <p className="text-sm text-gray-600">Connect with investors</p>
-            </Link>
-          </div>
+        {/* Secondary Content Grid */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+          {/* Financial Calendar */}
+          <FinancialCalendar />
+
+          {/* Watchlist Widget */}
+          <WatchlistWidget />
         </div>
+
+        {/* Portfolio Analysis Section */}
+        {assets.length > 0 && (
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+            {/* Portfolio Performance */}
+            <PortfolioPerformance 
+              assets={assets}
+              totalCost={totalCost}
+              totalGainLoss={totalGainLoss}
+            />
+
+            {/* Portfolio Allocation */}
+            <PortfolioAllocation assets={assets} />
+          </div>
+        )}        {/* Enhanced Quick Actions using Reusable Component */}
+        <DashboardQuickActions 
+          actions={[
+            {
+              title: 'Add Transaction',
+              description: 'Record new buy or sell orders',
+              link: '/portfolio',
+              icon: DollarSign,
+              gradient: 'bg-gradient-to-r from-blue-500 to-blue-600',
+              onClick: () => {
+                // Could open a modal or navigate to add transaction
+                console.log('Add transaction clicked');
+              }
+            },
+            {
+              title: 'Calculate Returns',
+              description: 'Estimate investment growth',
+              link: '/tools/retirement-planner',
+              icon: Calculator,
+              gradient: 'bg-gradient-to-r from-green-500 to-green-600'
+            },
+            {
+              title: 'Portfolio Analytics',
+              description: 'Analyze your holdings',
+              link: '/portfolio',
+              icon: PieChart,
+              gradient: 'bg-gradient-to-r from-purple-500 to-purple-600'
+            },
+            {
+              title: 'Investment Tools',
+              description: 'Access calculators and analyzers',
+              link: '/tools',
+              icon: Target,
+              gradient: 'bg-gradient-to-r from-orange-500 to-orange-600'
+            },
+            {
+              title: 'Market Research',
+              description: 'Discover new investment opportunities',
+              link: '/discover',
+              icon: BarChart3,
+              gradient: 'bg-gradient-to-r from-indigo-500 to-indigo-600'
+            },
+            {
+              title: 'Financial News',
+              description: 'Stay updated with market trends',
+              link: '/news',
+              icon: TrendingUp,
+              gradient: 'bg-gradient-to-r from-teal-500 to-teal-600'
+            }
+          ]}
+        />
       </div>
     </div>
   );

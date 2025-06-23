@@ -13,6 +13,8 @@ import {
 import { ApiService } from '../services/apiService';
 import { getRelativeTime } from '../utils/helpers';
 import PageHeader from '../components/PageHeader';
+import { KeyInsights, QuickActions, CategoryAnalytics, NewsletterSubscription } from '../components/news';
+import { insightsData, quickActionsData, getAnalyticsData } from '../data/newsComponentsData';
 import type { Article } from '../types';
 
 const NewsGrid = ({ articles }: { articles: Article[] }) => {
@@ -600,171 +602,10 @@ const CategoryNews = () => {  const { category } = useParams<{ category: string 
       </div>      {/* Enhanced Category-specific insights - Expanded */}
       <div className="mb-8 grid grid-cols-1 lg:grid-cols-3 gap-6">
         <div className="lg:col-span-2 space-y-6">
-          {/* Primary Key Insights */}
-          <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-200">
-            <h3 className="text-lg font-bold text-gray-900 mb-4 flex items-center">
-              <span className="mr-2">💡</span>
-              Key Insights
-            </h3>
-            <div className="space-y-4">
-              {category === 'stocks' && (
-                <>
-                  <div className="flex items-start space-x-3 p-3 bg-green-50 rounded-lg border border-green-200">
-                    <div className="w-3 h-3 bg-green-500 rounded-full mt-1 flex-shrink-0"></div>
-                    <div>
-                      <p className="text-gray-900 font-medium">Strong Earnings Performance</p>
-                      <p className="text-gray-700 text-sm">68% of S&P 500 companies beating estimates this quarter, driven by tech and healthcare sectors.</p>
-                    </div>
-                  </div>
-                  <div className="flex items-start space-x-3 p-3 bg-blue-50 rounded-lg border border-blue-200">
-                    <div className="w-3 h-3 bg-blue-500 rounded-full mt-1 flex-shrink-0"></div>
-                    <div>
-                      <p className="text-gray-900 font-medium">AI Infrastructure Boom</p>
-                      <p className="text-gray-700 text-sm">Technology sector leading gains with $45B in AI infrastructure investments announced this month.</p>
-                    </div>
-                  </div>
-                  <div className="flex items-start space-x-3 p-3 bg-orange-50 rounded-lg border border-orange-200">
-                    <div className="w-3 h-3 bg-orange-500 rounded-full mt-1 flex-shrink-0"></div>
-                    <div>
-                      <p className="text-gray-900 font-medium">Consumer Spending Shifts</p>
-                      <p className="text-gray-700 text-sm">Discretionary spending down 3.2% as consumers prioritize essentials amid inflation concerns.</p>
-                    </div>
-                  </div>
-                  <div className="flex items-start space-x-3 p-3 bg-purple-50 rounded-lg border border-purple-200">
-                    <div className="w-3 h-3 bg-purple-500 rounded-full mt-1 flex-shrink-0"></div>
-                    <div>
-                      <p className="text-gray-900 font-medium">Energy Transition Accelerates</p>
-                      <p className="text-gray-700 text-sm">Renewable energy stocks up 15% YTD as government subsidies and corporate commitments drive growth.</p>
-                    </div>
-                  </div>
-                  <div className="flex items-start space-x-3 p-3 bg-cyan-50 rounded-lg border border-cyan-200">
-                    <div className="w-3 h-3 bg-cyan-500 rounded-full mt-1 flex-shrink-0"></div>
-                    <div>
-                      <p className="text-gray-900 font-medium">Healthcare Innovation</p>
-                      <p className="text-gray-700 text-sm">Biotech and pharmaceutical companies showing strong pipeline progress with 12 new drug approvals this quarter.</p>
-                    </div>
-                  </div>
-                </>
-              )}
-              {category === 'crypto' && (
-                <>
-                  <div className="flex items-start space-x-3 p-3 bg-orange-50 rounded-lg border border-orange-200">
-                    <div className="w-3 h-3 bg-orange-500 rounded-full mt-1 flex-shrink-0"></div>
-                    <div>
-                      <p className="text-gray-900 font-medium">Institutional Adoption Surge</p>
-                      <p className="text-gray-700 text-sm">Bitcoin ETF inflows reaching record $2.4B monthly as major institutions increase crypto allocations.</p>
-                    </div>
-                  </div>
-                  <div className="flex items-start space-x-3 p-3 bg-blue-50 rounded-lg border border-blue-200">
-                    <div className="w-3 h-3 bg-blue-500 rounded-full mt-1 flex-shrink-0"></div>
-                    <div>
-                      <p className="text-gray-900 font-medium">Ethereum Scaling Solutions</p>
-                      <p className="text-gray-700 text-sm">Layer 2 networks processing 80% more transactions while reducing costs by 90% compared to mainnet.</p>
-                    </div>
-                  </div>
-                  <div className="flex items-start space-x-3 p-3 bg-green-50 rounded-lg border border-green-200">
-                    <div className="w-3 h-3 bg-green-500 rounded-full mt-1 flex-shrink-0"></div>
-                    <div>
-                      <p className="text-gray-900 font-medium">DeFi Growth Continues</p>
-                      <p className="text-gray-700 text-sm">Total Value Locked in DeFi protocols reaches $95B, driven by yield farming and liquid staking innovations.</p>
-                    </div>
-                  </div>
-                  <div className="flex items-start space-x-3 p-3 bg-purple-50 rounded-lg border border-purple-200">
-                    <div className="w-3 h-3 bg-purple-500 rounded-full mt-1 flex-shrink-0"></div>
-                    <div>
-                      <p className="text-gray-900 font-medium">Regulatory Clarity Emerges</p>
-                      <p className="text-gray-700 text-sm">New crypto regulations providing clearer frameworks, boosting institutional confidence and market stability.</p>
-                    </div>
-                  </div>
-                  <div className="flex items-start space-x-3 p-3 bg-indigo-50 rounded-lg border border-indigo-200">
-                    <div className="w-3 h-3 bg-indigo-500 rounded-full mt-1 flex-shrink-0"></div>
-                    <div>
-                      <p className="text-gray-900 font-medium">NFT Market Evolution</p>
-                      <p className="text-gray-700 text-sm">Focus shifting from collectibles to utility-driven NFTs in gaming, real estate, and identity verification.</p>
-                    </div>
-                  </div>
-                </>
-              )}
-              {category === 'macro' && (
-                <>
-                  <div className="flex items-start space-x-3 p-3 bg-red-50 rounded-lg border border-red-200">
-                    <div className="w-3 h-3 bg-red-500 rounded-full mt-1 flex-shrink-0"></div>
-                    <div>
-                      <p className="text-gray-900 font-medium">Fed Policy Pivot Expected</p>
-                      <p className="text-gray-700 text-sm">Markets pricing in 75bp rate cuts by year-end as inflation cools to 2.8% year-over-year.</p>
-                    </div>
-                  </div>
-                  <div className="flex items-start space-x-3 p-3 bg-blue-50 rounded-lg border border-blue-200">
-                    <div className="w-3 h-3 bg-blue-500 rounded-full mt-1 flex-shrink-0"></div>
-                    <div>
-                      <p className="text-gray-900 font-medium">Labor Market Rebalancing</p>
-                      <p className="text-gray-700 text-sm">Unemployment rises to 4.2% as job openings decline, signaling a cooling but stable employment environment.</p>
-                    </div>
-                  </div>
-                  <div className="flex items-start space-x-3 p-3 bg-green-50 rounded-lg border border-green-200">
-                    <div className="w-3 h-3 bg-green-500 rounded-full mt-1 flex-shrink-0"></div>
-                    <div>
-                      <p className="text-gray-900 font-medium">Supply Chain Resilience</p>
-                      <p className="text-gray-700 text-sm">Global shipping costs down 45% from peaks as supply chain disruptions normalize and inventories rebuild.</p>
-                    </div>
-                  </div>
-                  <div className="flex items-start space-x-3 p-3 bg-yellow-50 rounded-lg border border-yellow-200">
-                    <div className="w-3 h-3 bg-yellow-500 rounded-full mt-1 flex-shrink-0"></div>
-                    <div>
-                      <p className="text-gray-900 font-medium">Housing Market Stabilizes</p>
-                      <p className="text-gray-700 text-sm">Home sales volume up 8% month-over-month as mortgage rates stabilize around 6.5%, improving affordability.</p>
-                    </div>
-                  </div>
-                  <div className="flex items-start space-x-3 p-3 bg-teal-50 rounded-lg border border-teal-200">
-                    <div className="w-3 h-3 bg-teal-500 rounded-full mt-1 flex-shrink-0"></div>
-                    <div>
-                      <p className="text-gray-900 font-medium">Global Trade Recovery</p>
-                      <p className="text-gray-700 text-sm">International trade volumes reach pre-pandemic levels with emerging markets showing strongest growth.</p>
-                    </div>
-                  </div>
-                </>
-              )}
-              {category === 'general' && (
-                <>
-                  <div className="flex items-start space-x-3 p-3 bg-purple-50 rounded-lg border border-purple-200">
-                    <div className="w-3 h-3 bg-purple-500 rounded-full mt-1 flex-shrink-0"></div>
-                    <div>
-                      <p className="text-gray-900 font-medium">AI Investment Boom</p>
-                      <p className="text-gray-700 text-sm">Venture capital funding for AI startups reaches $45B globally, with enterprise AI solutions leading growth.</p>
-                    </div>
-                  </div>
-                  <div className="flex items-start space-x-3 p-3 bg-blue-50 rounded-lg border border-blue-200">
-                    <div className="w-3 h-3 bg-blue-500 rounded-full mt-1 flex-shrink-0"></div>
-                    <div>
-                      <p className="text-gray-900 font-medium">Climate Finance Mandates</p>
-                      <p className="text-gray-700 text-sm">New regulations require climate risk assessments for all major financial institutions by 2025.</p>
-                    </div>
-                  </div>
-                  <div className="flex items-start space-x-3 p-3 bg-green-50 rounded-lg border border-green-200">
-                    <div className="w-3 h-3 bg-green-500 rounded-full mt-1 flex-shrink-0"></div>
-                    <div>
-                      <p className="text-gray-900 font-medium">Real Estate Market Shift</p>
-                      <p className="text-gray-700 text-sm">Commercial real estate adapting to hybrid work trends with 30% increase in flexible workspace demand.</p>
-                    </div>
-                  </div>
-                  <div className="flex items-start space-x-3 p-3 bg-orange-50 rounded-lg border border-orange-200">
-                    <div className="w-3 h-3 bg-orange-500 rounded-full mt-1 flex-shrink-0"></div>
-                    <div>
-                      <p className="text-gray-900 font-medium">Fintech Innovation Wave</p>
-                      <p className="text-gray-700 text-sm">Digital banking and payment solutions seeing rapid adoption with 40% growth in mobile payment usage.</p>
-                    </div>
-                  </div>
-                  <div className="flex items-start space-x-3 p-3 bg-pink-50 rounded-lg border border-pink-200">
-                    <div className="w-3 h-3 bg-pink-500 rounded-full mt-1 flex-shrink-0"></div>
-                    <div>
-                      <p className="text-gray-900 font-medium">ESG Investment Focus</p>
-                      <p className="text-gray-700 text-sm">Sustainable investing reaches $35T globally as investors prioritize environmental and social impact.</p>
-                    </div>
-                  </div>
-                </>
-              )}
-            </div>
-          </div>
+          {/* Primary Key Insights - Using Global Component */}
+          <KeyInsights 
+            insights={insightsData[category as keyof typeof insightsData] || insightsData.general}
+          />
 
           {/* Secondary Insights - Market Analysis */}
           <div className="bg-gradient-to-r from-gray-50 to-blue-50 rounded-xl p-6 shadow-sm border border-gray-200">
@@ -951,225 +792,12 @@ const CategoryNews = () => {  const { category } = useParams<{ category: string 
               )}
             </div>
           </div>
-        </div>        
-        <div className="space-y-6">
-          {/* Enhanced Quick Actions - Category Specific */}
-          <div className="bg-gradient-to-br from-blue-50 to-purple-50 rounded-xl p-6 shadow-lg border border-blue-200/50">
-            <h3 className="text-lg font-bold text-gray-900 mb-4 flex items-center">
-              <span className="mr-2">⚡</span>
-              Quick Actions - {currentCategory.title}
-            </h3>
-            <div className="grid grid-cols-1 gap-3">
-              {category === 'stocks' && (
-                <>
-                  <button className="w-full text-left p-4 bg-white rounded-lg hover:bg-blue-50 transition-all duration-300 shadow-sm hover:shadow-md border border-gray-200 hover:border-blue-300 group">
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center space-x-3">
-                        <div className="bg-blue-100 rounded-full p-2 group-hover:bg-blue-200 transition-colors">
-                          <span className="text-lg">📊</span>
-                        </div>
-                        <div>
-                          <div className="font-medium text-gray-900 group-hover:text-blue-700">Stock Screener</div>
-                          <div className="text-sm text-gray-600">Filter & analyze stocks by criteria</div>
-                        </div>
-                      </div>
-                      <svg className="h-5 w-5 text-gray-400 group-hover:text-blue-500 transform group-hover:translate-x-1 transition-all" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                      </svg>
-                    </div>
-                  </button>
-                  <button className="w-full text-left p-4 bg-white rounded-lg hover:bg-green-50 transition-all duration-300 shadow-sm hover:shadow-md border border-gray-200 hover:border-green-300 group">
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center space-x-3">
-                        <div className="bg-green-100 rounded-full p-2 group-hover:bg-green-200 transition-colors">
-                          <span className="text-lg">🔔</span>
-                        </div>
-                        <div>
-                          <div className="font-medium text-gray-900 group-hover:text-green-700">Price Alerts</div>
-                          <div className="text-sm text-gray-600">Set alerts for stock movements</div>
-                        </div>
-                      </div>
-                      <svg className="h-5 w-5 text-gray-400 group-hover:text-green-500 transform group-hover:translate-x-1 transition-all" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                      </svg>
-                    </div>
-                  </button>
-                  <button className="w-full text-left p-4 bg-white rounded-lg hover:bg-purple-50 transition-all duration-300 shadow-sm hover:shadow-md border border-gray-200 hover:border-purple-300 group">
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center space-x-3">
-                        <div className="bg-purple-100 rounded-full p-2 group-hover:bg-purple-200 transition-colors">
-                          <span className="text-lg">📈</span>
-                        </div>
-                        <div>
-                          <div className="font-medium text-gray-900 group-hover:text-purple-700">Portfolio Tracker</div>
-                          <div className="text-sm text-gray-600">Track your stock investments</div>
-                        </div>
-                      </div>
-                      <svg className="h-5 w-5 text-gray-400 group-hover:text-purple-500 transform group-hover:translate-x-1 transition-all" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                      </svg>
-                    </div>
-                  </button>
-                </>
-              )}
-              {category === 'crypto' && (
-                <>
-                  <button className="w-full text-left p-4 bg-white rounded-lg hover:bg-orange-50 transition-all duration-300 shadow-sm hover:shadow-md border border-gray-200 hover:border-orange-300 group">
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center space-x-3">
-                        <div className="bg-orange-100 rounded-full p-2 group-hover:bg-orange-200 transition-colors">
-                          <span className="text-lg">🪙</span>
-                        </div>
-                        <div>
-                          <div className="font-medium text-gray-900 group-hover:text-orange-700">Crypto Calculator</div>
-                          <div className="text-sm text-gray-600">Calculate returns & conversion rates</div>
-                        </div>
-                      </div>
-                      <svg className="h-5 w-5 text-gray-400 group-hover:text-orange-500 transform group-hover:translate-x-1 transition-all" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                      </svg>
-                    </div>
-                  </button>
-                  <button className="w-full text-left p-4 bg-white rounded-lg hover:bg-blue-50 transition-all duration-300 shadow-sm hover:shadow-md border border-gray-200 hover:border-blue-300 group">
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center space-x-3">
-                        <div className="bg-blue-100 rounded-full p-2 group-hover:bg-blue-200 transition-colors">
-                          <span className="text-lg">🔗</span>
-                        </div>
-                        <div>
-                          <div className="font-medium text-gray-900 group-hover:text-blue-700">DeFi Tracker</div>
-                          <div className="text-sm text-gray-600">Monitor DeFi positions & yields</div>
-                        </div>
-                      </div>
-                      <svg className="h-5 w-5 text-gray-400 group-hover:text-blue-500 transform group-hover:translate-x-1 transition-all" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                      </svg>
-                    </div>
-                  </button>
-                  <button className="w-full text-left p-4 bg-white rounded-lg hover:bg-purple-50 transition-all duration-300 shadow-sm hover:shadow-md border border-gray-200 hover:border-purple-300 group">
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center space-x-3">
-                        <div className="bg-purple-100 rounded-full p-2 group-hover:bg-purple-200 transition-colors">
-                          <span className="text-lg">⚠️</span>
-                        </div>
-                        <div>
-                          <div className="font-medium text-gray-900 group-hover:text-purple-700">Risk Assessment</div>
-                          <div className="text-sm text-gray-600">Analyze crypto portfolio risk</div>
-                        </div>
-                      </div>
-                      <svg className="h-5 w-5 text-gray-400 group-hover:text-purple-500 transform group-hover:translate-x-1 transition-all" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                      </svg>
-                    </div>
-                  </button>
-                </>
-              )}
-              {category === 'macro' && (
-                <>
-                  <button className="w-full text-left p-4 bg-white rounded-lg hover:bg-red-50 transition-all duration-300 shadow-sm hover:shadow-md border border-gray-200 hover:border-red-300 group">
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center space-x-3">
-                        <div className="bg-red-100 rounded-full p-2 group-hover:bg-red-200 transition-colors">
-                          <span className="text-lg">📅</span>
-                        </div>
-                        <div>
-                          <div className="font-medium text-gray-900 group-hover:text-red-700">Economic Calendar</div>
-                          <div className="text-sm text-gray-600">Track important economic events</div>
-                        </div>
-                      </div>
-                      <svg className="h-5 w-5 text-gray-400 group-hover:text-red-500 transform group-hover:translate-x-1 transition-all" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                      </svg>
-                    </div>
-                  </button>
-                  <button className="w-full text-left p-4 bg-white rounded-lg hover:bg-blue-50 transition-all duration-300 shadow-sm hover:shadow-md border border-gray-200 hover:border-blue-300 group">
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center space-x-3">
-                        <div className="bg-blue-100 rounded-full p-2 group-hover:bg-blue-200 transition-colors">
-                          <span className="text-lg">💰</span>
-                        </div>
-                        <div>
-                          <div className="font-medium text-gray-900 group-hover:text-blue-700">Bond Calculator</div>
-                          <div className="text-sm text-gray-600">Calculate bond yields & prices</div>
-                        </div>
-                      </div>
-                      <svg className="h-5 w-5 text-gray-400 group-hover:text-blue-500 transform group-hover:translate-x-1 transition-all" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                      </svg>
-                    </div>
-                  </button>
-                  <button className="w-full text-left p-4 bg-white rounded-lg hover:bg-green-50 transition-all duration-300 shadow-sm hover:shadow-md border border-gray-200 hover:border-green-300 group">
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center space-x-3">
-                        <div className="bg-green-100 rounded-full p-2 group-hover:bg-green-200 transition-colors">
-                          <span className="text-lg">🌍</span>
-                        </div>
-                        <div>
-                          <div className="font-medium text-gray-900 group-hover:text-green-700">Currency Converter</div>
-                          <div className="text-sm text-gray-600">Convert between currencies</div>
-                        </div>
-                      </div>
-                      <svg className="h-5 w-5 text-gray-400 group-hover:text-green-500 transform group-hover:translate-x-1 transition-all" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                      </svg>
-                    </div>
-                  </button>
-                </>
-              )}
-              {category === 'general' && (
-                <>
-                  <button className="w-full text-left p-4 bg-white rounded-lg hover:bg-purple-50 transition-all duration-300 shadow-sm hover:shadow-md border border-gray-200 hover:border-purple-300 group">
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center space-x-3">
-                        <div className="bg-purple-100 rounded-full p-2 group-hover:bg-purple-200 transition-colors">
-                          <span className="text-lg">📋</span>
-                        </div>
-                        <div>
-                          <div className="font-medium text-gray-900 group-hover:text-purple-700">Financial Planner</div>
-                          <div className="text-sm text-gray-600">Plan your financial goals</div>
-                        </div>
-                      </div>
-                      <svg className="h-5 w-5 text-gray-400 group-hover:text-purple-500 transform group-hover:translate-x-1 transition-all" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                      </svg>
-                    </div>
-                  </button>
-                  <button className="w-full text-left p-4 bg-white rounded-lg hover:bg-green-50 transition-all duration-300 shadow-sm hover:shadow-md border border-gray-200 hover:border-green-300 group">
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center space-x-3">
-                        <div className="bg-green-100 rounded-full p-2 group-hover:bg-green-200 transition-colors">
-                          <span className="text-lg">🛡️</span>
-                        </div>
-                        <div>
-                          <div className="font-medium text-gray-900 group-hover:text-green-700">Risk Calculator</div>
-                          <div className="text-sm text-gray-600">Assess investment risk tolerance</div>
-                        </div>
-                      </div>
-                      <svg className="h-5 w-5 text-gray-400 group-hover:text-green-500 transform group-hover:translate-x-1 transition-all" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                      </svg>
-                    </div>
-                  </button>
-                  <button className="w-full text-left p-4 bg-white rounded-lg hover:bg-blue-50 transition-all duration-300 shadow-sm hover:shadow-md border border-gray-200 hover:border-blue-300 group">
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center space-x-3">
-                        <div className="bg-blue-100 rounded-full p-2 group-hover:bg-blue-200 transition-colors">
-                          <span className="text-lg">📊</span>
-                        </div>
-                        <div>
-                          <div className="font-medium text-gray-900 group-hover:text-blue-700">Market Analysis</div>
-                          <div className="text-sm text-gray-600">Get comprehensive market insights</div>
-                        </div>
-                      </div>
-                      <svg className="h-5 w-5 text-gray-400 group-hover:text-blue-500 transform group-hover:translate-x-1 transition-all" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                      </svg>
-                    </div>
-                  </button>
-                </>
-              )}
-            </div>
-          </div>
+        </div>          <div className="space-y-6">
+          {/* Enhanced Quick Actions - Using Global Component */}
+          <QuickActions 
+            title={`Quick Actions - ${currentCategory.title}`}
+            actions={quickActionsData[category as keyof typeof quickActionsData] || quickActionsData.general}
+          />
 
           {/* Related Tools */}
           <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-200">
@@ -1542,67 +1170,16 @@ const CategoryNews = () => {  const { category } = useParams<{ category: string 
             </div>
           </div>
         </div>
-      )}
-
-      {/* Interactive Analytics Dashboard */}
-      <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-200 mb-6">
-        <h3 className="text-lg font-bold text-gray-900 mb-4 flex items-center">
-          <span className="mr-2">📈</span>
-          Category Analytics
-        </h3>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-          <div className="text-center p-4 bg-blue-50 rounded-lg">
-            <div className="text-2xl font-bold text-blue-600">{articles.length}</div>
-            <div className="text-sm text-blue-700">Total Articles</div>
-            <div className="text-xs text-blue-500 mt-1">This month</div>
-          </div>
-          <div className="text-center p-4 bg-green-50 rounded-lg">
-            <div className="text-2xl font-bold text-green-600">
-              {Math.floor(articles.length * 1.2 + Math.random() * 10)}K
-            </div>
-            <div className="text-sm text-green-700">Total Views</div>
-            <div className="text-xs text-green-500 mt-1">+15% this week</div>
-          </div>
-          <div className="text-center p-4 bg-purple-50 rounded-lg">
-            <div className="text-2xl font-bold text-purple-600">
-              {Math.floor(articles.length * 0.8 + Math.random() * 5)}
-            </div>
-            <div className="text-sm text-purple-700">Breaking News</div>
-            <div className="text-xs text-purple-500 mt-1">Last 24h</div>
-          </div>
-          <div className="text-center p-4 bg-orange-50 rounded-lg">
-            <div className="text-2xl font-bold text-orange-600">
-              {Math.floor(85 + Math.random() * 10)}%
-            </div>
-            <div className="text-sm text-orange-700">Accuracy Rate</div>
-            <div className="text-xs text-orange-500 mt-1">AI verified</div>
-          </div>
-        </div>
-      </div>
-
-      {/* Newsletter Subscription */}
-      <div className="bg-gradient-to-r from-blue-600 to-purple-600 rounded-xl p-6 text-white shadow-lg mb-6">
-        <div className="flex items-center justify-between">
-          <div>
-            <h3 className="text-lg font-bold mb-2">
-              Stay Updated with {currentCategory.title}
-            </h3>
-            <p className="text-blue-100 text-sm">
-              Get daily digest of the most important {category} news delivered to your inbox
-            </p>
-          </div>
-          <div className="flex items-center space-x-3">
-            <input
-              type="email"
-              placeholder="Enter your email"
-              className="px-4 py-2 rounded-lg text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-white"
-            />
-            <button className="bg-white text-blue-600 px-4 py-2 rounded-lg font-medium hover:bg-gray-100 transition-colors">
-              Subscribe
-            </button>
-          </div>
-        </div>
-      </div>
+      )}      {/* Category Analytics - Using Global Component */}
+      <CategoryAnalytics 
+        metrics={getAnalyticsData(articles)}
+        className="mb-6"
+      />      {/* Newsletter Subscription - Using Global Component */}
+      <NewsletterSubscription 
+        categoryTitle={currentCategory.title}
+        categoryType={category || 'general'}
+        className="mb-6"
+      />
 
       {/* Articles Count */}
       <div className="mb-6 animate-fade-in" style={{animationDelay: '300ms'}}>
