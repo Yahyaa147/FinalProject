@@ -6,13 +6,13 @@ import {
   ExternalLink, 
   Filter,
   Search,
-  RefreshCw,
   ArrowLeft,
   Share2,
   BookmarkPlus
 } from 'lucide-react';
 import { ApiService } from '../services/apiService';
 import { getRelativeTime } from '../utils/helpers';
+import PageHeader from '../components/PageHeader';
 import type { Article } from '../types';
 
 const NewsGrid = ({ articles }: { articles: Article[] }) => {
@@ -107,12 +107,10 @@ const NewsGrid = ({ articles }: { articles: Article[] }) => {
   );
 };
 
-const AllNews = () => {
-  const [articles, setArticles] = useState<Article[]>([]);
+const AllNews = () => {  const [articles, setArticles] = useState<Article[]>([]);
   const [filteredArticles, setFilteredArticles] = useState<Article[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [searchTerm, setSearchTerm] = useState<string>('');
-  const [isLoading, setIsLoading] = useState(true);
 
   const categories = [
     { value: 'all', label: 'All News' },
@@ -123,14 +121,12 @@ const AllNews = () => {
   ];
   useEffect(() => {
     const fetchNews = async () => {
-      setIsLoading(true);
       const response = await ApiService.getNews();
       if (response.success) {
         // Use the actual articles without duplicating them
         setArticles(response.data);
         setFilteredArticles(response.data);
       }
-      setIsLoading(false);
     };
 
     fetchNews();
@@ -150,86 +146,57 @@ const AllNews = () => {
         article.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
         article.summary.toLowerCase().includes(searchTerm.toLowerCase())
       );
-    }
-
-    setFilteredArticles(filtered);
+    }    setFilteredArticles(filtered);
   }, [articles, selectedCategory, searchTerm]);
-  if (isLoading) {
-    return (
-      <div className="min-h-screen bg-gray-50">
-        <div className="flex items-center justify-center py-12">
-          <RefreshCw className="h-8 w-8 animate-spin text-blue-600 mr-2" />
-          <span className="text-lg text-gray-600">Loading news...</span>
-        </div>
-      </div>
-    );
-  }return (
+
+  return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-blue-50/30 relative overflow-hidden">
       {/* Subtle background elements */}
       <div className="absolute inset-0 overflow-hidden">
         <div className="absolute -top-40 -right-40 w-80 h-80 bg-gradient-to-br from-blue-100/20 to-purple-100/20 rounded-full blur-3xl"></div>
         <div className="absolute -bottom-32 -left-32 w-96 h-96 bg-gradient-to-br from-indigo-100/20 to-blue-100/20 rounded-full blur-3xl"></div>
       </div>
-      
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">        {/* Enhanced Header with Main Navbar Style */}
-        <div className="mb-8 animate-fade-in-up">
-          <div className="bg-gradient-to-r from-gray-900 via-blue-900 to-purple-900 rounded-2xl p-8 shadow-2xl border border-gray-700/50 backdrop-blur-sm transform hover:scale-[1.02] transition-all duration-500 relative overflow-hidden">
-            {/* Animated background effects */}
-            <div className="absolute inset-0 bg-gradient-to-r from-blue-600/10 via-purple-600/10 to-pink-600/10 opacity-50"></div>
-            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400"></div>
-            
-            <div className="relative z-10 flex items-center justify-between">
-              <div className="flex items-center space-x-6">
-                <div className="relative">
-                  <div className="bg-gradient-to-r from-blue-500 to-purple-500 rounded-2xl p-4 shadow-lg">
-                    <Newspaper className="h-10 w-10 text-white" />
-                  </div>
-                  <div className="absolute -top-1 -right-1 w-4 h-4 bg-gradient-to-r from-blue-400 to-purple-400 rounded-full animate-pulse"></div>
-                </div>
-                
-                <div>
-                  <h1 className="text-4xl font-bold bg-gradient-to-r from-white via-blue-200 to-purple-200 bg-clip-text text-transparent mb-2">
-                    Financial News Hub
-                  </h1>
-                  <p className="text-lg text-gray-300 animate-fade-in-up font-medium" style={{animationDelay: '200ms'}}>
-                    💡 Stay updated with the latest market insights and financial news
-                  </p>
-                  <div className="mt-4 flex items-center space-x-4 animate-fade-in-up" style={{animationDelay: '400ms'}}>
-                    <div className="flex items-center space-x-2 bg-blue-500/20 rounded-full px-4 py-2 border border-blue-400/30">
-                      <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
-                      <span className="text-blue-200 text-sm font-medium">Live Updates</span>
-                    </div>
-                    <div className="flex items-center space-x-2 bg-green-500/20 rounded-full px-4 py-2 border border-green-400/30">
-                      <span className="text-green-200 text-sm font-medium">📈 Market Open</span>
-                    </div>
-                    <div className="flex items-center space-x-2 bg-purple-500/20 rounded-full px-4 py-2 border border-purple-400/30">
-                      <Clock className="h-3 w-3 text-purple-200" />
-                      <span className="text-purple-200 text-sm font-medium">Last updated: 2 mins ago</span>
-                    </div>
-                  </div>
-                </div>
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        {/* Reusable Page Header Component */}        <PageHeader
+          title="Financial News Hub"
+          subtitle="💡 Stay updated with the latest market insights and financial news"
+          icon={<Newspaper className="h-10 w-10 text-white" />}
+          badges={[
+            {
+              text: 'Live Updates',
+              variant: 'primary',
+              icon: <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
+            },
+            {
+              text: '📈 Market Open',
+              variant: 'success'
+            },
+            {
+              text: 'Last updated: 2 mins ago',
+              variant: 'info',
+              icon: <Clock className="h-3 w-3 text-purple-200" />
+            }
+          ]}
+          rightContent={
+            <>
+              <div className="bg-gradient-to-r from-blue-500/20 to-purple-500/20 rounded-2xl p-4 backdrop-blur-sm border border-white/10">
+                <svg className="h-8 w-8 text-blue-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+                </svg>
               </div>
-              
-              <div className="hidden md:flex items-center space-x-4">
-                <div className="bg-gradient-to-r from-blue-500/20 to-purple-500/20 rounded-2xl p-4 backdrop-blur-sm border border-white/10">
-                  <svg className="h-8 w-8 text-blue-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
-                  </svg>
-                </div>
-                <div className="bg-gradient-to-r from-green-500/20 to-blue-500/20 rounded-2xl p-4 backdrop-blur-sm border border-white/10">
-                  <svg className="h-8 w-8 text-green-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1" />
-                  </svg>
-                </div>
-                <div className="bg-gradient-to-r from-purple-500/20 to-pink-500/20 rounded-2xl p-4 backdrop-blur-sm border border-white/10">
-                  <svg className="h-8 w-8 text-purple-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
-                  </svg>
-                </div>
+              <div className="bg-gradient-to-r from-green-500/20 to-blue-500/20 rounded-2xl p-4 backdrop-blur-sm border border-white/10">
+                <svg className="h-8 w-8 text-green-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1" />
+                </svg>
               </div>
-            </div>
-          </div>
-        </div>
+              <div className="bg-gradient-to-r from-purple-500/20 to-pink-500/20 rounded-2xl p-4 backdrop-blur-sm border border-white/10">
+                <svg className="h-8 w-8 text-purple-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                </svg>
+              </div>
+            </>
+          }
+        />
 
         {/* Enhanced Filters */}
         <div className="mb-8 animate-fade-in" style={{animationDelay: '300ms'}}>
@@ -461,10 +428,10 @@ const AllNews = () => {
   );
 };
 
-const CategoryNews = () => {
-  const { category } = useParams<{ category: string }>();
+const CategoryNews = () => {  const { category } = useParams<{ category: string }>();
   const [articles, setArticles] = useState<Article[]>([]);
-  const [isLoading, setIsLoading] = useState(true);  const categoryInfo = {
+
+  const categoryInfo = {
     stocks: {
       title: 'Stock Market News',
       description: 'Latest news and analysis from the equity markets, earnings reports, and company announcements.',
@@ -498,27 +465,17 @@ const CategoryNews = () => {
     ? categoryInfo[category as keyof typeof categoryInfo]
     : categoryInfo.general;
 
-  useEffect(() => {
-    const fetchCategoryNews = async () => {
-      setIsLoading(true);
+  useEffect(() => {    const fetchCategoryNews = async () => {
       const response = await ApiService.getNews(category);
       if (response.success) {
         setArticles(response.data);
       }
-      setIsLoading(false);
     };
 
     fetchCategoryNews();
   }, [category]);
 
-  if (isLoading) {
-    return (
-      <div className="flex items-center justify-center py-12">
-        <RefreshCw className="h-8 w-8 animate-spin text-blue-600 mr-2" />
-        <span className="text-lg text-gray-600">Loading {category} news...</span>
-      </div>
-    );
-  }  return (
+  return (
     <div>
       {/* Enhanced Category Header - Matching Main Header */}
       <div className="mb-8 animate-fade-in-up">
@@ -1688,15 +1645,11 @@ const CategoryNews = () => {
 };
 
 const ArticleDetail = () => {
-  const { id } = useParams<{ id: string }>();
-  const [article, setArticle] = useState<Article | null>(null);
+  const { id } = useParams<{ id: string }>();  const [article, setArticle] = useState<Article | null>(null);
   const [relatedArticles, setRelatedArticles] = useState<Article[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const fetchArticle = async () => {
-      setIsLoading(true);
-      
       // Fetch main article (mock implementation)
       const response = await ApiService.getNews();
       if (response.success) {
@@ -1710,21 +1663,9 @@ const ArticleDetail = () => {
           setRelatedArticles(related);
         }
       }
-      setIsLoading(false);
-    };
-
-    fetchArticle();
+    };    fetchArticle();
   }, [id]);
-  if (isLoading) {
-    return (
-      <div className="min-h-screen bg-gray-50">
-        <div className="flex items-center justify-center py-12">
-          <RefreshCw className="h-8 w-8 animate-spin text-blue-600 mr-2" />
-          <span className="text-lg text-gray-600">Loading article...</span>
-        </div>
-      </div>
-    );
-  }
+
   if (!article) {
     return (
       <div className="min-h-screen bg-gray-50">

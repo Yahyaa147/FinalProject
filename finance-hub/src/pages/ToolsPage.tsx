@@ -6,13 +6,15 @@ import {
   TrendingUp, 
   PieChart, 
   DollarSign,
-  BarChart3
+  BarChart3,
+  Settings
 } from 'lucide-react';
 import { calculateCompoundInterest, formatCurrency } from '../utils/helpers';
 import type { CompoundInterestFormData } from '../types';
 import type { CompoundInterestResult } from '../utils/helpers';
 import PortfolioAnalyzer from './tools/PortfolioAnalyzer';
 import RetirementPlanner from './tools/RetirementPlanner';
+import PageHeader from '../components/PageHeader';
 
 const CompoundInterestCalculator = () => {
   const [result, setResult] = useState<CompoundInterestResult | null>(null);
@@ -302,34 +304,43 @@ const ToolsOverview = () => {
       icon: TrendingUp,
       path: '/tools/retirement-planner',
       color: 'from-green-500 to-green-600',
-      bgColor: 'bg-green-50',
-      stats: 'Future Planning'
+      bgColor: 'bg-green-50',      stats: 'Future Planning'
     }
   ];
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 via-blue-50/30 to-purple-50/30">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Enhanced Header */}
-        <div className="mb-8">
-          <div className="bg-white rounded-2xl p-8 shadow-sm border border-gray-200/50 backdrop-blur-sm">
-            <div className="flex items-center justify-between">
-              <div>
-                <h1 className="text-4xl font-bold bg-gradient-to-r from-gray-900 to-gray-700 bg-clip-text text-transparent">
-                  Financial Tools
-                </h1>
-                <p className="mt-3 text-lg text-gray-600">
-                  Powerful calculators and analyzers to help you make informed financial decisions.
-                </p>
-              </div>
-              <div className="hidden md:flex items-center space-x-3">
-                <div className="bg-gradient-to-r from-blue-500 to-purple-600 rounded-full p-3">
-                  <Calculator className="h-8 w-8 text-white" />
-                </div>
-              </div>
+        {/* Reusable Page Header Component */}        <PageHeader
+          title="Financial Tools"
+          subtitle="🧮 Powerful calculators and analyzers to help you make informed financial decisions."
+          icon={<Settings className="h-10 w-10 text-white" />}
+          badges={[
+            {
+              text: 'Compound Interest',
+              variant: 'primary'
+            },
+            {
+              text: '📊 Portfolio Analyzer',
+              variant: 'info'
+            },
+            {
+              text: 'Retirement Planner',
+              variant: 'success'
+            },
+            {
+              text: 'Risk Calculator',
+              variant: 'warning'
+            }
+          ]}
+          backgroundGradient="from-indigo-900 via-purple-900 to-pink-900"
+          accentGradient="from-indigo-400 via-purple-400 to-pink-400"
+          rightContent={
+            <div className="bg-gradient-to-r from-purple-500/20 to-pink-500/20 rounded-2xl p-4 backdrop-blur-sm border border-white/10">
+              <Calculator className="h-8 w-8 text-purple-300" />
             </div>
-          </div>
-        </div>
+          }
+        />
 
         {/* Tools Section */}
         <div className="mb-8">

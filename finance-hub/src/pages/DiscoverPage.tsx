@@ -1,9 +1,23 @@
-import { useState } from 'react';
-import { Search, TrendingUp, Star, Users, Globe, ChevronRight } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { Search, TrendingUp, Star, Users, Globe, ChevronRight, RefreshCw } from 'lucide-react';
+import PageHeader from '../components/PageHeader';
 
 const DiscoverPage = () => {
   const [activeSection, setActiveSection] = useState('trending');
   const [searchTerm, setSearchTerm] = useState('');
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    // Simulate loading market data
+    const loadMarketData = async () => {
+      setIsLoading(true);
+      // Simulate API call delay
+      await new Promise(resolve => setTimeout(resolve, 1200));
+      setIsLoading(false);
+    };
+
+    loadMarketData();
+  }, []);
 
   const sections = [
     { id: 'trending', label: 'Trending Now', icon: TrendingUp },
@@ -371,18 +385,40 @@ const DiscoverPage = () => {
         return null;
     }
   };
-
   return (
     <div className="min-h-screen bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Header */}
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 mb-4">Discover</h1>
-          <p className="text-lg text-gray-600 mb-6">
-            Explore trending stocks, popular categories, and community insights
-          </p>
+        {/* Reusable Page Header Component */}
+        <PageHeader
+          title="Discover Markets"
+          subtitle="🔍 Explore trending stocks, popular categories, and community insights from global markets"
+          icon={<Search className="h-10 w-10 text-white" />}
+          badges={[
+            {
+              text: 'Live Data',
+              variant: 'primary',
+              icon: <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
+            },
+            {
+              text: '🌍 Global Markets',
+              variant: 'info'
+            },
+            {
+              text: 'Updated now',
+              variant: 'success'
+            }
+          ]}
+          backgroundGradient="from-purple-900 via-indigo-900 to-blue-900"
+          accentGradient="from-purple-400 via-indigo-400 to-blue-400"
+          rightContent={
+            <div className="bg-gradient-to-r from-purple-500/20 to-blue-500/20 rounded-2xl p-4 backdrop-blur-sm border border-white/10">
+              <TrendingUp className="h-8 w-8 text-purple-300" />
+            </div>
+          }
+        />
 
-          {/* Search Bar */}
+        {/* Search Bar */}
+        <div className="mb-8">
           <div className="relative max-w-xl">
             <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
               <Search className="h-5 w-5 text-gray-400" />

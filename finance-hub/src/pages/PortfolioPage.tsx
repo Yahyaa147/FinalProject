@@ -1,9 +1,10 @@
 import { Routes, Route, Link, useLocation } from 'react-router-dom';
-import { Plus, TrendingUp, PieChart, AlertCircle, CheckCircle, BarChart3, Activity, ArrowUpRight, ArrowDownRight } from 'lucide-react';
+import { Plus, TrendingUp, PieChart, AlertCircle, CheckCircle, BarChart3, Activity, ArrowUpRight, ArrowDownRight, Briefcase } from 'lucide-react';
 import { useForm } from 'react-hook-form';
 import { useState } from 'react';
 import { usePortfolioStore } from '../store/portfolioStore';
 import { formatCurrency, formatPercentage, getGainLossColor } from '../utils/helpers';
+import PageHeader from '../components/PageHeader';
 import { 
   PieChart as RechartsPieChart, 
   Pie,
@@ -89,9 +90,7 @@ const MyAssets = () => {
     { month: 'Apr', amount: 200 },
     { month: 'May', amount: 175 },
     { month: 'Jun', amount: 240 },
-  ];
-
-  // Colors for pie chart
+  ];  // Colors for pie chart
   const COLORS = ['#3b82f6', '#ef4444', '#10b981', '#f59e0b', '#8b5cf6', '#06b6d4', '#84cc16'];
 
   return (
@@ -1018,16 +1017,38 @@ const PortfolioPage = () => {
     { path: '/portfolio/add-transaction', label: 'Add Transaction', icon: Plus },
     { path: '/portfolio/transaction-history', label: 'History', icon: TrendingUp },
   ];
-
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-      {/* Header */}
-      <div className="mb-8">
-        <h1 className="text-3xl font-bold text-gray-900">Portfolio Management</h1>
-        <p className="mt-2 text-gray-600">
-          Manage your investments, track performance, and add new transactions.
-        </p>
-      </div>
+      {/* Reusable Page Header Component */}      <PageHeader
+        title="Portfolio Management"
+        subtitle="💼 Manage your investments, track performance, and add new transactions."
+        icon={<Briefcase className="h-10 w-10 text-white" />}
+        badges={[
+          {
+            text: 'Asset Tracking',
+            variant: 'primary'
+          },
+          {
+            text: '📈 Performance Analytics',
+            variant: 'success'
+          },
+          {
+            text: 'Transaction History',
+            variant: 'info'
+          },
+          {
+            text: 'Risk Analysis',
+            variant: 'warning'
+          }
+        ]}
+        backgroundGradient="from-green-900 via-teal-900 to-blue-900"
+        accentGradient="from-green-400 via-teal-400 to-blue-400"
+        rightContent={
+          <div className="bg-gradient-to-r from-green-500/20 to-teal-500/20 rounded-2xl p-4 backdrop-blur-sm border border-white/10">
+            <TrendingUp className="h-8 w-8 text-green-300" />
+          </div>
+        }
+      />
 
       {/* Sub Navigation */}
       <div className="mb-8">

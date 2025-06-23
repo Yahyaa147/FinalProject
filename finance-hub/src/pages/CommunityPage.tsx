@@ -4,7 +4,6 @@ import {
   Users, 
   MessageSquare, 
   Eye, 
-  Clock, 
   Pin,
   Lock,
   Plus,
@@ -16,6 +15,7 @@ import {
   Award,
   X
 } from 'lucide-react';
+import PageHeader from '../components/PageHeader';
 import { mockForumCategories, mockForumThreads, mockForumPosts } from '../data/mockData';
 import { getRelativeTime } from '../utils/helpers';
 import type { ForumCategory, ForumThread, ForumPost } from '../types';
@@ -213,18 +213,36 @@ const ForumHome = () => {
       </div>
     );
   };
-
   return (
     <div className="space-y-8">
-      {/* Header Section */}
-      <div className="bg-gradient-to-r from-primary-600 to-blue-700 rounded-xl p-8 text-white">
-        <div className="max-w-4xl">
-          <h1 className="text-3xl font-bold mb-3">Community Forum</h1>
-          <p className="text-blue-100 text-lg">
-            Connect with fellow investors, share insights, and learn from the community.
-          </p>
-        </div>
-      </div>
+      {/* Reusable Page Header Component */}
+      <PageHeader
+        title="Community Forum"
+        subtitle="👥 Connect with fellow investors, share insights, and learn from the community"
+        icon={<Users className="h-10 w-10 text-white" />}
+        badges={[
+          {
+            text: '12,847 Members',
+            variant: 'primary',
+            icon: <Users className="h-4 w-4" />
+          },
+          {
+            text: '💬 Active Discussions',
+            variant: 'success'
+          },
+          {
+            text: '24/7 Support',
+            variant: 'info'
+          }
+        ]}
+        backgroundGradient="from-blue-900 via-indigo-900 to-purple-900"
+        accentGradient="from-blue-400 via-indigo-400 to-purple-400"
+        rightContent={
+          <div className="bg-gradient-to-r from-blue-500/20 to-purple-500/20 rounded-2xl p-4 backdrop-blur-sm border border-white/10">
+            <MessageSquare className="h-8 w-8 text-blue-300" />
+          </div>
+        }
+      />
 
       {/* Stats Section */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-6">

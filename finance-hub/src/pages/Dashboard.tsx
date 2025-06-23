@@ -6,13 +6,13 @@ import {
   DollarSign, 
   PieChart, 
   ArrowRight,
-  RefreshCw,
   Users,
   BarChart3
 } from 'lucide-react';
 import { usePortfolioStore } from '../store/portfolioStore';
 import { ApiService } from '../services/apiService';
 import { formatCurrency, formatPercentage, getGainLossColor } from '../utils/helpers';
+import PageHeader from '../components/PageHeader';
 import type { Article, MarketData } from '../types';
 
 const Dashboard = () => {
@@ -22,15 +22,11 @@ const Dashboard = () => {
     getTotalCost, 
     getTotalGainLoss 
   } = usePortfolioStore();
-  
-  const [news, setNews] = useState<Article[]>([]);
+    const [news, setNews] = useState<Article[]>([]);
   const [marketData, setMarketData] = useState<MarketData[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const fetchDashboardData = async () => {
-      setIsLoading(true);
-      
       // Fetch latest news (top 3)
       const newsResponse = await ApiService.getNews();
       if (newsResponse.success) {
@@ -42,8 +38,6 @@ const Dashboard = () => {
       if (marketResponse.success) {
         setMarketData(marketResponse.data);
       }
-      
-      setIsLoading(false);
     };
 
     fetchDashboardData();
@@ -75,43 +69,38 @@ const Dashboard = () => {
       value: assets.length.toString(),
       icon: PieChart,
       color: 'text-purple-600',
-      bgColor: 'bg-purple-100'
-    }
+      bgColor: 'bg-purple-100'    }
   ];
 
-  if (isLoading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="flex items-center space-x-2">
-          <RefreshCw className="h-8 w-8 animate-spin text-primary-600" />
-          <span className="text-lg text-gray-600">Loading dashboard...</span>
-        </div>
-      </div>
-    );
-  }
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 via-blue-50/30 to-purple-50/30">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Enhanced Header */}
-        <div className="mb-8">
-          <div className="bg-white rounded-2xl p-8 shadow-sm border border-gray-200/50 backdrop-blur-sm">
-            <div className="flex items-center justify-between">
-              <div>
-                <h1 className="text-4xl font-bold bg-gradient-to-r from-gray-900 to-gray-700 bg-clip-text text-transparent">
-                  Dashboard
-                </h1>
-                <p className="mt-3 text-lg text-gray-600">
-                  Welcome back! Here's your comprehensive portfolio overview and market insights.
-                </p>
-              </div>
-              <div className="hidden md:flex items-center space-x-3">
-                <div className="bg-gradient-to-r from-blue-500 to-purple-600 rounded-full p-3">
-                  <TrendingUp className="h-8 w-8 text-white" />
-                </div>
-              </div>
+        {/* Reusable Page Header Component */}        <PageHeader
+          title="Portfolio Dashboard"
+          subtitle="📊 Welcome back! Here's your comprehensive portfolio overview and market insights."
+          icon={<BarChart3 className="h-10 w-10 text-white" />}
+          badges={[
+            {
+              text: `Portfolio Value: ${formatCurrency(totalValue)}`,
+              variant: 'info'
+            },
+            {
+              text: `${totalGainLoss >= 0 ? '📈' : '📉'} ${formatPercentage(gainLossPercentage)}`,
+              variant: totalGainLoss >= 0 ? 'success' : 'warning'
+            },
+            {
+              text: `${assets.length} Assets Tracked`,
+              variant: 'primary'
+            }
+          ]}
+          backgroundGradient="from-blue-900 via-indigo-900 to-purple-900"
+          accentGradient="from-blue-400 via-indigo-400 to-purple-400"
+          rightContent={
+            <div className="bg-gradient-to-r from-green-500/20 to-blue-500/20 rounded-2xl p-4 backdrop-blur-sm border border-white/10">
+              <TrendingUp className="h-8 w-8 text-green-300" />
             </div>
-          </div>
-        </div>
+          }
+        />
 
         {/* Enhanced Portfolio Stats */}
         <div className="mb-8">

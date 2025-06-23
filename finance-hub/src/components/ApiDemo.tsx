@@ -1,131 +1,112 @@
-import React from 'react';
-import { useNews, useMarketData, useCryptoPrices, useApiConfig } from '../hooks/useApi';
+import { useState } from 'react';
+import { ApiService } from '../services/apiService';
+import type { Article } from '../types';
 
-const ApiDemo: React.FC = () => {
-  const { data: news, loading: newsLoading, error: newsError } = useNews('crypto');
-  const { data: marketData, loading: marketLoading, error: marketError } = useMarketData();
-  const { data: cryptoData, loading: cryptoLoading, error: cryptoError } = useCryptoPrices(['BTC', 'ETH']);
-  const { config, healthStatus, checkingHealth } = useApiConfig();
+const ApiDemo = () => {
+  const [articles, setArticles] = useState<Article[]>([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  const fetchNews = async (category?: string) => {
+    setLoading(true);
+    setError(null);
+    
+    try {
+      const response = await ApiService.getNews(category);
+      if (response.success) {
+        setArticles(response.data);
+      } else {
+        setError(response.error || 'Failed to fetch news');
+      }
+    } catch (err) {
+      setError('An error occurred while fetching news');
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
-    <div className="p-6 max-w-4xl mx-auto">
-      <h1 className="text-3xl font-bold mb-6">API Integration Demo</h1>
-      
-      {/* API Configuration Status */}
-      <div className="bg-blue-50 p-4 rounded-lg mb-6">
-        <h2 className="text-xl font-semibold mb-3">API Configuration</h2>
-        <div className="grid grid-cols-2 gap-4 text-sm">
-          <div>
-            <strong>Base URL:</strong> {config.baseURL}
+    <div className="min-h-screen bg-gray-50 py-8">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-8">
+          <h1 className="text-3xl font-bold text-gray-900 mb-8">API Demo</h1>
+          
+          <div className="mb-6">
+            <h2 className="text-xl font-semibold text-gray-800 mb-4">Test News API</h2>
+            <div className="flex flex-wrap gap-3">
+              <button
+                onClick={() => fetchNews()}
+                disabled={loading}
+                className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50 transition-colors"
+              >
+                {loading ? 'Loading...' : 'Fetch All News'}
+              </button>
+              <button
+                onClick={() => fetchNews('stocks')}
+                disabled={loading}
+                className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 disabled:opacity-50 transition-colors"
+              >
+                Fetch Stocks News
+              </button>
+              <button
+                onClick={() => fetchNews('crypto')}
+                disabled={loading}
+                className="px-4 py-2 bg-yellow-600 text-white rounded-lg hover:bg-yellow-700 disabled:opacity-50 transition-colors"
+              >
+                Fetch Crypto News
+              </button>
+              <button
+                onClick={() => fetchNews('macro')}
+                disabled={loading}
+                className="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 disabled:opacity-50 transition-colors"
+              >
+                Fetch Macro News
+              </button>
+            </div>
           </div>
-          <div>
-            <strong>Use Mock Data:</strong> {config.useMockData ? 'Yes' : 'No'}
-          </div>
-          <div>
-            <strong>Real APIs Enabled:</strong> {config.enableRealAPIs ? 'Yes' : 'No'}
-          </div>
-          <div>
-            <strong>Alpha Vantage Key:</strong> {config.alphaVantageKey}
-          </div>
-          <div>
-            <strong>News API Key:</strong> {config.newsApiKey}
-          </div>
-          <div className="col-span-2">
-            <strong>Health Status:</strong> 
-            <span className={`ml-2 px-2 py-1 rounded ${
-              checkingHealth 
-                ? 'bg-yellow-200 text-yellow-800' 
-                : healthStatus?.status === 'healthy' 
-                  ? 'bg-green-200 text-green-800'
-                  : 'bg-red-200 text-red-800'
-            }`}>
-              {checkingHealth ? 'Checking...' : healthStatus?.status || 'Unknown'}
-            </span>
-          </div>
-        </div>
-      </div>
 
-      {/* News API Demo */}
-      <div className="bg-white border rounded-lg p-4 mb-6">
-        <h2 className="text-xl font-semibold mb-3">News API (Crypto Category)</h2>
-        {newsLoading && <div className="text-blue-600">Loading news...</div>}
-        {newsError && <div className="text-red-600">Error: {newsError}</div>}
-        {news && (
-          <div className="space-y-3">
-            {news.slice(0, 3).map((article, index) => (
-              <div key={index} className="border-l-4 border-blue-500 pl-4">
-                <h3 className="font-medium">{article.title}</h3>
-                <p className="text-sm text-gray-600">{article.summary}</p>
-                <p className="text-xs text-gray-500">
-                  {article.source} • {new Date(article.date).toLocaleDateString()}
-                </p>
+          {error && (
+            <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg">
+              <p className="text-red-700">{error}</p>
+            </div>
+          )}
+
+          {articles.length > 0 && (
+            <div>
+              <h3 className="text-lg font-semibold text-gray-800 mb-4">
+                Results ({articles.length} articles)
+              </h3>
+              <div className="space-y-4">
+                {articles.map((article) => (
+                  <div
+                    key={article.id}
+                    className="border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow"
+                  >
+                    <div className="flex items-start justify-between mb-2">
+                      <h4 className="font-semibold text-gray-900 flex-1">
+                        {article.title}
+                      </h4>
+                      <span className="ml-4 px-2 py-1 bg-gray-100 text-gray-700 text-xs rounded-full">
+                        {article.category}
+                      </span>
+                    </div>
+                    <p className="text-gray-600 text-sm mb-2">{article.summary}</p>
+                    <div className="flex items-center text-xs text-gray-500 space-x-4">
+                      <span>Source: {article.source}</span>
+                      <span>Author: {article.author}</span>
+                      <span>Date: {article.date.toLocaleDateString()}</span>
+                    </div>
+                  </div>
+                ))}
               </div>
-            ))}
-            <p className="text-sm text-gray-500">
-              Showing 3 of {news.length} articles
-            </p>
-          </div>
-        )}
-      </div>
+            </div>
+          )}
 
-      {/* Market Data API Demo */}
-      <div className="bg-white border rounded-lg p-4 mb-6">
-        <h2 className="text-xl font-semibold mb-3">Stock Market Data</h2>
-        {marketLoading && <div className="text-blue-600">Loading market data...</div>}
-        {marketError && <div className="text-red-600">Error: {marketError}</div>}
-        {marketData && (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {marketData.slice(0, 6).map((stock, index) => (
-              <div key={index} className="bg-gray-50 p-3 rounded">
-                <div className="font-medium">{stock.symbol}</div>
-                <div className="text-lg font-bold">${stock.price.toFixed(2)}</div>
-                <div className={`text-sm ${stock.changePercent >= 0 ? 'text-green-600' : 'text-red-600'}`}>
-                  {stock.changePercent >= 0 ? '+' : ''}{stock.changePercent.toFixed(2)}%
-                </div>
-              </div>
-            ))}
-          </div>
-        )}
-      </div>
-
-      {/* Crypto API Demo */}
-      <div className="bg-white border rounded-lg p-4 mb-6">
-        <h2 className="text-xl font-semibold mb-3">Cryptocurrency Prices (CoinGecko API)</h2>
-        {cryptoLoading && <div className="text-blue-600">Loading crypto data...</div>}
-        {cryptoError && <div className="text-red-600">Error: {cryptoError}</div>}
-        {cryptoData && (
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {cryptoData.map((crypto, index) => (
-              <div key={index} className="bg-gray-50 p-4 rounded">
-                <div className="font-medium text-lg">{crypto.symbol}</div>
-                <div className="text-2xl font-bold">${crypto.price.toLocaleString()}</div>
-                <div className={`text-sm ${crypto.changePercent >= 0 ? 'text-green-600' : 'text-red-600'}`}>
-                  {crypto.changePercent >= 0 ? '+' : ''}{crypto.changePercent.toFixed(2)}% (24h)
-                </div>
-                <div className="text-xs text-gray-500 mt-1">
-                  Last updated: {new Date(crypto.lastUpdated).toLocaleTimeString()}
-                </div>
-              </div>
-            ))}
-          </div>
-        )}
-      </div>
-
-      {/* API Usage Instructions */}
-      <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
-        <h2 className="text-xl font-semibold mb-3">🚀 Enable Real APIs</h2>
-        <div className="space-y-2 text-sm">
-          <p>To use real external APIs instead of mock data:</p>
-          <ol className="list-decimal list-inside space-y-1 ml-4">
-            <li>Set <code className="bg-gray-100 px-1 rounded">VITE_ENABLE_REAL_APIs=true</code> in your .env file</li>
-            <li>Get a free API key from <a href="https://www.alphavantage.co/support/#api-key" className="text-blue-600 underline">Alpha Vantage</a> for stock data</li>
-            <li>Get a free API key from <a href="https://newsapi.org/" className="text-blue-600 underline">NewsAPI</a> for news data</li>
-            <li>Add your keys to the .env file</li>
-            <li>Restart the development server</li>
-          </ol>
-          <p className="mt-3">
-            <strong>Note:</strong> CoinGecko API works without a key and can be enabled immediately!
-          </p>
+          {!loading && articles.length === 0 && !error && (
+            <div className="text-center py-8">
+              <p className="text-gray-500">Click a button above to test the API</p>
+            </div>
+          )}
         </div>
       </div>
     </div>
