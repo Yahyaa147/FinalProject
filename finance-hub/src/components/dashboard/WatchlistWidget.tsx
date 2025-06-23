@@ -126,17 +126,16 @@ const WatchlistWidget: React.FC<WatchlistWidgetProps> = ({ className = "" }) => 
     }
     return null;
   };
-
   return (
-    <div className={`bg-white rounded-2xl shadow-sm border border-gray-200/50 overflow-hidden ${className}`}>
-      <div className="bg-gradient-to-r from-cyan-50 to-blue-50 p-6 border-b border-gray-200/50">
+    <div className={`bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-200/50 dark:border-gray-700/50 overflow-hidden transition-colors duration-300 ${className}`}>
+      <div className="bg-gradient-to-r from-cyan-50 dark:from-cyan-900/20 to-blue-50 dark:to-blue-900/20 p-6 border-b border-gray-200/50 dark:border-gray-700/50 transition-colors duration-300">
         <div className="flex items-center justify-between">
           <div>
-            <h2 className="text-xl font-semibold text-gray-900 flex items-center">
-              <Eye className="h-5 w-5 text-cyan-600 mr-2" />
+            <h2 className="text-xl font-semibold text-gray-900 dark:text-white flex items-center transition-colors duration-300">
+              <Eye className="h-5 w-5 text-cyan-600 dark:text-cyan-400 mr-2 transition-colors duration-300" />
               Watchlist
             </h2>
-            <p className="text-sm text-gray-600 mt-1 flex items-center">
+            <p className="text-sm text-gray-600 dark:text-gray-400 mt-1 flex items-center transition-colors duration-300">
               <span className="mr-2">Last updated: {lastUpdated.toLocaleTimeString()}</span>
               {isLoading && <RefreshCw className="h-3 w-3 animate-spin" />}
             </p>
@@ -145,19 +144,19 @@ const WatchlistWidget: React.FC<WatchlistWidgetProps> = ({ className = "" }) => 
             <button
               onClick={refreshWatchlist}
               disabled={isLoading}
-              className="p-2 text-cyan-600 hover:bg-cyan-100 rounded-lg transition-colors disabled:opacity-50"
+              className="p-2 text-cyan-600 dark:text-cyan-400 hover:bg-cyan-100 dark:hover:bg-cyan-900/30 rounded-lg transition-colors disabled:opacity-50"
               title="Refresh watchlist"
             >
               <RefreshCw className={`h-4 w-4 ${isLoading ? 'animate-spin' : ''}`} />
             </button>
             <button
               onClick={addToWatchlist}
-              className="p-2 text-cyan-600 hover:bg-cyan-100 rounded-lg transition-colors"
+              className="p-2 text-cyan-600 dark:text-cyan-400 hover:bg-cyan-100 dark:hover:bg-cyan-900/30 rounded-lg transition-colors"
               title="Add to watchlist"
             >
               <Plus className="h-4 w-4" />
             </button>
-            <Link 
+            <Link
               to="/discover"
               className="px-4 py-2 bg-cyan-600 text-white text-sm font-medium rounded-lg hover:bg-cyan-700 transition-colors"
             >
@@ -167,11 +166,10 @@ const WatchlistWidget: React.FC<WatchlistWidgetProps> = ({ className = "" }) => 
         </div>
       </div>
 
-      <div className="p-6">
-        {watchlist.length === 0 ? (
+      <div className="p-6">        {watchlist.length === 0 ? (
           <div className="text-center py-8">
-            <Eye className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-            <p className="text-gray-500 mb-4">Your watchlist is empty</p>
+            <Eye className="h-12 w-12 text-gray-400 dark:text-gray-500 mx-auto mb-4 transition-colors duration-300" />
+            <p className="text-gray-500 dark:text-gray-400 mb-4 transition-colors duration-300">Your watchlist is empty</p>
             <button
               onClick={addToWatchlist}
               className="px-4 py-2 bg-cyan-600 text-white text-sm font-medium rounded-lg hover:bg-cyan-700 transition-colors"
@@ -182,11 +180,11 @@ const WatchlistWidget: React.FC<WatchlistWidgetProps> = ({ className = "" }) => 
         ) : (
           <div className="space-y-3">
             {watchlist.map((item) => (
-              <div key={item.symbol} className="flex items-center justify-between p-4 bg-gray-50 rounded-xl hover:bg-gray-100 transition-colors group">
+              <div key={item.symbol} className="flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-700/50 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors group">
                 <div className="flex items-center space-x-3">
                   <button
                     onClick={() => toggleWatch(item.symbol)}
-                    className="text-yellow-500 hover:text-yellow-600 transition-colors"
+                    className="text-yellow-500 hover:text-yellow-600 dark:text-yellow-400 dark:hover:text-yellow-300 transition-colors"
                   >
                     {item.isWatched ? (
                       <Star className="h-4 w-4 fill-current" />
@@ -203,10 +201,10 @@ const WatchlistWidget: React.FC<WatchlistWidgetProps> = ({ className = "" }) => 
                   
                   <div>
                     <div className="flex items-center space-x-2">
-                      <p className="font-semibold text-gray-900">{item.symbol}</p>
+                      <p className="font-semibold text-gray-900 dark:text-white transition-colors duration-300">{item.symbol}</p>
                       {getAlertIcon(item.changePercent)}
                     </div>
-                    <p className="text-sm text-gray-600 truncate max-w-[150px]">
+                    <p className="text-sm text-gray-600 dark:text-gray-400 truncate max-w-[150px] transition-colors duration-300">
                       {item.name}
                     </p>
                     {item.volume && (
@@ -218,7 +216,7 @@ const WatchlistWidget: React.FC<WatchlistWidgetProps> = ({ className = "" }) => 
                 </div>
                 
                 <div className="text-right">
-                  <p className="text-lg font-bold text-gray-900">
+                  <p className="text-lg font-bold text-gray-900 dark:text-white transition-colors duration-300">
                     {formatCurrency(item.price)}
                   </p>
                   <div className={`flex items-center justify-end space-x-1 ${getGainLossColor(item.change)}`}>
@@ -238,13 +236,11 @@ const WatchlistWidget: React.FC<WatchlistWidgetProps> = ({ className = "" }) => 
               </div>
             ))}
           </div>
-        )}
-
-        {/* Quick Add Popular Stocks */}
+        )}        {/* Quick Add Popular Stocks */}
         {watchlist.length > 0 && (
-          <div className="mt-6 p-4 bg-gradient-to-r from-cyan-50 to-blue-50 rounded-xl border border-cyan-200">
-            <h3 className="text-sm font-semibold text-gray-900 mb-3 flex items-center">
-              <Star className="h-4 w-4 text-cyan-600 mr-2" />
+          <div className="mt-6 p-4 bg-gradient-to-r from-cyan-50 dark:from-cyan-900/20 to-blue-50 dark:to-blue-900/20 rounded-xl border border-cyan-200 dark:border-cyan-700/50 transition-colors duration-300">
+            <h3 className="text-sm font-semibold text-gray-900 dark:text-white mb-3 flex items-center transition-colors duration-300">
+              <Star className="h-4 w-4 text-cyan-600 dark:text-cyan-400 mr-2 transition-colors duration-300" />
               Popular Stocks to Watch
             </h3>
             <div className="flex flex-wrap gap-2">
@@ -255,7 +251,7 @@ const WatchlistWidget: React.FC<WatchlistWidgetProps> = ({ className = "" }) => 
                     // Add to watchlist logic would go here
                     console.log(`Adding ${symbol} to watchlist`);
                   }}
-                  className="px-3 py-1 text-xs font-medium bg-white text-cyan-700 border border-cyan-200 rounded-full hover:bg-cyan-100 transition-colors"
+                  className="px-3 py-1 text-xs font-medium bg-white dark:bg-gray-700 text-cyan-700 dark:text-cyan-300 border border-cyan-200 dark:border-cyan-600 rounded-full hover:bg-cyan-100 dark:hover:bg-cyan-900/30 transition-colors"
                 >
                   + {symbol}
                 </button>

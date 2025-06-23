@@ -3,6 +3,13 @@
 @tailwind utilities;
 
 @layer base {
+  /* Smooth theme transitions */
+  * {
+    transition-property: background-color, border-color, color, fill, stroke;
+    transition-duration: 300ms;
+    transition-timing-function: ease-in-out;
+  }
+
   html {
     font-family: 'Inter', system-ui, sans-serif;
   }

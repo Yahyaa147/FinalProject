@@ -166,13 +166,71 @@ export class ApiService {
       return {
         data: response.data,
         success: true,
-        message: 'Request successful'
-      };
+        message: 'Request successful'      };
     } catch (error: any) {
       return {
         data: null as T,
         success: false,
         error: error.response?.data?.message || error.message || 'API request failed'
+      };
+    }
+  }
+
+  // Batch API calls
+  static async batchApiCalls(apiCalls: Array<() => Promise<ApiResponse<any>>>): Promise<ApiResponse<any[]>> {
+    try {
+      const results = await Promise.allSettled(apiCalls.map(call => call()));
+      const data = results.map(result => 
+        result.status === 'fulfilled' ? result.value.data : null
+      ).filter(Boolean);
+      
+      const successCount = results.filter(result => 
+        result.status === 'fulfilled' && result.value.success
+      ).length;
+
+      return {
+        data,
+        success: successCount > 0,
+        message: `${successCount}/${apiCalls.length} API calls successful`
+      };
+    } catch (error) {
+      return {
+        data: [],
+        success: false,
+        error: 'Batch API call failed'
+      };
+    }
+  }
+
+  // API configuration
+  static getConfig() {
+    return {
+      baseURL: 'https://api.example.com',
+      timeout: 10000,
+      retryAttempts: 3
+    };
+  }
+
+  // API health check
+  static async checkApiHealth(): Promise<ApiResponse<{ status: string; timestamp: number }>> {
+    try {
+      await simulateDelay(300);
+      return {
+        data: {
+          status: 'healthy',
+          timestamp: Date.now()
+        },
+        success: true,
+        message: 'API is healthy'
+      };
+    } catch (error) {
+      return {
+        data: {
+          status: 'unhealthy',
+          timestamp: Date.now()
+        },
+        success: false,
+        error: 'API health check failed'
       };
     }
   }

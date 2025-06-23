@@ -157,12 +157,14 @@ export function useApiConfig() {
   const [config] = useState(ApiService.getConfig());
   const [healthStatus, setHealthStatus] = useState<{ status: string; timestamp: Date } | null>(null);
   const [checkingHealth, setCheckingHealth] = useState(false);
-
   const checkHealth = useCallback(async () => {
     setCheckingHealth(true);
     try {
       const response = await ApiService.checkApiHealth();
-      setHealthStatus(response.data);
+      setHealthStatus({
+        status: response.data.status,
+        timestamp: new Date(response.data.timestamp)
+      });
     } catch (err) {
       setHealthStatus({ status: 'error', timestamp: new Date() });
     } finally {

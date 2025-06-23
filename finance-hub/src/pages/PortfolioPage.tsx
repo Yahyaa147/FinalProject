@@ -93,33 +93,30 @@ const MyAssets = () => {
     { month: 'Jun', amount: 240 },
   ];  // Colors for pie chart
   const COLORS = ['#3b82f6', '#ef4444', '#10b981', '#f59e0b', '#8b5cf6', '#06b6d4', '#84cc16'];
-
   return (
     <div className="space-y-8">
       <div className="mb-6">
-        <h2 className="text-3xl font-bold text-gray-900 mb-2">Portfolio Overview</h2>
-        <p className="text-gray-600">Comprehensive view of your investment performance</p>
-      </div>
-
-      {/* Enhanced Portfolio Summary */}
+        <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-2 transition-colors duration-300">Portfolio Overview</h2>
+        <p className="text-gray-600 dark:text-gray-400 transition-colors duration-300">Comprehensive view of your investment performance</p>
+      </div>      {/* Enhanced Portfolio Summary */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-        <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-200">
+        <div className="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-sm border border-gray-200 dark:border-gray-700 transition-colors duration-300">
           <div className="flex items-center justify-between">
             <div>
-              <h3 className="text-sm font-medium text-gray-600 mb-1">Total Value</h3>
-              <p className="text-3xl font-bold text-blue-600">{formatCurrency(totalValue)}</p>
-              <p className="text-sm text-gray-500 mt-1">10 holdings</p>
+              <h3 className="text-sm font-medium text-gray-600 dark:text-gray-400 mb-1 transition-colors duration-300">Total Value</h3>
+              <p className="text-3xl font-bold text-blue-600 dark:text-blue-400 transition-colors duration-300">{formatCurrency(totalValue)}</p>
+              <p className="text-sm text-gray-500 dark:text-gray-400 mt-1 transition-colors duration-300">10 holdings</p>
             </div>
-            <div className="p-3 bg-blue-100 rounded-lg">
-              <TrendingUp className="h-6 w-6 text-blue-600" />
+            <div className="p-3 bg-blue-100 dark:bg-blue-900 rounded-lg transition-colors duration-300">
+              <TrendingUp className="h-6 w-6 text-blue-600 dark:text-blue-400 transition-colors duration-300" />
             </div>
           </div>
         </div>
 
-        <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-200">
+        <div className="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-sm border border-gray-200 dark:border-gray-700 transition-colors duration-300">
           <div className="flex items-center justify-between">
             <div>
-              <h3 className="text-sm font-medium text-gray-600 mb-1">Total Returns</h3>
+              <h3 className="text-sm font-medium text-gray-600 dark:text-gray-400 mb-1 transition-colors duration-300">Total Returns</h3>
               <p className={`text-3xl font-bold ${getGainLossColor(totalGainLoss)}`}>
                 {formatCurrency(totalGainLoss)}
               </p>
@@ -132,40 +129,39 @@ const MyAssets = () => {
                 {formatPercentage(Math.abs(gainLossPercentage))}
               </p>
             </div>
-            <div className={`p-3 rounded-lg ${gainLossPercentage >= 0 ? 'bg-green-100' : 'bg-red-100'}`}>
+            <div className={`p-3 rounded-lg ${gainLossPercentage >= 0 ? 'bg-green-100 dark:bg-green-900' : 'bg-red-100 dark:bg-red-900'} transition-colors duration-300`}>
               {gainLossPercentage >= 0 ? (
-                <ArrowUpRight className="h-6 w-6 text-green-600" />
+                <ArrowUpRight className="h-6 w-6 text-green-600 dark:text-green-400 transition-colors duration-300" />
               ) : (
-                <ArrowDownRight className="h-6 w-6 text-red-600" />
+                <ArrowDownRight className="h-6 w-6 text-red-600 dark:text-red-400 transition-colors duration-300" />
               )}
             </div>
           </div>
         </div>
 
-        <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-200">
+        <div className="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-sm border border-gray-200 dark:border-gray-700 transition-colors duration-300">
           <div className="flex items-center justify-between">
             <div>
-              <h3 className="text-sm font-medium text-gray-600 mb-1">Est. Dividend</h3>
-              <p className="text-3xl font-bold text-green-600">$764</p>
-              <p className="text-sm text-gray-500 mt-1">4.0% Yield</p>
+              <h3 className="text-sm font-medium text-gray-600 dark:text-gray-400 mb-1 transition-colors duration-300">Est. Dividend</h3>
+              <p className="text-3xl font-bold text-green-600 dark:text-green-400 transition-colors duration-300">$764</p>
+              <p className="text-sm text-gray-500 dark:text-gray-400 mt-1 transition-colors duration-300">4.0% Yield</p>
             </div>
-            <div className="p-3 bg-green-100 rounded-lg">
-              <Activity className="h-6 w-6 text-green-600" />
+            <div className="p-3 bg-green-100 dark:bg-green-900 rounded-lg transition-colors duration-300">
+              <Activity className="h-6 w-6 text-green-600 dark:text-green-400 transition-colors duration-300" />
             </div>
           </div>
         </div>
 
-        <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-200">
-          <div className="flex items-center justify-between">
+        <div className="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-sm border border-gray-200 dark:border-gray-700 transition-colors duration-300">          <div className="flex items-center justify-between">
             <div>
-              <h3 className="text-sm font-medium text-gray-600 mb-1">Portfolio Risk</h3>
-              <p className="text-3xl font-bold text-yellow-600">17</p>
-              <p className="text-sm text-gray-500 mt-1">17 Risks • 25 Rewards</p>
+              <h3 className="text-sm font-medium text-gray-600 dark:text-gray-400 mb-1 transition-colors duration-300">Portfolio Risk</h3>
+              <p className="text-3xl font-bold text-yellow-600 dark:text-yellow-400 transition-colors duration-300">17</p>
+              <p className="text-sm text-gray-500 dark:text-gray-400 mt-1 transition-colors duration-300">17 Risks • 25 Rewards</p>
             </div>
-            <div className="p-3 bg-yellow-100 rounded-lg">
-              <BarChart3 className="h-6 w-6 text-yellow-600" />
+            <div className="p-3 bg-yellow-100 dark:bg-yellow-900 rounded-lg transition-colors duration-300">
+              <BarChart3 className="h-6 w-6 text-yellow-600 dark:text-yellow-400 transition-colors duration-300" />
             </div>
-          </div>        </div>
+          </div></div>
       </div>
 
       {/* Portfolio Analysis Components from Dashboard */}
@@ -182,13 +178,12 @@ const MyAssets = () => {
       </div>
 
       {/* Charts Section */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          {/* Asset Allocation Pie Chart */}
-        <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-200">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">          {/* Asset Allocation Pie Chart */}
+        <div className="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-sm border border-gray-200 dark:border-gray-700 transition-colors duration-300">
           <div className="flex items-center justify-between mb-6">
-            <h3 className="text-xl font-semibold text-gray-900">Asset Allocation</h3>
-            <PieChart className="h-5 w-5 text-gray-500" />
-          </div>          <div className="h-80">
+            <h3 className="text-xl font-semibold text-gray-900 dark:text-white transition-colors duration-300">Asset Allocation</h3>
+            <PieChart className="h-5 w-5 text-gray-500 dark:text-gray-400 transition-colors duration-300" />
+          </div><div className="h-80">
             <ResponsiveContainer width="100%" height="100%">
               <RechartsPieChart>
                 <Pie 
@@ -232,23 +227,22 @@ const MyAssets = () => {
                     style={{ backgroundColor: COLORS[index % COLORS.length] }}
                   ></div>
                   <span className="font-medium">{asset.name}</span>
-                </div>
-                <span className="text-gray-600">{asset.percentage.toFixed(1)}%</span>
+                </div>                <span className="text-gray-600 dark:text-gray-400 transition-colors duration-300">{asset.percentage.toFixed(1)}%</span>
               </div>
             ))}
           </div>
         </div>        {/* Portfolio Performance Chart */}
-        <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-200">
+        <div className="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-sm border border-gray-200 dark:border-gray-700 transition-colors duration-300">
           <div className="flex items-center justify-between mb-4">
-            <h3 className="text-xl font-semibold text-gray-900">Performance vs Market</h3>
+            <h3 className="text-xl font-semibold text-gray-900 dark:text-white transition-colors duration-300">Performance vs Market</h3>
             <div className="flex items-center space-x-4 text-sm">
               <div className="flex items-center">
                 <div className="w-3 h-3 rounded-full bg-blue-500 mr-2"></div>
-                <span>Holdings</span>
+                <span className="text-gray-700 dark:text-gray-300 transition-colors duration-300">Holdings</span>
               </div>
               <div className="flex items-center">
                 <div className="w-3 h-3 rounded-full bg-gray-400 mr-2"></div>
-                <span>US Market</span>
+                <span className="text-gray-700 dark:text-gray-300 transition-colors duration-300">US Market</span>
               </div>
             </div>
           </div>
@@ -258,11 +252,10 @@ const MyAssets = () => {
             {['YTD', '1Y', '5Y'].map((range) => (
               <button
                 key={range}
-                onClick={() => setSelectedTimeRange(range)}
-                className={`px-4 py-2 text-sm font-medium rounded-lg transition-all duration-200 ${
+                onClick={() => setSelectedTimeRange(range)}                className={`px-4 py-2 text-sm font-medium rounded-lg transition-all duration-200 ${
                   selectedTimeRange === range
                     ? 'bg-blue-600 text-white shadow-md'
-                    : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                    : 'bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600'
                 }`}
               >
                 {range}
@@ -327,10 +320,9 @@ const MyAssets = () => {
       </div>
 
       {/* Additional Charts Row */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          {/* Risk Metrics */}
-        <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-200">
-          <h3 className="text-xl font-semibold text-gray-900 mb-6">Risk Analysis</h3>
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">          {/* Risk Metrics */}
+        <div className="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-sm border border-gray-200 dark:border-gray-700 transition-colors duration-300">
+          <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-6 transition-colors duration-300">Risk Analysis</h3>
           <div className="h-64">
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={riskMetrics}>
@@ -365,11 +357,9 @@ const MyAssets = () => {
               </div>
             ))}
           </div>
-        </div>
-
-        {/* Dividend Income */}
-        <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-200">
-          <h3 className="text-xl font-semibold text-gray-900 mb-6">Dividend Income</h3>
+        </div>        {/* Dividend Income */}
+        <div className="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-sm border border-gray-200 dark:border-gray-700 transition-colors duration-300">
+          <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-6 transition-colors duration-300">Dividend Income</h3>
           <div className="h-64">
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={dividendData}>
@@ -381,11 +371,10 @@ const MyAssets = () => {
               </BarChart>
             </ResponsiveContainer>
           </div>
-        </div>
-      </div>      {/* Assets List */}
-      <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+        </div>      </div>      {/* Assets List */}
+      <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-6 transition-colors duration-300">
         <div className="flex items-center justify-between mb-6">
-          <h3 className="text-xl font-semibold text-gray-900">Asset Holdings</h3>
+          <h3 className="text-xl font-semibold text-gray-900 dark:text-white transition-colors duration-300">Asset Holdings</h3>
           <div className="flex items-center space-x-4 text-sm text-gray-500">
             <span>{assets.length} Assets</span>
             <span>•</span>
@@ -407,19 +396,18 @@ const MyAssets = () => {
                 </th>
                 <th className="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
                   Current Price
-                </th>
-                <th className="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                </th>                <th className="px-6 py-4 text-left text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wider transition-colors duration-300">
                   Total Value
                 </th>
-                <th className="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                <th className="px-6 py-4 text-left text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wider transition-colors duration-300">
                   Gain/Loss
                 </th>
-                <th className="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                <th className="px-6 py-4 text-left text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wider transition-colors duration-300">
                   Allocation
                 </th>
               </tr>
             </thead>
-            <tbody className="bg-white divide-y divide-gray-200">
+            <tbody className="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700 transition-colors duration-300">
               {assets.map((asset) => {
                 const assetTotalValue = asset.currentPrice * asset.quantity;
                 const totalCost = asset.averageCost * asset.quantity;
@@ -428,30 +416,29 @@ const MyAssets = () => {
                 const allocation = totalValue > 0 ? (assetTotalValue / totalValue) * 100 : 0;
 
                 return (
-                  <tr key={asset.id} className="hover:bg-gray-50 transition-colors">
-                    <td className="px-6 py-4 whitespace-nowrap">
+                  <tr key={asset.id} className="hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-300">                    <td className="px-6 py-4 whitespace-nowrap">
                       <div className="flex items-center">
-                        <div className="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center mr-3">
-                          <span className="text-blue-600 font-bold text-sm">{asset.symbol.charAt(0)}</span>
+                        <div className="w-10 h-10 bg-blue-100 dark:bg-blue-900 rounded-lg flex items-center justify-center mr-3 transition-colors duration-300">
+                          <span className="text-blue-600 dark:text-blue-400 font-bold text-sm transition-colors duration-300">{asset.symbol.charAt(0)}</span>
                         </div>
                         <div>
-                          <div className="text-sm font-semibold text-gray-900">{asset.symbol}</div>
-                          <div className="text-sm text-gray-500">{asset.name}</div>
+                          <div className="text-sm font-semibold text-gray-900 dark:text-white transition-colors duration-300">{asset.symbol}</div>
+                          <div className="text-sm text-gray-500 dark:text-gray-400 transition-colors duration-300">{asset.name}</div>
                         </div>
                       </div>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="text-sm font-medium text-gray-900">{asset.quantity}</div>
-                      <div className="text-xs text-gray-500">shares</div>
+                      <div className="text-sm font-medium text-gray-900 dark:text-white transition-colors duration-300">{asset.quantity}</div>
+                      <div className="text-xs text-gray-500 dark:text-gray-400 transition-colors duration-300">shares</div>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="text-sm font-medium text-gray-900">{formatCurrency(asset.averageCost)}</div>
+                      <div className="text-sm font-medium text-gray-900 dark:text-white transition-colors duration-300">{formatCurrency(asset.averageCost)}</div>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="text-sm font-medium text-gray-900">{formatCurrency(asset.currentPrice)}</div>
+                      <div className="text-sm font-medium text-gray-900 dark:text-white transition-colors duration-300">{formatCurrency(asset.currentPrice)}</div>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="text-sm font-semibold text-gray-900">{formatCurrency(assetTotalValue)}</div>
+                      <div className="text-sm font-semibold text-gray-900 dark:text-white transition-colors duration-300">{formatCurrency(assetTotalValue)}</div>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
                       <div className={`text-sm font-semibold flex items-center ${getGainLossColor(gainLoss)}`}>
@@ -601,15 +588,13 @@ const AddTransaction = () => {
             <span className="text-green-800 font-medium">Transaction added successfully!</span>
           </div>
         </div>
-      )}
-
-      <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-8">
+      )}      <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-8 transition-colors duration-300">
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-8">
           {/* Asset Information */}
-          <div className="border-b border-gray-200 pb-8">
-            <h3 className="text-xl font-semibold text-gray-900 mb-6 flex items-center">
-              <div className="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center mr-3">
-                <span className="text-blue-600 font-bold text-sm">1</span>
+          <div className="border-b border-gray-200 dark:border-gray-600 pb-8 transition-colors duration-300">
+            <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-6 flex items-center transition-colors duration-300">
+              <div className="w-8 h-8 bg-blue-100 dark:bg-blue-900 rounded-lg flex items-center justify-center mr-3 transition-colors duration-300">
+                <span className="text-blue-600 dark:text-blue-400 font-bold text-sm transition-colors duration-300">1</span>
               </div>
               Asset Information
             </h3>
@@ -891,79 +876,76 @@ const TransactionHistory = () => {
   const sortedTransactions = [...transactions].sort((a, b) => 
     new Date(b.date).getTime() - new Date(a.date).getTime()
   );
-
   return (
     <div className="max-w-6xl mx-auto">
       <div className="mb-8">
-        <h2 className="text-3xl font-bold text-gray-900 mb-2">Transaction History</h2>
-        <p className="text-gray-600">View all your past trading activity and transaction details</p>
+        <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-2 transition-colors duration-300">Transaction History</h2>
+        <p className="text-gray-600 dark:text-gray-400 transition-colors duration-300">View all your past trading activity and transaction details</p>
       </div>
       
-      <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+      <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-6 transition-colors duration-300">
         <div className="flex items-center justify-between mb-6">
-          <h3 className="text-xl font-semibold text-gray-900">Recent Transactions</h3>
-          <div className="flex items-center space-x-4 text-sm text-gray-500">
+          <h3 className="text-xl font-semibold text-gray-900 dark:text-white transition-colors duration-300">Recent Transactions</h3>
+          <div className="flex items-center space-x-4 text-sm text-gray-500 dark:text-gray-400 transition-colors duration-300">
             <span>{transactions.length} Transactions</span>
           </div>
         </div>
         
         <div className="overflow-x-auto">
-          <table className="min-w-full divide-y divide-gray-200">
-            <thead className="bg-gray-50">
+          <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700 transition-colors duration-300">
+            <thead className="bg-gray-50 dark:bg-gray-700 transition-colors duration-300">
               <tr>
-                <th className="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                <th className="px-6 py-4 text-left text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wider transition-colors duration-300">
                   Date
                 </th>
-                <th className="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                <th className="px-6 py-4 text-left text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wider transition-colors duration-300">
                   Asset
                 </th>
-                <th className="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                <th className="px-6 py-4 text-left text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wider transition-colors duration-300">
                   Type
                 </th>
-                <th className="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                <th className="px-6 py-4 text-left text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wider transition-colors duration-300">
                   Quantity
-                </th>
-                <th className="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                </th>                <th className="px-6 py-4 text-left text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wider transition-colors duration-300">
                   Price
                 </th>
-                <th className="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                <th className="px-6 py-4 text-left text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wider transition-colors duration-300">
                   Total Value
                 </th>
               </tr>
             </thead>
-            <tbody className="bg-white divide-y divide-gray-200">
+            <tbody className="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700 transition-colors duration-300">
               {sortedTransactions.map((transaction) => {
                 const asset = getAssetById(transaction.assetId);
                 const total = transaction.quantity * transaction.price;
 
                 return (
-                  <tr key={transaction.id} className="hover:bg-gray-50 transition-colors">
+                  <tr key={transaction.id} className="hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-300">
                     <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="text-sm font-medium text-gray-900">
+                      <div className="text-sm font-medium text-gray-900 dark:text-white transition-colors duration-300">
                         {new Date(transaction.date).toLocaleDateString('en-US', {
                           year: 'numeric',
                           month: 'short',
                           day: 'numeric'
                         })}
                       </div>
-                      <div className="text-xs text-gray-500">
+                      <div className="text-xs text-gray-500 dark:text-gray-400 transition-colors duration-300">
                         {new Date(transaction.date).toLocaleDateString('en-US', {
                           weekday: 'short'
                         })}
                       </div>
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
+                    </td>                    <td className="px-6 py-4 whitespace-nowrap">
                       <div className="flex items-center">
-                        <div className="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center mr-3">
-                          <span className="text-blue-600 font-bold text-xs">
+                        <div className="w-8 h-8 bg-blue-100 dark:bg-blue-900 rounded-lg flex items-center justify-center mr-3 transition-colors duration-300">
+                          <span className="text-blue-600 dark:text-blue-400 font-bold text-xs transition-colors duration-300">
                             {asset?.symbol?.charAt(0) || 'U'}
                           </span>
                         </div>
                         <div>
-                          <div className="text-sm font-medium text-gray-900">
+                          <div className="text-sm font-medium text-gray-900 dark:text-white transition-colors duration-300">
                             {asset?.symbol || 'Unknown'}
                           </div>
-                          <div className="text-xs text-gray-500">
+                          <div className="text-xs text-gray-500 dark:text-gray-400 transition-colors duration-300">
                             {asset?.name || 'Unknown Asset'}
                           </div>
                         </div>
@@ -972,9 +954,9 @@ const TransactionHistory = () => {
                     <td className="px-6 py-4 whitespace-nowrap">
                       <span className={`inline-flex items-center px-3 py-1 text-xs font-semibold rounded-full ${
                         transaction.type === 'buy' 
-                          ? 'bg-green-100 text-green-800' 
-                          : 'bg-red-100 text-red-800'
-                      }`}>
+                          ? 'bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-300' 
+                          : 'bg-red-100 dark:bg-red-900 text-red-800 dark:text-red-300'
+                      } transition-colors duration-300`}>
                         {transaction.type === 'buy' ? (
                           <ArrowUpRight className="h-3 w-3 mr-1" />
                         ) : (
@@ -984,15 +966,14 @@ const TransactionHistory = () => {
                       </span>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="text-sm font-medium text-gray-900">{transaction.quantity}</div>
-                      <div className="text-xs text-gray-500">shares</div>
+                      <div className="text-sm font-medium text-gray-900 dark:text-white transition-colors duration-300">{transaction.quantity}</div>                      <div className="text-xs text-gray-500 dark:text-gray-400 transition-colors duration-300">shares</div>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="text-sm font-medium text-gray-900">{formatCurrency(transaction.price)}</div>
-                      <div className="text-xs text-gray-500">per share</div>
+                      <div className="text-sm font-medium text-gray-900 dark:text-white transition-colors duration-300">{formatCurrency(transaction.price)}</div>
+                      <div className="text-xs text-gray-500 dark:text-gray-400 transition-colors duration-300">per share</div>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="text-sm font-semibold text-gray-900">{formatCurrency(total)}</div>
+                      <div className="text-sm font-semibold text-gray-900 dark:text-white transition-colors duration-300">{formatCurrency(total)}</div>
                     </td>
                   </tr>
                 );
@@ -1003,9 +984,9 @@ const TransactionHistory = () => {
         
         {transactions.length === 0 && (
           <div className="text-center py-12">
-            <TrendingUp className="mx-auto h-12 w-12 text-gray-400" />
-            <h3 className="mt-2 text-sm font-medium text-gray-900">No transactions yet</h3>
-            <p className="mt-1 text-sm text-gray-500">Start building your portfolio by making your first transaction.</p>
+            <TrendingUp className="mx-auto h-12 w-12 text-gray-400 dark:text-gray-500 transition-colors duration-300" />
+            <h3 className="mt-2 text-sm font-medium text-gray-900 dark:text-white transition-colors duration-300">No transactions yet</h3>
+            <p className="mt-1 text-sm text-gray-500 dark:text-gray-400 transition-colors duration-300">Start building your portfolio by making your first transaction.</p>
             <div className="mt-6">
               <Link
                 to="/portfolio/add-transaction"

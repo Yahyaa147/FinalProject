@@ -13,8 +13,12 @@ import {
   LogIn,
   Settings,
   LogOut,
-  ChevronDown
+  ChevronDown,
+  Bell,
+  Moon,
+  Sun
 } from 'lucide-react';
+import { useUIStore } from '../store/uiStore';
 
 const Navigation = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -23,6 +27,8 @@ const Navigation = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [user, setUser] = useState({ name: 'John Doe', email: 'john@example.com' });
   const location = useLocation();
+    // Use UI store for notifications and theme
+  const { notifications, getUnreadNotificationsCount, addNotification, theme, toggleTheme } = useUIStore();
   const navigationItems = [
     { path: '/', label: 'Dashboard', icon: Home },
     { path: '/portfolio', label: 'Portfolio', icon: BarChart3 },
@@ -190,10 +196,40 @@ const Navigation = () => {
                   );
                 })}
               </div>
-            </div>
-
-            {/* Right side - User menu or Login */}
+            </div>            {/* Right side - Theme Toggle, Notifications and User menu or Login */}
             <div className="hidden md:flex items-center space-x-4">
+              {/* Theme Toggle */}
+              <button 
+                className="p-2 rounded-lg hover:bg-white/20 transition-all duration-200 border border-white/20 hover:border-white/30"
+                onClick={toggleTheme}
+                title={`Switch to ${theme === 'light' ? 'dark' : 'light'} theme`}
+              >
+                {theme === 'light' ? (
+                  <Moon className="w-5 h-5 text-gray-300 hover:text-white transition-colors" />
+                ) : (
+                  <Sun className="w-5 h-5 text-gray-300 hover:text-white transition-colors" />
+                )}
+              </button>
+              
+              {/* Notification Bell */}
+              <div className="relative">
+                <button 
+                  className="p-2 rounded-lg hover:bg-white/20 transition-all duration-200 border border-white/20 hover:border-white/30"
+                  onClick={() => addNotification({
+                    type: 'info',
+                    title: 'Market Update',
+                    message: 'Stock market is showing positive trends today!'
+                  })}
+                >
+                  <Bell className="w-5 h-5 text-gray-300 hover:text-white transition-colors" />
+                  {getUnreadNotificationsCount() > 0 && (
+                    <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center font-bold">
+                      {getUnreadNotificationsCount()}
+                    </span>
+                  )}
+                </button>
+              </div>
+              
               {isLoggedIn ? (
                 <div className="relative">                  <button
                     onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}

@@ -8,9 +8,9 @@ import {
 } from 'lucide-react';
 import PortfolioAnalyzer from './tools/PortfolioAnalyzer';
 import RetirementPlanner from './tools/RetirementPlanner';
-import CompoundInterestCalculator from './tools/CompoundInterestCalculator';
+import CompoundInterestCalculator from './tools/CompoundInterestCalculator_backup';
 import PageHeader from '../components/PageHeader';
-import { DashboardQuickActions } from '../components/dashboard';
+import DashboardQuickActions from '../components/dashboard/DashboardQuickActions';
 
 const ToolsOverview = () => {
   const tools = [
@@ -40,11 +40,10 @@ const ToolsOverview = () => {
       color: 'from-green-500 to-green-600',
       bgColor: 'bg-green-50',
       stats: 'Future Planning'
-    }
-  ];
+    }  ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-blue-50/30 to-purple-50/30">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-blue-50/30 to-purple-50/30 dark:from-gray-900 dark:via-blue-900/30 dark:to-purple-900/30 transition-colors duration-300">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Reusable Page Header Component */}
         <PageHeader
@@ -79,8 +78,7 @@ const ToolsOverview = () => {
         />
 
         {/* Tools Section */}
-        <div className="mb-8">
-          <h2 className="text-2xl font-semibold text-gray-900 mb-6 flex items-center">
+        <div className="mb-8">          <h2 className="text-2xl font-semibold text-gray-900 dark:text-white mb-6 flex items-center transition-colors duration-300">
             <div className="w-1 h-6 bg-gradient-to-b from-blue-500 to-purple-600 rounded-full mr-3"></div>
             Available Tools
           </h2>
@@ -93,25 +91,23 @@ const ToolsOverview = () => {
                   to={tool.path}
                   className="group block"
                 >
-                  <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-200/50 hover:shadow-lg transition-all duration-300 transform hover:scale-105">
+                  <div className="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-sm border border-gray-200/50 dark:border-gray-700/50 hover:shadow-lg transition-all duration-300 transform hover:scale-105">
                     <div className="flex items-center justify-between mb-4">
                       <div className="flex items-center">
-                        <div className={`p-4 rounded-xl ${tool.bgColor} group-hover:scale-110 transition-transform duration-300`}>
-                          <Icon className={`h-6 w-6 ${
-                            tool.path.includes('compound-interest') ? 'text-blue-600' :
+                        <div className={`p-4 rounded-xl ${tool.bgColor} dark:bg-opacity-20 group-hover:scale-110 transition-transform duration-300`}>
+                          <Icon className={`h-6 w-6 ${tool.path.includes('compound-interest') ? 'text-blue-600' :
                             tool.path.includes('portfolio-analyzer') ? 'text-purple-600' :
-                            'text-green-600'
-                          }`} />
+                            'text-green-600'} dark:text-opacity-90`} />
                         </div>
                         <div className="ml-4">
-                          <h3 className="text-lg font-semibold text-gray-900 group-hover:text-blue-600 transition-colors">
+                          <h3 className="text-lg font-semibold text-gray-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
                             {tool.title}
                           </h3>
-                          <p className="text-sm text-gray-500 font-medium">{tool.stats}</p>
+                          <p className="text-sm text-gray-500 dark:text-gray-400 font-medium transition-colors duration-300">{tool.stats}</p>
                         </div>
                       </div>
                       <div className="text-right">
-                        <div className="w-2 h-16 bg-gradient-to-b from-gray-200 to-gray-300 rounded-full overflow-hidden">
+                        <div className="w-2 h-16 bg-gradient-to-b from-gray-200 dark:from-gray-600 to-gray-300 dark:to-gray-700 rounded-full overflow-hidden transition-colors duration-300">
                           <div 
                             className={`w-full bg-gradient-to-b ${tool.color} rounded-full transition-all duration-1000`}
                             style={{ height: `${60 + (index * 15)}%` }}
@@ -119,9 +115,8 @@ const ToolsOverview = () => {
                         </div>
                       </div>
                     </div>
-                    <p className="text-gray-600 mb-4 line-clamp-2">{tool.description}</p>
-                    <div className="flex items-center justify-between">
-                      <span className="text-sm font-medium text-blue-600 group-hover:text-blue-700">
+                    <p className="text-gray-600 dark:text-gray-300 mb-4 line-clamp-2 transition-colors duration-300">{tool.description}</p>                    <div className="flex items-center justify-between">
+                      <span className="text-sm font-medium text-blue-600 dark:text-blue-400 group-hover:text-blue-700 dark:group-hover:text-blue-300 transition-colors duration-300">
                         Use Tool
                       </span>
                       <div className="w-8 h-8 rounded-full bg-gradient-to-r from-blue-500 to-purple-600 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">

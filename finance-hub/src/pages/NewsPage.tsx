@@ -8,28 +8,55 @@ import {
   Search,
   ArrowLeft,
   Share2,
-  BookmarkPlus
+  BookmarkPlus,
+  ChevronDown,
+  X,
+  History
 } from 'lucide-react';
 import { ApiService } from '../services/apiService';
 import { getRelativeTime } from '../utils/helpers';
 import PageHeader from '../components/PageHeader';
 import { KeyInsights, QuickActions, CategoryAnalytics, NewsletterSubscription } from '../components/news';
 import { insightsData, quickActionsData, getAnalyticsData } from '../data/newsComponentsData';
+import { useNewsStore } from '../store/newsStore';
 import type { Article } from '../types';
 
 const NewsGrid = ({ articles }: { articles: Article[] }) => {
+  const { toggleBookmark, isBookmarked, markAsRead } = useNewsStore();
+  
+  const handleBookmarkClick = (e: React.MouseEvent, articleId: string) => {
+    e.preventDefault();
+    e.stopPropagation();
+    toggleBookmark(articleId);
+  };
+  
+  const handleArticleClick = (articleId: string) => {
+    markAsRead(articleId);
+  };
+
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
       {articles.map((article, index) => (
-        <Link
-          key={article.id}
-          to={`/news/article/${article.id}`}
-          className="group block animate-fade-in-up"
-          style={{
-            animationDelay: `${index * 100}ms`
-          }}
-        >
-          <article className="bg-white rounded-xl p-6 shadow-md border border-gray-200/60 hover:shadow-lg transition-all duration-300 transform hover:scale-[1.02] hover:-translate-y-1">
+        <div key={article.id} className="relative">
+          <Link
+            to={`/news/article/${article.id}`}
+            onClick={() => handleArticleClick(article.id)}
+            className="group block animate-fade-in-up"
+            style={{
+              animationDelay: `${index * 100}ms`
+            }}
+          >            <article className="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-md border border-gray-200/60 dark:border-gray-700/60 hover:shadow-lg transition-all duration-300 transform hover:scale-[1.02] hover:-translate-y-1">
+              {/* Bookmark button */}
+              <button
+                onClick={(e) => handleBookmarkClick(e, article.id)}
+                className={`absolute top-4 right-4 z-10 p-2 rounded-full transition-all duration-300 ${
+                  isBookmarked(article.id)
+                    ? 'bg-blue-600 text-white shadow-lg'
+                    : 'bg-white/80 dark:bg-gray-700/80 text-gray-400 dark:text-gray-500 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-white dark:hover:bg-gray-700'
+                } backdrop-blur-sm`}
+              >
+                <BookmarkPlus className="h-4 w-4" />
+              </button>
             {article.imageUrl ? (
               <div className="relative overflow-hidden rounded-lg mb-4 bg-gray-100">
                 <img 
@@ -81,21 +108,18 @@ const NewsGrid = ({ articles }: { articles: Article[] }) => {
                 'bg-gradient-news text-white'
               }`}>
                 {article.category.toUpperCase()}
-              </span>
-              <span className="text-xs text-gray-500 flex items-center bg-gray-100 px-2 py-1 rounded-full">
+              </span>              <span className="text-xs text-gray-500 dark:text-gray-400 flex items-center bg-gray-100 dark:bg-gray-700 px-2 py-1 rounded-full transition-colors duration-300">
                 <Clock className="h-3 w-3 mr-1" />
                 {getRelativeTime(article.date)}
               </span>
             </div>
-            <h3 className="text-lg font-bold text-gray-900 mb-3 line-clamp-2 group-hover:text-blue-700 transition-colors">
+            <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-3 line-clamp-2 group-hover:text-blue-700 dark:group-hover:text-blue-400 transition-colors">
               {article.title}
             </h3>
-            <p className="text-gray-600 text-sm mb-4 line-clamp-3">
-              {article.summary}
-            </p>
-            <div className="flex items-center justify-between pt-4 border-t border-gray-100">
-              <span className="text-xs text-gray-500 font-medium">{article.source}</span>
-              <div className="flex items-center text-blue-600 group-hover:text-blue-700 text-sm font-medium">
+            <p className="text-gray-600 dark:text-gray-300 text-sm mb-4 line-clamp-3 transition-colors duration-300">
+              {article.summary}            </p>            <div className="flex items-center justify-between pt-4 border-t border-gray-100 dark:border-gray-700">
+              <span className="text-xs text-gray-500 dark:text-gray-400 font-medium transition-colors duration-300">{article.source}</span>
+              <div className="flex items-center text-blue-600 dark:text-blue-400 group-hover:text-blue-700 dark:group-hover:text-blue-300 text-sm font-medium transition-colors duration-300">
                 Read Article
                 <svg className="ml-1 h-4 w-4 group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
@@ -104,15 +128,19 @@ const NewsGrid = ({ articles }: { articles: Article[] }) => {
             </div>
           </article>
         </Link>
+        </div>
       ))}
     </div>
   );
 };
 
-const AllNews = () => {  const [articles, setArticles] = useState<Article[]>([]);
-  const [filteredArticles, setFilteredArticles] = useState<Article[]>([]);
-  const [selectedCategory, setSelectedCategory] = useState<string>('all');
+const AllNews = () => {
+  const [articles, setArticles] = useState<Article[]>([]);
+  const [filteredArticles, setFilteredArticles] = useState<Article[]>([]);  const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [searchTerm, setSearchTerm] = useState<string>('');
+  const [showSearchHistory, setShowSearchHistory] = useState<boolean>(false);
+    // Use news store for search history and preferences
+  const { addToSearchHistory, searchHistory, clearSearchHistory } = useNewsStore();
 
   const categories = [
     { value: 'all', label: 'All News' },
@@ -147,16 +175,15 @@ const AllNews = () => {  const [articles, setArticles] = useState<Article[]>([])
       filtered = filtered.filter(article =>
         article.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
         article.summary.toLowerCase().includes(searchTerm.toLowerCase())
-      );
-    }    setFilteredArticles(filtered);
+      );    }    setFilteredArticles(filtered);
   }, [articles, selectedCategory, searchTerm]);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-blue-50/30 relative overflow-hidden">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-blue-50/30 dark:from-gray-900 dark:via-gray-800 dark:to-blue-900/30 relative overflow-hidden transition-colors duration-300">
       {/* Subtle background elements */}
       <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute -top-40 -right-40 w-80 h-80 bg-gradient-to-br from-blue-100/20 to-purple-100/20 rounded-full blur-3xl"></div>
-        <div className="absolute -bottom-32 -left-32 w-96 h-96 bg-gradient-to-br from-indigo-100/20 to-blue-100/20 rounded-full blur-3xl"></div>
+        <div className="absolute -top-40 -right-40 w-80 h-80 bg-gradient-to-br from-blue-100/20 to-purple-100/20 dark:from-blue-900/10 dark:to-purple-900/10 rounded-full blur-3xl"></div>
+        <div className="absolute -bottom-32 -left-32 w-96 h-96 bg-gradient-to-br from-indigo-100/20 to-blue-100/20 dark:from-indigo-900/10 dark:to-blue-900/10 rounded-full blur-3xl"></div>
       </div>
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Reusable Page Header Component */}        <PageHeader
@@ -200,61 +227,95 @@ const AllNews = () => {  const [articles, setArticles] = useState<Article[]>([])
           }
         />
 
-        {/* Enhanced Filters */}
-        <div className="mb-8 animate-fade-in" style={{animationDelay: '300ms'}}>
-          <div className="bg-white rounded-2xl p-6 shadow-lg border border-gray-200/50 hover:shadow-xl transition-all duration-500 backdrop-blur-sm">{/* ...existing code... */}            <h2 className="text-xl font-bold text-gray-900 mb-4 flex items-center">
-              <div className="bg-slate-600 rounded-full p-2 mr-3">
+        {/* Enhanced Filters */}        <div className="mb-8 animate-fade-in" style={{animationDelay: '300ms'}}>
+          <div className="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-lg border border-gray-200/50 dark:border-gray-700/50 hover:shadow-xl transition-all duration-500 backdrop-blur-sm">
+            <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-4 flex items-center transition-colors duration-300">
+              <div className="bg-slate-600 dark:bg-slate-700 rounded-full p-2 mr-3 transition-colors duration-300">
                 <Filter className="h-5 w-5 text-white" />
               </div>
-              <span className="text-gray-900">
+              <span className="text-gray-900 dark:text-white transition-colors duration-300">
                 Filter & Search News
               </span>
             </h2>
             
-            <div className="flex flex-col sm:flex-row gap-4">
-              {/* Enhanced Search */}
-              <div className="relative flex-1">
-                <div className="relative bg-white rounded-xl border border-gray-300 focus-within:border-blue-500 transition-colors">
-                  <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
+            <div className="flex flex-col sm:flex-row gap-4">              {/* Enhanced Search */}              <div className="relative flex-1">
+                <div className="relative bg-white dark:bg-gray-700 rounded-xl border border-gray-300 dark:border-gray-600 focus-within:border-blue-500 dark:focus-within:border-blue-400 transition-colors">
+                  <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400 dark:text-gray-500" />
                   <input
                     type="text"
                     placeholder="Search financial news, companies, trends..."
                     value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
-                    className="pl-12 pr-4 py-3 w-full border-0 rounded-xl focus:ring-2 focus:ring-blue-500 transition-all duration-300 text-gray-900 placeholder-gray-500"
+                    onFocus={() => setShowSearchHistory(true)}
+                    onBlur={() => setTimeout(() => setShowSearchHistory(false), 150)}
+                    onChange={(e) => {
+                      setSearchTerm(e.target.value);
+                      // Add to search history when user types
+                      if (e.target.value.length > 2) {
+                        addToSearchHistory(e.target.value);
+                      }
+                    }}
+                    className="pl-12 pr-4 py-3 w-full border-0 rounded-xl focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 transition-all duration-300 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 bg-transparent"
                   />
+                  {/* Search History Dropdown */}
+                  {showSearchHistory && searchHistory.length > 0 && (
+                    <div className="absolute top-full left-0 right-0 mt-1 bg-white dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-lg shadow-lg z-10 max-h-48 overflow-y-auto">
+                      <div className="flex justify-between items-center px-3 py-2 border-b border-gray-100 dark:border-gray-600">
+                        <span className="text-sm font-medium text-gray-600 dark:text-gray-300 flex items-center transition-colors duration-300">
+                          <History className="w-4 h-4 mr-1" />
+                          Recent searches
+                        </span>
+                        <button
+                          onClick={clearSearchHistory}
+                          className="text-xs text-red-500 hover:text-red-700 dark:text-red-400 dark:hover:text-red-300 flex items-center transition-colors duration-300"
+                        >
+                          <X className="w-3 h-3 mr-1" />
+                          Clear
+                        </button>
+                      </div>
+                      {searchHistory.slice(0, 5).map((query, index) => (
+                        <button
+                          key={index}
+                          onClick={() => {
+                            setSearchTerm(query);
+                            setShowSearchHistory(false);
+                          }}
+                          className="w-full text-left px-3 py-2 hover:bg-gray-50 dark:hover:bg-gray-600 text-sm text-gray-700 dark:text-gray-300 flex items-center transition-colors duration-300"
+                        >
+                          <Clock className="w-3 h-3 mr-2 text-gray-400 dark:text-gray-500" />
+                          {query}
+                        </button>
+                      ))}
+                    </div>
+                  )}
                 </div>
               </div>
               
               {/* Enhanced Category Filter */}
               <div className="relative">
-                <div className="relative">
-                  <select
+                <div className="relative">                  <select
                     value={selectedCategory}
                     onChange={(e) => setSelectedCategory(e.target.value)}
-                    className="px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 appearance-none bg-white min-w-40 transition-all duration-300 text-gray-900 font-medium"
+                    className="px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 focus:border-blue-500 dark:focus:border-blue-400 appearance-none bg-white dark:bg-gray-700 min-w-40 transition-all duration-300 text-gray-900 dark:text-white font-medium"
                   >
                     {categories.map((category) => (
-                      <option key={category.value} value={category.value}>
+                      <option key={category.value} value={category.value} className="dark:bg-gray-700">
                         {category.label}
                       </option>
                     ))}
                   </select>
                   <div className="absolute right-3 top-1/2 transform -translate-y-1/2 pointer-events-none">
-                    <svg className="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg className="h-5 w-5 text-gray-400 dark:text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                     </svg>
                   </div>
                 </div>
               </div>
-            </div>
-
-            {/* Enhanced Results count */}
-            <div className="mt-4 pt-4 border-t border-gray-200 animate-fade-in">
+            </div>            {/* Enhanced Results count */}
+            <div className="mt-4 pt-4 border-t border-gray-200 dark:border-gray-600 animate-fade-in transition-colors duration-300">
               <div className="flex items-center justify-between">
-                <p className="text-sm text-gray-600 flex items-center">
+                <p className="text-sm text-gray-600 dark:text-gray-400 flex items-center transition-colors duration-300">
                   <span className="mr-2">📰</span>
-                  Showing <span className="font-bold text-blue-600 mx-1">{filteredArticles.length}</span> 
+                  Showing <span className="font-bold text-blue-600 dark:text-blue-400 mx-1 transition-colors duration-300">{filteredArticles.length}</span> 
                   article{filteredArticles.length !== 1 ? 's' : ''}
                   {selectedCategory !== 'all' && ` in ${categories.find(c => c.value === selectedCategory)?.label}`}
                   {searchTerm && ` matching "${searchTerm}"`}
@@ -266,10 +327,9 @@ const AllNews = () => {  const [articles, setArticles] = useState<Article[]>([])
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-8 mb-8">
           {/* Main Articles */}
           <div className="lg:col-span-3">
-            <div className="flex items-center justify-between mb-8">
-              <h2 className="text-3xl font-bold text-gray-900 flex items-center">
+            <div className="flex items-center justify-between mb-8">              <h2 className="text-3xl font-bold text-gray-900 dark:text-white flex items-center transition-colors duration-300">
                 <div className="w-2 h-8 bg-gradient-to-b from-blue-500 via-purple-500 to-pink-500 rounded-full mr-4 animate-pulse"></div>
-                <span className="bg-gradient-to-r from-gray-900 via-blue-700 to-purple-700 bg-clip-text text-transparent">
+                <span className="bg-gradient-to-r from-gray-900 dark:from-gray-100 via-blue-700 dark:via-blue-400 to-purple-700 dark:to-purple-400 bg-clip-text text-transparent">
                   Breaking News & Analysis
                 </span>
               </h2>

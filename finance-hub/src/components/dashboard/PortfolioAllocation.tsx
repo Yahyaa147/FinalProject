@@ -114,30 +114,29 @@ const PortfolioAllocation: React.FC<PortfolioAllocationProps> = ({
   };
 
   const currentTargets = targetAllocations[viewType] || {};
-
   return (
-    <div className={`bg-white rounded-2xl shadow-sm border border-gray-200/50 overflow-hidden ${className}`}>
-      <div className="bg-gradient-to-r from-indigo-50 to-purple-50 p-6 border-b border-gray-200/50">
+    <div className={`bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-200/50 dark:border-gray-700/50 overflow-hidden transition-colors duration-300 ${className}`}>
+      <div className="bg-gradient-to-r from-indigo-50 dark:from-indigo-900/20 to-purple-50 dark:to-purple-900/20 p-6 border-b border-gray-200/50 dark:border-gray-700/50 transition-colors duration-300">
         <div className="flex items-center justify-between">
           <div>
-            <h2 className="text-xl font-semibold text-gray-900 flex items-center">
-              <PieChart className="h-5 w-5 text-indigo-600 mr-2" />
+            <h2 className="text-xl font-semibold text-gray-900 dark:text-white flex items-center transition-colors duration-300">
+              <PieChart className="h-5 w-5 text-indigo-600 dark:text-indigo-400 mr-2 transition-colors duration-300" />
               Portfolio Allocation
             </h2>
-            <p className="text-sm text-gray-600 mt-1">
+            <p className="text-sm text-gray-600 dark:text-gray-400 mt-1 transition-colors duration-300">
               Analyze your investment distribution and diversification
             </p>
           </div>
           <div className="flex items-center space-x-2">
             <button
               onClick={() => setViewType(viewType === 'sector' ? 'type' : 'sector')}
-              className="px-3 py-1 text-sm font-medium text-indigo-600 hover:bg-indigo-100 rounded-lg transition-colors"
+              className="px-3 py-1 text-sm font-medium text-indigo-600 dark:text-indigo-400 hover:bg-indigo-100 dark:hover:bg-indigo-900/30 rounded-lg transition-colors"
             >
               View by {viewType === 'sector' ? 'Type' : 'Sector'}
             </button>
             <Link 
               to="/portfolio"
-              className="px-4 py-2 bg-indigo-600 text-white text-sm font-medium rounded-lg hover:bg-indigo-700 transition-colors"
+              className="px-4 py-2 bg-indigo-600 text-white text-sm font-medium rounded-lg hover:bg-indigo-700 dark:bg-indigo-600 dark:hover:bg-indigo-700 transition-colors"
             >
               Rebalance
             </Link>
@@ -181,13 +180,12 @@ const PortfolioAllocation: React.FC<PortfolioAllocationProps> = ({
                   acc.currentAngle = endAngle;
                   return acc;
                 }, { elements: [] as React.ReactElement[], currentAngle: 0 }).elements}
-                
-                {/* Center circle */}
-                <circle cx="50" cy="50" r="20" fill="white" />
-                <text x="50" y="50" textAnchor="middle" dy="0.3em" className="text-xs font-semibold fill-gray-700">
+                  {/* Center circle */}
+                <circle cx="50" cy="50" r="20" fill="white" className="dark:fill-gray-800" />
+                <text x="50" y="50" textAnchor="middle" dy="0.3em" className="text-xs font-semibold fill-gray-700 dark:fill-gray-300">
                   Total
                 </text>
-                <text x="50" y="50" textAnchor="middle" dy="1.5em" className="text-xs fill-gray-500">
+                <text x="50" y="50" textAnchor="middle" dy="1.5em" className="text-xs fill-gray-500 dark:fill-gray-400">
                   {assets.length} assets
                 </text>
               </svg>
@@ -199,34 +197,33 @@ const PortfolioAllocation: React.FC<PortfolioAllocationProps> = ({
             {allocationData.map((item, index) => {
               const target = (currentTargets as any)[item.sector] || 0;
               const difference = item.percentage - target;
-              
-              return (
-                <div key={index} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors">
+                return (
+                <div key={index} className="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-700 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors">
                   <div className="flex items-center space-x-3">
                     <div 
                       className="w-4 h-4 rounded-full"
                       style={{ backgroundColor: item.color }}
                     ></div>
                     <div>
-                      <p className="font-medium text-gray-900">{item.sector}</p>
-                      <p className="text-sm text-gray-500">
+                      <p className="font-medium text-gray-900 dark:text-white transition-colors duration-300">{item.sector}</p>
+                      <p className="text-sm text-gray-500 dark:text-gray-400 transition-colors duration-300">
                         {item.count} asset{item.count !== 1 ? 's' : ''}
                       </p>
                     </div>
                   </div>
                   <div className="text-right">
-                    <p className="font-semibold text-gray-900">
+                    <p className="font-semibold text-gray-900 dark:text-white transition-colors duration-300">
                       {formatPercentage(item.percentage)}
                     </p>
-                    <p className="text-sm text-gray-600">
+                    <p className="text-sm text-gray-600 dark:text-gray-400 transition-colors duration-300">
                       {formatCurrency(item.value)}
                     </p>
                     {target > 0 && (
                       <p className={`text-xs font-medium ${
                         Math.abs(difference) > 5 
-                          ? difference > 0 ? 'text-red-600' : 'text-blue-600'
-                          : 'text-gray-500'
-                      }`}>
+                          ? difference > 0 ? 'text-red-600 dark:text-red-400' : 'text-blue-600 dark:text-blue-400'
+                          : 'text-gray-500 dark:text-gray-400'
+                      } transition-colors duration-300`}>
                         {difference > 0 ? '+' : ''}{formatPercentage(difference)} vs target
                       </p>
                     )}
@@ -235,21 +232,19 @@ const PortfolioAllocation: React.FC<PortfolioAllocationProps> = ({
               );
             })}
           </div>
-        </div>
-
-        {/* Risk Assessment and Recommendations */}
+        </div>        {/* Risk Assessment and Recommendations */}
         <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div className={`p-4 rounded-xl border ${riskLevel.bg} border-opacity-20`}>
+          <div className={`p-4 rounded-xl border ${riskLevel.bg} dark:bg-opacity-20 border-opacity-20 transition-colors duration-300`}>
             <div className="flex items-center justify-between">
               <div className="flex items-center space-x-2">
                 <Target className={`h-4 w-4 ${riskLevel.color}`} />
-                <span className="font-medium text-gray-900">Diversification Risk</span>
+                <span className="font-medium text-gray-900 dark:text-white transition-colors duration-300">Diversification Risk</span>
               </div>
               <span className={`text-sm font-semibold ${riskLevel.color}`}>
                 {riskLevel.level}
               </span>
             </div>
-            <p className="text-sm text-gray-600 mt-2">
+            <p className="text-sm text-gray-600 dark:text-gray-400 mt-2 transition-colors duration-300">
               {riskLevel.level === 'High' 
                 ? 'Consider diversifying to reduce concentration risk'
                 : riskLevel.level === 'Medium'
@@ -258,12 +253,12 @@ const PortfolioAllocation: React.FC<PortfolioAllocationProps> = ({
             </p>
           </div>
 
-          <div className="p-4 bg-blue-50 rounded-xl border border-blue-200 border-opacity-20">
+          <div className="p-4 bg-blue-50 dark:bg-blue-900/20 rounded-xl border border-blue-200 dark:border-blue-700 border-opacity-20 transition-colors duration-300">
             <div className="flex items-center space-x-2">
-              <Info className="h-4 w-4 text-blue-600" />
-              <span className="font-medium text-gray-900">Recommendation</span>
+              <Info className="h-4 w-4 text-blue-600 dark:text-blue-400 transition-colors duration-300" />
+              <span className="font-medium text-gray-900 dark:text-white transition-colors duration-300">Recommendation</span>
             </div>
-            <p className="text-sm text-gray-600 mt-2">
+            <p className="text-sm text-gray-600 dark:text-gray-400 mt-2 transition-colors duration-300">
               {allocationData.length < 5 
                 ? 'Consider adding more sectors for better diversification'
                 : 'Portfolio shows good sector diversification'}

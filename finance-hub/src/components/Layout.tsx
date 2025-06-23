@@ -1,14 +1,20 @@
 import { Outlet } from 'react-router-dom';
 import Navigation from './Navigation';
 import { TrendingUp, Mail, Phone, MapPin, Facebook, Twitter, Linkedin, Github } from 'lucide-react';
+import { useUIStore } from '../store/uiStore';
 
 const Layout = () => {
-  return (
-    <div className="min-h-screen bg-gray-50 flex flex-col">
+  const { theme, sidebarCollapsed } = useUIStore();
+    return (
+    <div className={`min-h-screen flex flex-col transition-colors duration-300 ${
+      theme === 'dark' 
+        ? 'dark bg-gray-900' 
+        : 'bg-gray-50'
+    } ${sidebarCollapsed ? 'sidebar-collapsed' : ''}`}>
       <Navigation />
       <main className="flex-1">
         <Outlet />
-      </main>      <footer className="bg-gradient-to-r from-gray-900 via-blue-900 to-purple-900 text-white mt-auto">
+      </main><footer className="bg-gradient-to-r from-gray-900 via-blue-900 to-purple-900 text-white mt-auto">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Main Footer Content */}
           <div className="py-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">

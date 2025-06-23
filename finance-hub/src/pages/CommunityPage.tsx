@@ -738,19 +738,18 @@ const ThreadView = () => {
 const CommunityPage = () => {
   const location = useLocation();
   const isHomePage = location.pathname === '/community' || location.pathname === '/community/';
-
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Breadcrumb Navigation */}
         {!isHomePage && (
           <nav className="mb-6">
-            <div className="flex items-center space-x-2 text-sm text-gray-500">
-              <Link to="/community" className="hover:text-primary-600 transition-colors">
+            <div className="flex items-center space-x-2 text-sm text-gray-500 dark:text-gray-400 transition-colors duration-300">
+              <Link to="/community" className="hover:text-primary-600 dark:hover:text-primary-400 transition-colors">
                 Community
               </Link>
               <span>›</span>
-              <span className="text-gray-900">Current Page</span>
+              <span className="text-gray-900 dark:text-white transition-colors duration-300">Current Page</span>
             </div>
           </nav>
         )}
