@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Search, TrendingUp, Star, Users, Globe, ChevronRight } from 'lucide-react';
 import PageHeader from '../components/PageHeader';
+import { RealTimeStockWidget, PopularStocksWidget } from '../components/discover';
 
 const DiscoverPage = () => {
   const [activeSection, setActiveSection] = useState('trending');
@@ -101,7 +102,7 @@ const DiscoverPage = () => {
             </div>            {/* Market Heat Map */}
             <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-6 transition-colors duration-300">
               <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-6 transition-colors duration-300">📊 Market Heat Map</h3>
-              <div className="grid grid-cols-6 gap-2 h-96">
+              <div className="grid grid-cols-6 gap-2 h-80 overflow-hidden">
                 {[
                   // Large Cap Stocks (biggest market caps take more space)
                   { name: 'AAPL', change: '+2.34%', marketCap: 2800, size: 'xl' }, // Apple
@@ -171,7 +172,7 @@ const DiscoverPage = () => {
                     )}
                   </div>
                 ))}
-              </div>              <div className="mt-4 flex justify-between items-center text-sm text-gray-600 dark:text-gray-400 transition-colors duration-300">
+              </div><div className="mt-4 flex justify-between items-center text-sm text-gray-600 dark:text-gray-400 transition-colors duration-300">
                 <div className="flex items-center space-x-4">
                   <div className="flex items-center space-x-2">
                     <div className="w-3 h-3 bg-green-500 rounded"></div>
@@ -181,12 +182,14 @@ const DiscoverPage = () => {
                     <div className="w-3 h-3 bg-red-500 rounded"></div>
                     <span>Negative</span>
                   </div>
-                </div>
-                <div className="text-xs text-gray-500 dark:text-gray-400 transition-colors duration-300">
+                </div>                <div className="text-xs text-gray-500 dark:text-gray-400 transition-colors duration-300">
                   Size represents market capitalization
                 </div>
               </div>
             </div>
+
+            {/* Real-Time Stock Data Widget */}
+            <RealTimeStockWidget />
           </div>
         );
 
@@ -211,7 +214,12 @@ const DiscoverPage = () => {
                   </div>
                 ))}
               </div>
-            </div>            {/* Sector Performance */}
+            </div>
+
+            {/* Real-Time Popular Stocks */}
+            <PopularStocksWidget />
+
+            {/* Sector Performance */}
             <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-6 transition-colors duration-300">
               <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-6 transition-colors duration-300">📈 Sector Performance (YTD)</h3>
               <div className="space-y-3">

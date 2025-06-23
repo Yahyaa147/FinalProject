@@ -30,6 +30,13 @@ Kişisel yatırım portföylerini yönetmek, finansal haberleri takip etmek, fin
 - **Hızlı Navigasyon**: İç içe yönlendirme ve breadcrumb'lar ile React Router
 - **Tip Güvenliği**: Uygulama boyunca tam TypeScript entegrasyonu
 
+### 📊 Gerçek Zamanlı Veri Entegrasyonu
+- **Alpha Vantage API**: Gerçek zamanlı hisse senedi fiyatları ve piyasa verileri
+- **Hisse Senedi Arama**: Anlık hisse senedi sembolü arama ve fiyat sorgulaması
+- **Canlı Fiyat Güncellemeleri**: Otomatik yenileme ile güncel piyasa verileri
+- **Oran Sınırı Yönetimi**: API çağrı limitlerinin akıllı yönetimi
+- **Önbellek Sistemi**: Performans optimizasyonu için 1 dakikalık veri önbelleği
+
 ## 🛠️ Teknoloji Yığını
 
 - **Frontend Framework**: TypeScript ile React 18
@@ -193,6 +200,11 @@ Uygulama, gösteri için önceden yüklenmiş örnek verilerle gelir:
 - Mobil uygulama geliştirme
 - Gerçek finansal API'ler ile entegrasyon
 
+## 📚 API Dokümantasyonu
+
+Gerçek zamanlı hisse senedi verileri entegrasyonu hakkında detaylı bilgi için bakınız:
+[Alpha Vantage API Entegrasyon Rehberi](./ALPHA_VANTAGE_INTEGRATION.md)
+
 ## 📄 Lisans
 
 Bu proje bir yazılım mühendisliği dersinin parçasıdır ve eğitim amaçlıdır.
@@ -205,7 +217,3 @@ Modern web geliştirme en iyi uygulamaları ile oluşturulmuştur:
 - Yeniden kullanılabilir yardımcılar ve hook'lar
 - Kapsamlı tip güvenliği
 - Temiz kod prensipleri
-    ...reactDom.configs.recommended.rules,
-  },
-})
-```
